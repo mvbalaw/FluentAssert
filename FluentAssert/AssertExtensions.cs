@@ -87,9 +87,14 @@ namespace FluentAssert
 			Assert.IsNull(item, errorMessage);
 		}
 
+		public static void ShouldBeOfType<E>(this object item)
+		{
+			item.ShouldBeOfType<E>("");
+		}
+
 		public static void ShouldBeOfType<E>(this object item, string errorMessage)
 		{
-			item.GetType().ShouldBeEqualTo(typeof (E), errorMessage);
+			typeof(E).IsAssignableFrom(item.GetType()).ShouldBeTrue(errorMessage);
 		}
 
 		public static void ShouldBeTrue(this bool item)
