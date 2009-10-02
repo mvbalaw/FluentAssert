@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FluentAssert")]
+[assembly: AssemblyTitle("FluentAssert - http://code.google.com/p/fluent-assert/")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("McCreary, Veselka, Bragg & Allen, P.C.")]
