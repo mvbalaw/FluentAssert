@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using JetBrains.Annotations;
+
 using NUnit.Framework;
 
 namespace FluentAssert
@@ -178,6 +180,35 @@ namespace FluentAssert
 		public static void ShouldStartWith(this string item, [NotNull] string expected, [NotNull] string errorMessage)
 		{
 			item.StartsWith(expected).ShouldBeTrue(errorMessage);
+		}
+
+		public static Exception ShouldThrowAnException<T>(this T item, Func<T, object> methodToCall)
+		{
+			try
+			{
+				methodToCall(item);
+			}
+			catch (Exception exception)
+			{
+				if (typeof(AssertionException).IsAssignableFrom(exception.GetType()))
+				{
+					throw;
+				}
+				return exception;
+			}
+			throw new AssertionException("Should have thrown an exception.");
+		}
+
+		public static Exception OfType<T>(this Exception item)
+		{
+			Assert.IsInstanceOf(typeof(T), item);
+			return item;
+		}
+
+		public static Exception WithMessage(this Exception item, string expectedMessage)
+		{
+			item.Message.ShouldBeEqualTo(expectedMessage);
+			return item;
 		}
 	}
 }
