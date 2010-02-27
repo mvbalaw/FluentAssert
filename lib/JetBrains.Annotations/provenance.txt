@@ -1,0 +1,6 @@
+source: Resharper 4.5
+
+license source: http://www.jetbrains.com/resharper/buy/opensource_license.html#openSource_licenseTerms
+5. LICENSE TO DISTRIBUTE JETBRAINS.ANNOTATIONS
+In addition to the license granted in Section 4(a) of this Agreement, Licensor grants to Licensee a non-exclusive license to distribute the Software component
+JetBrains.Annotations located in the Software installation folder.
