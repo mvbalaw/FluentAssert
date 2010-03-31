@@ -131,15 +131,15 @@ namespace FluentAssert
 		public static void ShouldContainAllInOrder<T>(this IEnumerable<T> collection, IEnumerable<T> expected) where T : IEquatable<T>
 		{
 			var indexedSource = collection.Select((x, i) => new
-			{
-				Item = x,
-				Index = i
-			}).ToList();
+				{
+					Item = x,
+					Index = i
+				}).ToList();
 			var indexedExpected = expected.Select((x, i) => new
-			{
-				Item = x,
-				Index = i
-			}).ToList();
+				{
+					Item = x,
+					Index = i
+				}).ToList();
 			indexedSource.Count.ShouldBeEqualTo(indexedExpected.Count);
 			foreach (int index in Enumerable.Range(0, indexedSource.Count))
 			{
