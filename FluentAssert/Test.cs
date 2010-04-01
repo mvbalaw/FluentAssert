@@ -6,5 +6,10 @@ namespace FluentAssert
 		{
 			return new TestDefinition<T>();
 		}
+
+		public static TestGivenClause<T> Given<T>(T item)
+		{
+			return new TestGivenClause<T>(item);
+		}
 	}
 }
