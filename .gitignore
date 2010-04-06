@@ -1,0 +1,8 @@
+*.suo
+bin
+obj
+FluentAssert.4.5.resharper.user
+_ReSharper.*
+dist
+*.cache
+CommonAssemblyInfo.cs
