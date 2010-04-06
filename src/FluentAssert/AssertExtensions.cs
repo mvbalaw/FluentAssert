@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using JetBrains.Annotations;
-
 using NUnit.Framework;
 
 namespace FluentAssert
@@ -16,31 +14,36 @@ namespace FluentAssert
 			return item;
 		}
 
-		public static void ShouldBeEmpty<T>(this IList<T> item)
+		public static IList<T> ShouldBeEmpty<T>(this IList<T> list)
 		{
-			item.ShouldNotBeNull();
-			item.Count.ShouldBeEqualTo(0);
+			list.ShouldNotBeNull();
+			list.Count.ShouldBeEqualTo(0);
+			return list;
 		}
 
-		public static void ShouldBeEqualTo<T>(this IList<T> list, IEnumerable<T> expected) where T : IEquatable<T>
+		public static IList<T> ShouldBeEqualTo<T>(this IList<T> list, IEnumerable<T> expected) where T : IEquatable<T>
 		{
 			list.ToList().ShouldContainAll(expected);
 			expected.ToList().ShouldContainAll(list);
+			return list;
 		}
 
-		public static void ShouldBeEqualTo<T>(this T item, T expected)
+		public static T ShouldBeEqualTo<T>(this T item, T expected)
 		{
 			Assert.AreEqual(expected, item);
+			return item;
 		}
 
-		public static void ShouldBeEqualTo<T>(this T? item, T? expected) where T : struct
+		public static T? ShouldBeEqualTo<T>(this T? item, T? expected) where T : struct
 		{
 			Assert.AreEqual(expected, item);
+			return item;
 		}
 
-		public static void ShouldBeEqualTo<T>(this T item, T expected, [NotNull] string errorMessage)
+		public static T ShouldBeEqualTo<T>(this T item, T expected, string errorMessage)
 		{
 			Assert.AreEqual(expected, item, errorMessage);
+			return item;
 		}
 
 		public static void ShouldBeFalse(this bool item)
@@ -48,61 +51,71 @@ namespace FluentAssert
 			Assert.IsFalse(item);
 		}
 
-		public static void ShouldBeFalse(this bool item, [NotNull] string errorMessage)
+		public static void ShouldBeFalse(this bool item, string errorMessage)
 		{
 			Assert.IsFalse(item, errorMessage);
 		}
 
-		public static void ShouldBeGreaterThan<T>(this T item, [NotNull] T lowEndOfRange) where T : IComparable
+		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange) where T : IComparable
 		{
 			Assert.That(Is.GreaterThan(lowEndOfRange).Matches(item));
+			return item;
 		}
 
-		public static void ShouldBeGreaterThan<T>(this T item, [NotNull] T lowEndOfRange, string errorMessage) where T : IComparable
+		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange, string errorMessage) where T : IComparable
 		{
 			Assert.That(Is.GreaterThan(lowEndOfRange).Matches(item), errorMessage);
+			return item;
 		}
 
-		public static void ShouldBeGreaterThanOrEqualTo<T>(this T item, [NotNull] T lowEndOfRange) where T : IComparable
+		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange) where T : IComparable
 		{
 			Assert.That(Is.GreaterThanOrEqualTo(lowEndOfRange).Matches(item));
+			return item;
 		}
 
-		public static void ShouldBeInRangeInclusive<T>(this T item, [NotNull] T lowEndOfRange, [NotNull] T highEndOfRange)
+		public static T ShouldBeInRangeInclusive<T>(this T item, T lowEndOfRange, T highEndOfRange)
 			where T : IComparable
 		{
 			item.ShouldBeGreaterThanOrEqualTo(lowEndOfRange);
 			item.ShouldBeLessThanOrEqualTo(highEndOfRange);
+			return item;
 		}
 
-		public static void ShouldBeLessThan<T>(this T item, [NotNull] T highEndOfRange) where T : IComparable
+		public static T ShouldBeLessThan<T>(this T item, T highEndOfRange) where T : IComparable
 		{
 			Assert.That(Is.LessThan(highEndOfRange).Matches(item));
+			return item;
 		}
 
-		public static void ShouldBeLessThanOrEqualTo<T>(this T item, [NotNull] T highEndOfRange) where T : IComparable
+		public static T ShouldBeLessThanOrEqualTo<T>(this T item, T highEndOfRange) where T : IComparable
 		{
 			Assert.That(Is.LessThanOrEqualTo(highEndOfRange).Matches(item));
+			return item;
 		}
 
-		public static void ShouldBeNull<T>(this T item)
+		public static T ShouldBeNull<T>(this T item)
 		{
 			Assert.IsNull(item);
+			return item;
 		}
 
-		public static void ShouldBeNull<T>(this T item, [NotNull] string errorMessage) where T : class
+		public static T ShouldBeNull<T>(this T item, string errorMessage) where T : class
 		{
 			Assert.IsNull(item, errorMessage);
+			return item;
 		}
 
-		public static void ShouldBeOfType<E>(this object item)
+		public static object ShouldBeOfType<TType>(this object item)
 		{
-			item.ShouldBeOfType<E>("");
+			item.ShouldBeOfType<TType>("");
+			return item;
 		}
 
-		public static void ShouldBeOfType<E>(this object item, string errorMessage)
+		public static object ShouldBeOfType<TType>(this object item, string errorMessage)
 		{
-			typeof(E).IsAssignableFrom(item.GetType()).ShouldBeTrue(errorMessage);
+			typeof(TType).IsAssignableFrom(item.GetType()).ShouldBeTrue(errorMessage);
+			return item;
 		}
 
 		public static void ShouldBeTrue(this bool item)
@@ -110,27 +123,30 @@ namespace FluentAssert
 			Assert.IsTrue(item);
 		}
 
-		public static void ShouldBeTrue(this bool item, [NotNull] string errorMessage)
+		public static void ShouldBeTrue(this bool item, string errorMessage)
 		{
 			Assert.IsTrue(item, errorMessage);
 		}
 
-		public static void ShouldContain(this string item, string expectedSubstring)
+		public static string ShouldContain(this string item, string expectedSubstring)
 		{
 			item.Contains(expectedSubstring).ShouldBeTrue();
+			return item;
 		}
 
-		public static void ShouldContainAll<T>(this List<T> collection, IEnumerable<T> expected) where T : IEquatable<T>
+		public static IList<T> ShouldContainAll<T>(this IList<T> list, IEnumerable<T> expected) where T : IEquatable<T>
 		{
 			foreach (var item in expected)
 			{
-				collection.Any(x => x.Equals(item)).ShouldBeTrue("Collection does not contain '" + item + "'");
+				var other = item;
+				list.Any(x => x.Equals(other)).ShouldBeTrue("Collection does not contain '" + item + "'");
 			}
+			return list;
 		}
 
-		public static void ShouldContainAllInOrder<T>(this IEnumerable<T> collection, IEnumerable<T> expected) where T : IEquatable<T>
+		public static IEnumerable<T> ShouldContainAllInOrder<T>(this IEnumerable<T> list, IEnumerable<T> expected) where T : IEquatable<T>
 		{
-			var indexedSource = collection.Select((x, i) => new
+			var indexedSource = list.Select((x, i) => new
 				{
 					Item = x,
 					Index = i
@@ -145,56 +161,78 @@ namespace FluentAssert
 			{
 				indexedSource[index].Item.ShouldBeEqualTo(indexedExpected[index].Item, "at offset " + index);
 			}
+			return list;
 		}
 
-		public static void ShouldNotBeEqualTo<T>(this T item, T expected)
+		public static T ShouldNotBeEqualTo<T>(this T item, T expected)
 		{
 			Assert.AreNotEqual(expected, item);
+			return item;
 		}
 
-		public static void ShouldNotBeEqualTo<T>(this T item, T expected, [NotNull] string errorMessage)
+		public static T ShouldNotBeEqualTo<T>(this T item, T expected, string errorMessage)
 		{
 			Assert.AreNotEqual(expected, item, errorMessage);
+			return item;
 		}
 
-		public static void ShouldNotBeNull<T>([CanBeNull] this T item) where T : class
+		public static T ShouldNotBeNull<T>(this T item) where T : class
 		{
 			Assert.IsNotNull(item);
+			return item;
 		}
 
-		public static void ShouldNotBeNull<T>([NotNull] this T? item) where T : struct
+		public static T? ShouldNotBeNull<T>(this T? item) where T : struct
 		{
 			Assert.IsTrue(item.HasValue);
+			return item;
 		}
 
-		public static void ShouldNotBeNull<T>([NotNull] this T item, [NotNull] string errorMessage) where T : class
+		public static T ShouldNotBeNull<T>(this T item, string errorMessage) where T : class
 		{
 			Assert.IsNotNull(item, errorMessage);
+			return item;
 		}
 
-		public static void ShouldNotBeNullOrEmpty([CanBeNull] this string item)
+		public static string ShouldNotBeNullOrEmpty(this string item)
 		{
 			Assert.IsNotNull(item);
 			Assert.IsNotEmpty(item);
+			return item;
 		}
 
-		public static void ShouldNotBeNullOrEmpty([CanBeNull] this string item, string message)
+		public static string ShouldNotBeNullOrEmpty(this string item, string message)
 		{
 			Assert.IsNotNull(item, message);
 			Assert.IsNotEmpty(item, message);
+			return item;
 		}
 
-		public static void ShouldNotContain(this string item, string expectedSubstring)
+		public static string ShouldNotContain(this string item, string expectedSubstring)
 		{
 			item.Contains(expectedSubstring).ShouldBeFalse();
+			return item;
 		}
 
-		public static void ShouldStartWith(this string item, [NotNull] string expected, [NotNull] string errorMessage)
+		public static string ShouldStartWith(this string item, string expected, string errorMessage)
 		{
 			item.StartsWith(expected).ShouldBeTrue(errorMessage);
+			return item;
 		}
 
-		public static Exception ShouldThrowAnException<T>(this T item, Func<T, object> methodToCall)
+		public static T ShouldThrow<T>(this T item, Func<T, object> methodToCall) where T : Exception
+		{
+			Assert.Throws<T>(() => methodToCall(item));
+			return item;
+		}
+
+		public static T ShouldThrow<T>(this T item, Func<T, object> methodToCall, string exceptionMessage) where T : Exception
+		{
+			Assert.Throws<T>(() => methodToCall(item), exceptionMessage);
+			return item;
+		}
+
+		public static Exception ShouldThrowAnException<T>(this T item, Func<T, object> methodToCall) where T : Exception
 		{
 			try
 			{
@@ -208,9 +246,10 @@ namespace FluentAssert
 				}
 				return exception;
 			}
-			throw new AssertionException("Should have thrown an exception.");
+			throw new AssertionException(String.Format("Should have thrown {0}.", typeof(T).Name));
 		}
 
+		[Obsolete("use item.ShouldThrow<TExceptionType>(x=>x.Method(args), \"Message\")")]
 		public static Exception WithMessage(this Exception item, string expectedMessage)
 		{
 			item.Message.ShouldBeEqualTo(expectedMessage);

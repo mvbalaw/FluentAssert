@@ -6,11 +6,11 @@ namespace FluentAssert
 	public class TestWhenClause<T>
 	{
 		private readonly Action<T> _action;
+		private readonly IList<Action<T>> _assertions = new List<Action<T>>();
 		private readonly T _item;
-		private readonly List<Action<T>> _setupActionsForItem;
-		private readonly List<Action<T>> _verificationActions = new List<Action<T>>();
+		private readonly IList<Action<T>> _setupActionsForItem;
 
-		public TestWhenClause(T item, Action<T> action, List<Action<T>> setupActionsForItem)
+		public TestWhenClause(T item, Action<T> action, IList<Action<T>> setupActionsForItem)
 		{
 			_item = item;
 			_action = action;
@@ -19,22 +19,22 @@ namespace FluentAssert
 
 		public TestWhenClause<T> Should(Action<T> verify)
 		{
-			_verificationActions.Add(verify);
+			_assertions.Add(verify);
 			return this;
 		}
 
 		public void Verify()
 		{
-			foreach (var setupItem in _setupActionsForItem)
+			foreach (var arrange in _setupActionsForItem)
 			{
-				setupItem(_item);
+				arrange(_item);
 			}
 
 			_action(_item);
 
-			foreach (var verify in _verificationActions)
+			foreach (var assert in _assertions)
 			{
-				verify(_item);
+				assert(_item);
 			}
 		}
 	}

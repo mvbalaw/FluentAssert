@@ -6,7 +6,7 @@ namespace FluentAssert
 	public class TestGivenClause<T>
 	{
 		private readonly T _item;
-		private readonly List<Action<T>> _setupActionsForItem = new List<Action<T>>();
+		private readonly IList<Action<T>> _setupActionsForItem = new List<Action<T>>();
 
 		public TestGivenClause(T item)
 		{
