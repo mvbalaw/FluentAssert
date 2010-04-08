@@ -5,36 +5,36 @@ namespace FluentAssert
 {
 	public class TestWhenClause<T>
 	{
-		private readonly Action<T> _action;
+		private readonly T _actionContainer;
+		private readonly Action<T> _actionUnderTest;
 		private readonly IList<Action<T>> _assertions = new List<Action<T>>();
-		private readonly T _item;
-		private readonly IList<Action<T>> _setupActionsForItem;
+		private readonly IList<Action<T>> _initializationsForActionParameters;
 
-		public TestWhenClause(T item, Action<T> action, IList<Action<T>> setupActionsForItem)
+		public TestWhenClause(T actionContainer, Action<T> actionUnderTest, IList<Action<T>> initializationsForActionParameters)
 		{
-			_item = item;
-			_action = action;
-			_setupActionsForItem = setupActionsForItem;
+			_actionContainer = actionContainer;
+			_actionUnderTest = actionUnderTest;
+			_initializationsForActionParameters = initializationsForActionParameters;
 		}
 
-		public TestWhenClause<T> Should(Action<T> verify)
+		public TestWhenClause<T> Should(Action<T> assertion)
 		{
-			_assertions.Add(verify);
+			_assertions.Add(assertion);
 			return this;
 		}
 
 		public void Verify()
 		{
-			foreach (var arrange in _setupActionsForItem)
+			foreach (var arrange in _initializationsForActionParameters)
 			{
-				arrange(_item);
+				arrange(_actionContainer);
 			}
 
-			_action(_item);
+			_actionUnderTest(_actionContainer);
 
 			foreach (var assert in _assertions)
 			{
-				assert(_item);
+				assert(_actionContainer);
 			}
 		}
 	}

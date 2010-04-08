@@ -2,14 +2,9 @@ namespace FluentAssert
 {
 	public static class Test
 	{
-		public static TestDefinition<T> For<T>()
+		public static TestGivenClause<T> Given<T>(T actionContainer)
 		{
-			return new TestDefinition<T>();
-		}
-
-		public static TestGivenClause<T> Given<T>(T item)
-		{
-			return new TestGivenClause<T>(item);
+			return new TestGivenClause<T>(actionContainer);
 		}
 	}
 }
