@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 using NUnit.Framework;
 
@@ -8,49 +9,60 @@ namespace FluentAssert
 	public class TestWhenClause<T>
 	{
 		private readonly T _actionContainer;
-		private readonly Action<T> _actionUnderTest;
-		private readonly IList<Action<T>> _assertions = new List<Action<T>>();
-		private readonly IList<Action<T>> _initializationsForActionParameters;
+		private readonly IWhenActionWrapper _actionUnderTest;
+		private readonly IList<IAssertionActionWrapper> _assertions = new List<IAssertionActionWrapper>();
+		private readonly IList<IParameterActionWrapper> _initializationsForActionParameters;
 		private Action<T> _performAction;
 
-		public TestWhenClause(T actionContainer, Action<T> actionUnderTest, IList<Action<T>> initializationsForActionParameters)
+		internal TestWhenClause(T actionContainer, IWhenActionWrapper actionUnderTest, IList<IParameterActionWrapper> initializationsForActionParameters)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
 			_initializationsForActionParameters = initializationsForActionParameters;
-			_performAction = (T item) => _actionUnderTest(item);
+			_performAction = (T item) => _actionUnderTest.Act();
 		}
 
-		public TestWhenClause<T> Should(Action<T> assertion)
+		[DebuggerNonUserCode]
+		public TestWhenClause<T> Should(Action assertion)
 		{
-			_assertions.Add(assertion);
+			_assertions.Add(new AssertionActionWrapper(assertion));
 			return this;
 		}
 
-		public void ShouldThrowException<TExceptionType>() where TExceptionType : Exception
+		[DebuggerNonUserCode]
+		public TestWhenClause<T> Should(Action<T> assertion)
 		{
-			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest(item));
-			Verify();
+			_assertions.Add(new AssertionActionWrapper<T>(_actionContainer, assertion));
+			return this;
 		}
 
-		public void ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
+		[DebuggerNonUserCode]
+		public TestWhenClause<T> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
-			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest(item), message);
-			Verify();
+			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
+			return this;
 		}
 
+		[DebuggerNonUserCode]
+		public TestWhenClause<T> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
+		{
+			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
+			return this;
+		}
+
+		[DebuggerNonUserCode]
 		public void Verify()
 		{
 			foreach (var arrange in _initializationsForActionParameters)
 			{
-				arrange(_actionContainer);
+				arrange.Setup();
 			}
 
 			_performAction(_actionContainer);
 
-			foreach (var assert in _assertions)
+			foreach (var assertion in _assertions)
 			{
-				assert(_actionContainer);
+				assertion.Verify();
 			}
 		}
 	}
@@ -58,51 +70,82 @@ namespace FluentAssert
 	public class TestWhenClause<T, TContext>
 	{
 		private readonly T _actionContainer;
-		private readonly Action<T, TContext> _actionUnderTest;
-		private readonly IList<Action<T, TContext>> _assertions = new List<Action<T, TContext>>();
+		private readonly IWhenActionWrapper _actionUnderTest;
+		private readonly IList<IAssertionActionWrapper> _assertions = new List<IAssertionActionWrapper>();
 		private readonly TContext _context;
-		private readonly IList<Action<T, TContext>> _initializationsForActionParameters;
+		private readonly IList<IParameterActionWrapper> _initializationsForActionParameters;
 		private Action<T, TContext> _performAction;
 
-		public TestWhenClause(T actionContainer, Action<T, TContext> actionUnderTest, IList<Action<T, TContext>> initializationsForActionParameters, TContext context)
+		internal TestWhenClause(T actionContainer, IWhenActionWrapper actionUnderTest, IList<IParameterActionWrapper> initializationsForActionParameters, TContext context)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
 			_initializationsForActionParameters = initializationsForActionParameters;
 			_context = context;
-			_performAction = (T item, TContext testContext) => _actionUnderTest(item, testContext);
+			_performAction = (T item, TContext testContext) => _actionUnderTest.Act();
 		}
 
-		public TestWhenClause<T, TContext> Should(Action<T, TContext> assertion)
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> Should<TBaseContext>(Action<T, TBaseContext> assertion) where TBaseContext : class
 		{
-			_assertions.Add(assertion);
+			var baseContext = _context as TBaseContext;
+			if (baseContext == null)
+			{
+				throw new InvalidCastException(typeof(TContext).Name + " must inherit from " + typeof(TBaseContext) + " in order to call " + assertion.Method.Name);
+			}
+
+			_assertions.Add(new AssertionActionWrapper<T, TBaseContext>(_actionContainer, baseContext, assertion));
 			return this;
 		}
 
-		public void ShouldThrowException<TExceptionType>() where TExceptionType : Exception
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> Should(Action<T, TContext> assertion)
 		{
-			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest(item, testContext));
-			Verify();
+			_assertions.Add(new AssertionActionWrapper<T, TContext>(_actionContainer, _context, assertion));
+			return this;
 		}
 
-		public void ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> Should(Action<T> assertion)
 		{
-			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest(item, testContext), message);
-			Verify();
+			_assertions.Add(new AssertionActionWrapper<T>(_actionContainer, assertion));
+			return this;
 		}
 
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> Should(Action assertion)
+		{
+			_assertions.Add(new AssertionActionWrapper(assertion));
+			return this;
+		}
+
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
+		{
+			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
+			return this;
+		}
+
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
+		{
+			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
+			return this;
+		}
+
+		[DebuggerNonUserCode]
 		public void Verify()
 		{
 			foreach (var arrange in _initializationsForActionParameters)
 			{
-				arrange(_actionContainer, _context);
+				arrange.Setup();
 			}
 
 			_performAction(_actionContainer, _context);
 
-			foreach (var assert in _assertions)
+			foreach (var assertion in _assertions)
 			{
-				assert(_actionContainer, _context);
+				assertion.Verify();
 			}
 		}
 	}
