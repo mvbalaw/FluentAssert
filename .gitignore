@@ -6,3 +6,6 @@ _ReSharper.*
 dist
 *.cache
 CommonAssemblyInfo.cs
+Build.bat
+build_support
+RakeFile
