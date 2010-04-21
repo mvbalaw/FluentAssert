@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
 using NUnit.Framework;
 
 namespace FluentAssert
@@ -14,7 +13,8 @@ namespace FluentAssert
 		private readonly IList<IParameterActionWrapper> _initializationsForActionParameters;
 		private Action<T> _performAction;
 
-		internal TestWhenClause(T actionContainer, IWhenActionWrapper actionUnderTest, IList<IParameterActionWrapper> initializationsForActionParameters)
+		internal TestWhenClause(T actionContainer, IWhenActionWrapper actionUnderTest,
+		                        IList<IParameterActionWrapper> initializationsForActionParameters)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
@@ -76,7 +76,8 @@ namespace FluentAssert
 		private readonly IList<IParameterActionWrapper> _initializationsForActionParameters;
 		private Action<T, TContext> _performAction;
 
-		internal TestWhenClause(T actionContainer, IWhenActionWrapper actionUnderTest, IList<IParameterActionWrapper> initializationsForActionParameters, TContext context)
+		internal TestWhenClause(T actionContainer, IWhenActionWrapper actionUnderTest,
+		                        IList<IParameterActionWrapper> initializationsForActionParameters, TContext context)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
@@ -91,7 +92,8 @@ namespace FluentAssert
 			var baseContext = _context as TBaseContext;
 			if (baseContext == null)
 			{
-				throw new InvalidCastException(typeof(TContext).Name + " must inherit from " + typeof(TBaseContext) + " in order to call " + assertion.Method.Name);
+				throw new InvalidCastException(typeof (TContext).Name + " must inherit from " + typeof (TBaseContext) +
+				                               " in order to call " + assertion.Method.Name);
 			}
 
 			_assertions.Add(new AssertionActionWrapper<T, TBaseContext>(_actionContainer, baseContext, assertion));
@@ -102,6 +104,13 @@ namespace FluentAssert
 		public TestWhenClause<T, TContext> Should(Action<T, TContext> assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper<T, TContext>(_actionContainer, _context, assertion));
+			return this;
+		}
+
+		[DebuggerNonUserCode]
+		public TestWhenClause<T, TContext> Should(Action<TContext> assertion)
+		{
+			_assertions.Add(new AssertionActionWrapper<TContext>(_context, assertion));
 			return this;
 		}
 
@@ -127,9 +136,11 @@ namespace FluentAssert
 		}
 
 		[DebuggerNonUserCode]
-		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
+		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>(string message)
+			where TExceptionType : Exception
 		{
-			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
+			_performAction =
+				(T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
 			return this;
 		}
 
