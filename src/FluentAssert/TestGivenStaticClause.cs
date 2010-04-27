@@ -5,7 +5,8 @@ namespace FluentAssert
 {
 	public class TestGivenStaticClause
 	{
-		internal TestWithStaticClause When(Action actionUnderTest)
+		[DebuggerNonUserCode]
+		public TestWithStaticClause When(Action actionUnderTest)
 		{
 			return new TestWithStaticClause(actionUnderTest);
 		}
