@@ -1,7 +1,7 @@
 *.suo
 bin
 obj
-.*.[rR]e[sS]harper.user
+*.user
 _ReSharper.*
 dist
 *.cache
