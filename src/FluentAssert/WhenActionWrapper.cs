@@ -6,6 +6,7 @@ namespace FluentAssert
 	internal interface IWhenActionWrapper
 	{
 		void Act();
+		string Description { get; }
 	}
 
 	internal class WhenActionWrapper : IWhenActionWrapper
@@ -21,6 +22,11 @@ namespace FluentAssert
 		public void Act()
 		{
 			_actionUnderTest();
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_actionUnderTest); }
 		}
 	}
 
@@ -39,6 +45,11 @@ namespace FluentAssert
 		public void Act()
 		{
 			_actionUnderTest(_actionContainer);
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_actionUnderTest); }
 		}
 	}
 
@@ -59,6 +70,11 @@ namespace FluentAssert
 		public void Act()
 		{
 			_actionUnderTest(_actionContainer, _context);
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_actionUnderTest); }
 		}
 	}
 }

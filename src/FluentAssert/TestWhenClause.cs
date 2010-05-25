@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 using NUnit.Framework;
 
 namespace FluentAssert
@@ -53,17 +54,10 @@ namespace FluentAssert
 		[DebuggerNonUserCode]
 		public void Verify()
 		{
-			foreach (var arrange in _initializationsForActionParameters)
-			{
-				arrange.Setup();
-			}
-
-			_performAction(_actionContainer);
-
-			foreach (var assertion in _assertions)
-			{
-				assertion.Verify();
-			}
+			TestRunner.Verify(_actionUnderTest.Description,
+			                  _initializationsForActionParameters,
+			                  () => _performAction(_actionContainer),
+			                  _assertions);
 		}
 	}
 
@@ -92,7 +86,7 @@ namespace FluentAssert
 			var baseContext = _context as TBaseContext;
 			if (baseContext == null)
 			{
-				throw new InvalidCastException(typeof (TContext).Name + " must inherit from " + typeof (TBaseContext) +
+				throw new InvalidCastException(typeof(TContext).Name + " must inherit from " + typeof(TBaseContext) +
 				                               " in order to call " + assertion.Method.Name);
 			}
 
@@ -147,17 +141,11 @@ namespace FluentAssert
 		[DebuggerNonUserCode]
 		public void Verify()
 		{
-			foreach (var arrange in _initializationsForActionParameters)
-			{
-				arrange.Setup();
-			}
-
-			_performAction(_actionContainer, _context);
-
-			foreach (var assertion in _assertions)
-			{
-				assertion.Verify();
-			}
+			TestRunner.Verify(_actionUnderTest.Description,
+			                  _initializationsForActionParameters,
+			                  () => _performAction(_actionContainer, _context),
+			                  _assertions
+				);
 		}
 	}
 }

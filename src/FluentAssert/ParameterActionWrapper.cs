@@ -5,6 +5,8 @@ namespace FluentAssert
 {
 	internal interface IParameterActionWrapper
 	{
+		string Description { get; }
+
 		[DebuggerNonUserCode]
 		void Setup();
 	}
@@ -23,6 +25,11 @@ namespace FluentAssert
 		{
 			_setup();
 		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_setup); }
+		}
 	}
 
 	internal class ParameterActionWrapper<T> : IParameterActionWrapper
@@ -40,6 +47,11 @@ namespace FluentAssert
 		public void Setup()
 		{
 			_setup(_actionContainer);
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_setup); }
 		}
 	}
 
@@ -60,6 +72,11 @@ namespace FluentAssert
 		public void Setup()
 		{
 			_setup(_actionContainer, _context);
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_setup); }
 		}
 	}
 }

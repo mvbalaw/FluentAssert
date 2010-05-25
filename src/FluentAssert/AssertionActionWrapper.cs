@@ -7,6 +7,8 @@ namespace FluentAssert
 	{
 		[DebuggerNonUserCode]
 		void Verify();
+
+		string Description { get; }
 	}
 
 	internal class AssertionActionWrapper : IAssertionActionWrapper
@@ -22,6 +24,11 @@ namespace FluentAssert
 		public void Verify()
 		{
 			_assert();
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_assert); }
 		}
 	}
 
@@ -40,6 +47,11 @@ namespace FluentAssert
 		public void Verify()
 		{
 			_assert(_actionContainer);
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_assert); }
 		}
 	}
 
@@ -60,6 +72,11 @@ namespace FluentAssert
 		public void Verify()
 		{
 			_assert(_actionContainer, _context);
+		}
+
+		public string Description
+		{
+			get { return ActionDescriptionBuilder.BuildFor(_assert); }
 		}
 	}
 }

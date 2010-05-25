@@ -44,17 +44,10 @@ namespace FluentAssert
 		[DebuggerNonUserCode]
 		public void Verify()
 		{
-			foreach (var arrange in _initializationsForActionParameters)
-			{
-				arrange.Setup();
-			}
-
-			_performAction();
-
-			foreach (var assertion in _assertions)
-			{
-				assertion.Verify();
-			}
+			TestRunner.Verify(ActionDescriptionBuilder.BuildFor(_actionUnderTest),
+			                  _initializationsForActionParameters,
+			                  () => _performAction(),
+			                  _assertions);
 		}
 	}
 
@@ -118,17 +111,10 @@ namespace FluentAssert
 		[DebuggerNonUserCode]
 		public void Verify()
 		{
-			foreach (var arrange in _initializationsForActionParameters)
-			{
-				arrange.Setup();
-			}
-
-			_performAction(_context);
-
-			foreach (var assertion in _assertions)
-			{
-				assertion.Verify();
-			}
+			TestRunner.Verify(_actionUnderTest.Description,
+			                  _initializationsForActionParameters,
+			                  () => _performAction(_context),
+			                  _assertions);
 		}
 	}
 }

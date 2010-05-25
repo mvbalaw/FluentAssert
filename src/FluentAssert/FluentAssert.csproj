@@ -41,6 +41,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionDescriptionBuilder.cs" />
+    <Compile Include="TestRunner.cs" />
     <Compile Include="WhenActionWrapper.cs" />
     <Compile Include="ActionContainerSource.cs" />
     <Compile Include="AssertExtensions.cs" />

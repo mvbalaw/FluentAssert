@@ -1,7 +1,7 @@
 *.suo
 bin
 obj
-FluentAssert.4.5.resharper.user
+.*.[rR]e[sS]harper.user
 _ReSharper.*
 dist
 *.cache
