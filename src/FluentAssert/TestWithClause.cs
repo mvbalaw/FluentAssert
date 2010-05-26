@@ -4,6 +4,8 @@ using System.Diagnostics;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestWithClause<T>
 	{
 		private readonly T _actionContainer;
@@ -18,35 +20,30 @@ namespace FluentAssert
 			_actionUnderTest = actionUnderTest;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> Should(Action<T> assertion)
 		{
 			return new TestWhenClause<T>(_actionContainer, _actionUnderTest, _initializationsForActionParameters)
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> Should(Action assertion)
 		{
 			return new TestWhenClause<T>(_actionContainer, _actionUnderTest, _initializationsForActionParameters)
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestWhenClause<T>(_actionContainer, _actionUnderTest, _initializationsForActionParameters)
 				.ShouldThrowException<TExceptionType>();
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			return new TestWhenClause<T>(_actionContainer, _actionUnderTest, _initializationsForActionParameters)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T> With(Action<T> initializationForActionParameter)
 		{
 			_initializationsForActionParameters.Add(new ParameterActionWrapper<T>(_actionContainer,
@@ -54,7 +51,6 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T> With(Action initializationForActionParameter)
 		{
 			_initializationsForActionParameters.Add(new ParameterActionWrapper(initializationForActionParameter));
@@ -62,6 +58,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestWithClause<T, TContext>
 	{
 		private readonly T _actionContainer;
@@ -78,7 +76,6 @@ namespace FluentAssert
 			_context = context;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should<TBaseContext>(Action<T, TBaseContext> assertion) where TBaseContext : class
 		{
 			return new TestWhenClause<T, TContext>(_actionContainer, _actionUnderTest, _initializationsForActionParameters,
@@ -86,7 +83,6 @@ namespace FluentAssert
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action<T, TContext> assertion)
 		{
 			return new TestWhenClause<T, TContext>(_actionContainer, _actionUnderTest, _initializationsForActionParameters,
@@ -94,7 +90,6 @@ namespace FluentAssert
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action<TContext> assertion)
 		{
 			return new TestWhenClause<T, TContext>(_actionContainer, _actionUnderTest, _initializationsForActionParameters,
@@ -102,7 +97,6 @@ namespace FluentAssert
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action<T> assertion)
 		{
 			return new TestWhenClause<T, TContext>(_actionContainer, _actionUnderTest, _initializationsForActionParameters,
@@ -110,7 +104,6 @@ namespace FluentAssert
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action assertion)
 		{
 			return new TestWhenClause<T, TContext>(_actionContainer, _actionUnderTest, _initializationsForActionParameters,
@@ -118,7 +111,6 @@ namespace FluentAssert
 				.Should(assertion);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return
@@ -126,7 +118,6 @@ namespace FluentAssert
 					.ShouldThrowException<TExceptionType>();
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>(string message)
 			where TExceptionType : Exception
 		{
@@ -135,14 +126,13 @@ namespace FluentAssert
 				.ShouldThrowException<TExceptionType>(message);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> With<TBaseContext>(Action<T, TBaseContext> initializationForActionParameter)
 			where TBaseContext : class
 		{
 			var baseContext = _context as TBaseContext;
 			if (baseContext == null)
 			{
-				throw new InvalidCastException(typeof (TContext).Name + " must inherit from " + typeof (TBaseContext) +
+				throw new InvalidCastException(typeof(TContext).Name + " must inherit from " + typeof(TBaseContext) +
 				                               " in order to call " + initializationForActionParameter.Method.Name);
 			}
 			_initializationsForActionParameters.Add(new ParameterActionWrapper<T, TBaseContext>(_actionContainer, baseContext,
@@ -150,7 +140,6 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> With(Action<T, TContext> initializationForActionParameter)
 		{
 			_initializationsForActionParameters.Add(new ParameterActionWrapper<T, TContext>(_actionContainer, _context,
@@ -158,7 +147,6 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> With(Action<TContext> initializationForActionParameter)
 		{
 			_initializationsForActionParameters.Add(new ParameterActionWrapper<TContext>(_context,
@@ -166,7 +154,6 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> With(Action<T> initializationForActionParameter)
 		{
 			_initializationsForActionParameters.Add(new ParameterActionWrapper<T>(_actionContainer,
@@ -174,7 +161,6 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> With(Action initializationForActionParameter)
 		{
 			_initializationsForActionParameters.Add(new ParameterActionWrapper(initializationForActionParameter));

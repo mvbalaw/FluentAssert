@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestGivenClause<T>
 	{
 		private readonly ActionContainerSource<T> _actionContainerSource;
@@ -12,21 +14,18 @@ namespace FluentAssert
 			_actionContainerSource = actionContainerSource;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T> When(Action<T> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer();
 			return new TestWithClause<T>(actionContainer, new WhenActionWrapper<T>(actionContainer, actionUnderTest));
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T> When(Action actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer();
 			return new TestWithClause<T>(actionContainer, new WhenActionWrapper(actionUnderTest));
 		}
 
-		[DebuggerNonUserCode]
 		public TestGivenClause<T, TContext> WithContext<TContext>(TContext context)
 		{
 			var actionContainerSource = new ActionContainerSource<T, TContext>
@@ -37,6 +36,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestGivenClause<T, TContext>
 	{
 		private readonly ActionContainerSource<T, TContext> _actionContainerSource;
@@ -48,7 +49,6 @@ namespace FluentAssert
 			_context = context;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> When(Action<T, TContext> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
@@ -57,7 +57,6 @@ namespace FluentAssert
 			                                       _context);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> When(Action<T> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
@@ -66,7 +65,6 @@ namespace FluentAssert
 			                                       _context);
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithClause<T, TContext> When(Action actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);

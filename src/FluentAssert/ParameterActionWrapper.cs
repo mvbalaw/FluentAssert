@@ -7,10 +7,11 @@ namespace FluentAssert
 	{
 		string Description { get; }
 
-		[DebuggerNonUserCode]
 		void Setup();
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class ParameterActionWrapper : IParameterActionWrapper
 	{
 		private readonly Action _setup;
@@ -20,7 +21,6 @@ namespace FluentAssert
 			_setup = setup;
 		}
 
-		[DebuggerNonUserCode]
 		public void Setup()
 		{
 			_setup();
@@ -32,6 +32,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class ParameterActionWrapper<T> : IParameterActionWrapper
 	{
 		private readonly T _actionContainer;
@@ -43,7 +45,6 @@ namespace FluentAssert
 			_setup = setup;
 		}
 
-		[DebuggerNonUserCode]
 		public void Setup()
 		{
 			_setup(_actionContainer);
@@ -55,6 +56,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class ParameterActionWrapper<T, TContext> : IParameterActionWrapper
 	{
 		private readonly T _actionContainer;
@@ -68,7 +71,6 @@ namespace FluentAssert
 			_setup = setup;
 		}
 
-		[DebuggerNonUserCode]
 		public void Setup()
 		{
 			_setup(_actionContainer, _context);

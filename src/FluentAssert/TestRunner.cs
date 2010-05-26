@@ -5,9 +5,10 @@ using System.Text;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal static class TestRunner
 	{
-		[DebuggerNonUserCode]
 		public static void Verify(string actionDescription,
 		                          IEnumerable<IParameterActionWrapper> initializationsForActionParameters,
 		                          Action action,
@@ -38,7 +39,6 @@ namespace FluentAssert
 					throw;
 				}
 			}
-
 		}
 	}
 }

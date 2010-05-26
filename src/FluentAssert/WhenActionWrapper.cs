@@ -5,10 +5,12 @@ namespace FluentAssert
 {
 	internal interface IWhenActionWrapper
 	{
-		void Act();
 		string Description { get; }
+		void Act();
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class WhenActionWrapper : IWhenActionWrapper
 	{
 		private readonly Action _actionUnderTest;
@@ -18,7 +20,6 @@ namespace FluentAssert
 			_actionUnderTest = actionUnderTest;
 		}
 
-		[DebuggerNonUserCode]
 		public void Act()
 		{
 			_actionUnderTest();
@@ -30,6 +31,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class WhenActionWrapper<T> : IWhenActionWrapper
 	{
 		private readonly T _actionContainer;
@@ -41,7 +44,6 @@ namespace FluentAssert
 			_actionUnderTest = actionUnderTest;
 		}
 
-		[DebuggerNonUserCode]
 		public void Act()
 		{
 			_actionUnderTest(_actionContainer);
@@ -53,6 +55,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class WhenActionWrapper<T, TContext> : IWhenActionWrapper
 	{
 		private readonly T _actionContainer;
@@ -66,7 +70,6 @@ namespace FluentAssert
 			_actionUnderTest = actionUnderTest;
 		}
 
-		[DebuggerNonUserCode]
 		public void Act()
 		{
 			_actionUnderTest(_actionContainer, _context);

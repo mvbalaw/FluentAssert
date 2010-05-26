@@ -6,6 +6,8 @@ using NUnit.Framework;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestWhenStaticClause
 	{
 		private readonly Action _actionUnderTest;
@@ -20,28 +22,24 @@ namespace FluentAssert
 			_performAction = () => _actionUnderTest();
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause Should(Action assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper(assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			_performAction = () => Assert.Throws<TExceptionType>(() => _actionUnderTest());
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			_performAction = () => Assert.Throws<TExceptionType>(() => _actionUnderTest(), message);
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public void Verify()
 		{
 			TestRunner.Verify(ActionDescriptionBuilder.BuildFor(_actionUnderTest),
@@ -51,6 +49,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestWhenStaticClause<TContext>
 	{
 		private readonly IWhenActionWrapper _actionUnderTest;
@@ -67,7 +67,6 @@ namespace FluentAssert
 			_performAction = (TContext testContext) => _actionUnderTest.Act();
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause<TContext> Should<TBaseContext>(Action<TBaseContext> assertion) where TBaseContext : class
 		{
 			var baseContext = _context as TBaseContext;
@@ -80,35 +79,30 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause<TContext> Should(Action<TContext> assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper<TContext>(_context, assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause<TContext> Should(Action assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper(assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause<TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			_performAction = (TContext context) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenStaticClause<TContext> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			_performAction = (TContext context) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public void Verify()
 		{
 			TestRunner.Verify(_actionUnderTest.Description,

@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal static class ActionDescriptionBuilder
 	{
 		public static string BuildFor(MulticastDelegate action)
@@ -13,6 +16,8 @@ namespace FluentAssert
 			return new string(readable).TrimStart();
 		}
 
+		[DebuggerNonUserCode]
+		[DebuggerStepThrough]
 		private static IEnumerable<char> Cleanup(char c)
 		{
 			if (c == '_')

@@ -5,12 +5,12 @@ namespace FluentAssert
 {
 	internal interface IAssertionActionWrapper
 	{
-		[DebuggerNonUserCode]
-		void Verify();
-
 		string Description { get; }
+		void Verify();
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class AssertionActionWrapper : IAssertionActionWrapper
 	{
 		private readonly Action _assert;
@@ -20,7 +20,6 @@ namespace FluentAssert
 			_assert = assert;
 		}
 
-		[DebuggerStepThrough]
 		public void Verify()
 		{
 			_assert();
@@ -32,6 +31,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class AssertionActionWrapper<T> : IAssertionActionWrapper
 	{
 		private readonly T _actionContainer;
@@ -43,7 +44,6 @@ namespace FluentAssert
 			_assert = assert;
 		}
 
-		[DebuggerStepThrough]
 		public void Verify()
 		{
 			_assert(_actionContainer);
@@ -55,6 +55,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class AssertionActionWrapper<T, TContext> : IAssertionActionWrapper
 	{
 		private readonly T _actionContainer;
@@ -68,7 +70,6 @@ namespace FluentAssert
 			_assert = assert;
 		}
 
-		[DebuggerStepThrough]
 		public void Verify()
 		{
 			_assert(_actionContainer, _context);

@@ -3,21 +3,23 @@ using System.Diagnostics;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestGivenStaticClause
 	{
-		[DebuggerNonUserCode]
 		public TestWithStaticClause When(Action actionUnderTest)
 		{
 			return new TestWithStaticClause(actionUnderTest);
 		}
 
-		[DebuggerNonUserCode]
 		public TestGivenStaticClause<TContext> WithContext<TContext>(TContext context)
 		{
 			return new TestGivenStaticClause<TContext>(context);
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestGivenStaticClause<TContext>
 	{
 		private readonly TContext _context;
@@ -27,7 +29,6 @@ namespace FluentAssert
 			_context = context;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWithStaticClause<TContext> When(Action<TContext> actionUnderTest)
 		{
 			return new TestWithStaticClause<TContext>(new WhenActionWrapper<TContext>(_context, actionUnderTest), _context);

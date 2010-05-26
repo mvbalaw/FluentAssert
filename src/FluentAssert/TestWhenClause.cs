@@ -6,6 +6,8 @@ using NUnit.Framework;
 
 namespace FluentAssert
 {
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestWhenClause<T>
 	{
 		private readonly T _actionContainer;
@@ -23,35 +25,30 @@ namespace FluentAssert
 			_performAction = (T item) => _actionUnderTest.Act();
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> Should(Action assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper(assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> Should(Action<T> assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper<T>(_actionContainer, assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public void Verify()
 		{
 			TestRunner.Verify(_actionUnderTest.Description,
@@ -61,6 +58,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class TestWhenClause<T, TContext>
 	{
 		private readonly T _actionContainer;
@@ -80,7 +79,6 @@ namespace FluentAssert
 			_performAction = (T item, TContext testContext) => _actionUnderTest.Act();
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should<TBaseContext>(Action<T, TBaseContext> assertion) where TBaseContext : class
 		{
 			var baseContext = _context as TBaseContext;
@@ -94,42 +92,36 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action<T, TContext> assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper<T, TContext>(_actionContainer, _context, assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action<TContext> assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper<TContext>(_context, assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action<T> assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper<T>(_actionContainer, assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> Should(Action assertion)
 		{
 			_assertions.Add(new AssertionActionWrapper(assertion));
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public TestWhenClause<T, TContext> ShouldThrowException<TExceptionType>(string message)
 			where TExceptionType : Exception
 		{
@@ -138,7 +130,6 @@ namespace FluentAssert
 			return this;
 		}
 
-		[DebuggerNonUserCode]
 		public void Verify()
 		{
 			TestRunner.Verify(_actionUnderTest.Description,
