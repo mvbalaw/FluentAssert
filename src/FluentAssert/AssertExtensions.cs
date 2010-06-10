@@ -121,6 +121,12 @@ namespace FluentAssert
 			return item;
 		}
 
+		public static T ShouldBeSameInstanceAs<T>(this T item, T other)
+		{
+			ReferenceEquals(item, other).ShouldBeTrue();
+			return item;
+		}
+
 		public static void ShouldBeTrue(this bool item)
 		{
 			Assert.IsTrue(item);
@@ -208,6 +214,12 @@ namespace FluentAssert
 		{
 			Assert.IsNotNull(item, message);
 			Assert.IsNotEmpty(item, message);
+			return item;
+		}
+
+		public static T ShouldNotBeSameInstanceAs<T>(this T item, T other)
+		{
+			ReferenceEquals(item, other).ShouldBeFalse();
 			return item;
 		}
 
