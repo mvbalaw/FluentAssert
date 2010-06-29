@@ -14,16 +14,16 @@ namespace FluentAssert
 			_actionContainerSource = actionContainerSource;
 		}
 
-		public TestWithClause<T> When(Action<T> actionUnderTest)
+		public TestWhenClause<T> When(Action<T> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer();
-			return new TestWithClause<T>(actionContainer, new WhenActionWrapper<T>(actionContainer, actionUnderTest));
+			return new TestWhenClause<T>(actionContainer, new WhenActionWrapper<T>(actionContainer, actionUnderTest));
 		}
 
-		public TestWithClause<T> When(Action actionUnderTest)
+		public TestWhenClause<T> When(Action actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer();
-			return new TestWithClause<T>(actionContainer, new WhenActionWrapper(actionUnderTest));
+			return new TestWhenClause<T>(actionContainer, new WhenActionWrapper(actionUnderTest));
 		}
 
 		public TestGivenClause<T, TContext> WithContext<TContext>(TContext context)
@@ -49,26 +49,26 @@ namespace FluentAssert
 			_context = context;
 		}
 
-		public TestWithClause<T, TContext> When(Action<T, TContext> actionUnderTest)
+		public TestWhenClause<T, TContext> When(Action<T, TContext> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
-			return new TestWithClause<T, TContext>(actionContainer,
+			return new TestWhenClause<T, TContext>(actionContainer,
 			                                       new WhenActionWrapper<T, TContext>(actionContainer, _context, actionUnderTest),
 			                                       _context);
 		}
 
-		public TestWithClause<T, TContext> When(Action<T> actionUnderTest)
+		public TestWhenClause<T, TContext> When(Action<T> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
-			return new TestWithClause<T, TContext>(actionContainer,
+			return new TestWhenClause<T, TContext>(actionContainer,
 			                                       new WhenActionWrapper<T>(actionContainer, actionUnderTest),
 			                                       _context);
 		}
 
-		public TestWithClause<T, TContext> When(Action actionUnderTest)
+		public TestWhenClause<T, TContext> When(Action actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
-			return new TestWithClause<T, TContext>(actionContainer,
+			return new TestWhenClause<T, TContext>(actionContainer,
 			                                       new WhenActionWrapper(actionUnderTest),
 			                                       _context);
 		}

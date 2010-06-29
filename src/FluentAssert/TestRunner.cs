@@ -35,19 +35,29 @@ namespace FluentAssert
 		}
 
 		public static void Verify(string actionDescription,
-		                          IEnumerable<IParameterActionWrapper> initializationsForActionParameters,
+		                          IEnumerable<IParameterActionWrapper> parameterActions,
 		                          Action action,
+		                          IEnumerable<IDependencyActionWrapper> dependencyActions,
 		                          IEnumerable<IAssertionActionWrapper> assertions)
 		{
-			var steps = initializationsForActionParameters
-				.Select((arrange,i) => new TestStep
+			var steps = parameterActions
+				.Select(arrange => new TestStep
 					{
-						Description = string.Format("STEP {0}: {1}", (1+i), arrange.Description),
+						Description = "WITH " + arrange.Description,
 						Action = arrange.Setup,
 						FailureSuffix = " - FAILED",
 						SuccessSuffix = ""
 					})
 				.ToList();
+
+			steps.AddRange(
+				dependencyActions.Select(assertion => new TestStep
+				{
+					Description = "EXPECT " +assertion.Description,
+					Action = assertion.Verify,
+					FailureSuffix = " - FAILED",
+					SuccessSuffix = ""
+				}));
 
 			steps.Add(new TestStep
 				{

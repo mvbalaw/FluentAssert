@@ -7,9 +7,9 @@ namespace FluentAssert
 	[DebuggerStepThrough]
 	public class TestGivenStaticClause
 	{
-		public TestWithStaticClause When(Action actionUnderTest)
+		public TestWhenStaticClause When(Action actionUnderTest)
 		{
-			return new TestWithStaticClause(actionUnderTest);
+			return new TestWhenStaticClause(actionUnderTest);
 		}
 
 		public TestGivenStaticClause<TContext> WithContext<TContext>(TContext context)
@@ -29,9 +29,9 @@ namespace FluentAssert
 			_context = context;
 		}
 
-		public TestWithStaticClause<TContext> When(Action<TContext> actionUnderTest)
+		public TestWhenStaticClause<TContext> When(Action<TContext> actionUnderTest)
 		{
-			return new TestWithStaticClause<TContext>(new WhenActionWrapper<TContext>(_context, actionUnderTest), _context);
+			return new TestWhenStaticClause<TContext>(new WhenActionWrapper<TContext>(_context, actionUnderTest), _context);
 		}
 	}
 }

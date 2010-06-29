@@ -42,7 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionDescriptionBuilder.cs" />
+    <Compile Include="DependencyActionWrapper.cs" />
+    <Compile Include="TestExpectClause.cs" />
+    <Compile Include="TestExpectStaticClause.cs" />
     <Compile Include="TestRunner.cs" />
+    <Compile Include="TestShouldClause.cs" />
+    <Compile Include="TestShouldStaticClause.cs" />
     <Compile Include="WhenActionWrapper.cs" />
     <Compile Include="ActionContainerSource.cs" />
     <Compile Include="AssertExtensions.cs" />
@@ -55,8 +60,6 @@
     <Compile Include="TestGivenStaticClause.cs" />
     <Compile Include="TestWhenClause.cs" />
     <Compile Include="TestWhenStaticClause.cs" />
-    <Compile Include="TestWithClause.cs" />
-    <Compile Include="TestWithStaticClause.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

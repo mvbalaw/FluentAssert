@@ -6,74 +6,79 @@ namespace FluentAssert
 {
 	[DebuggerNonUserCode]
 	[DebuggerStepThrough]
-	public class TestWhenStaticClause
+	public class TestExpectStaticClause
 	{
 		private readonly Action _actionUnderTest;
-		private readonly IList<IParameterActionWrapper> _parameterActions = new List<IParameterActionWrapper>();
+		private readonly IList<IDependencyActionWrapper> _dependencyActions = new List<IDependencyActionWrapper>();
+		private readonly IEnumerable<IParameterActionWrapper> _parameterActions;
 
-		internal TestWhenStaticClause(Action actionUnderTest)
+		internal TestExpectStaticClause(Action actionUnderTest,
+		                                IEnumerable<IParameterActionWrapper> parameterActions)
 		{
 			_actionUnderTest = actionUnderTest;
+			_parameterActions = parameterActions;
 		}
 
 		public TestExpectStaticClause Expect(Action dependencyAction)
 		{
-			return new TestExpectStaticClause(_actionUnderTest, _parameterActions)
-				.Expect(dependencyAction);
+			_dependencyActions.Add(new DependencyActionWrapper(dependencyAction));
+			return this;
 		}
 
 		public TestShouldStaticClause Should(Action assertion)
 		{
 			return new TestShouldStaticClause(_actionUnderTest,
-			                                  _parameterActions)
+			                                  _parameterActions,
+			                                  _dependencyActions)
 				.Should(assertion);
 		}
 
 		public TestShouldStaticClause ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestShouldStaticClause(_actionUnderTest,
-			                                  _parameterActions)
+			                                  _parameterActions,
+			                                  _dependencyActions)
 				.ShouldThrowException<TExceptionType>();
 		}
 
 		public TestShouldStaticClause ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			return new TestShouldStaticClause(_actionUnderTest,
-			                                  _parameterActions)
+			                                  _parameterActions,
+			                                  _dependencyActions)
 				.ShouldThrowException<TExceptionType>(message);
-		}
-
-		public TestWhenStaticClause With(Action parameterAction)
-		{
-			_parameterActions.Add(new ParameterActionWrapper(parameterAction));
-			return this;
 		}
 	}
 
 	[DebuggerNonUserCode]
 	[DebuggerStepThrough]
-	public class TestWhenStaticClause<TContext>
+	public class TestExpectStaticClause<TContext>
 	{
 		private readonly IWhenActionWrapper _actionUnderTest;
 		private readonly TContext _context;
-		private readonly IList<IParameterActionWrapper> _parameterActions = new List<IParameterActionWrapper>();
+		private readonly IList<IDependencyActionWrapper> _dependencyActions = new List<IDependencyActionWrapper>();
+		private readonly IEnumerable<IParameterActionWrapper> _parameterActions;
 
-		internal TestWhenStaticClause(IWhenActionWrapper actionUnderTest, TContext context)
+		internal TestExpectStaticClause(IWhenActionWrapper actionUnderTest,
+		                                IEnumerable<IParameterActionWrapper> parameterActions,
+		                                TContext context)
 		{
 			_actionUnderTest = actionUnderTest;
+			_parameterActions = parameterActions;
 			_context = context;
 		}
 
 		public TestExpectStaticClause<TContext> Expect(Action dependencyAction)
 		{
-			return new TestExpectStaticClause<TContext>(_actionUnderTest, _parameterActions, _context)
-				.Expect(dependencyAction);
+			_dependencyActions.Add(new DependencyActionWrapper(dependencyAction));
+			return this;
 		}
 
 		public TestShouldStaticClause<TContext> Should<TBaseContext>(Action<TBaseContext> assertion) where TBaseContext : class
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
 			                                            _parameterActions,
+			                                            _dependencyActions,
 			                                            _context)
 				.Should(assertion);
 		}
@@ -82,6 +87,7 @@ namespace FluentAssert
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
 			                                            _parameterActions,
+			                                            _dependencyActions,
 			                                            _context)
 				.Should(assertion);
 		}
@@ -90,6 +96,7 @@ namespace FluentAssert
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
 			                                            _parameterActions,
+			                                            _dependencyActions,
 			                                            _context)
 				.Should(assertion);
 		}
@@ -98,6 +105,7 @@ namespace FluentAssert
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
 			                                            _parameterActions,
+			                                            _dependencyActions,
 			                                            _context)
 				.ShouldThrowException<TExceptionType>();
 		}
@@ -106,20 +114,9 @@ namespace FluentAssert
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
 			                                            _parameterActions,
+			                                            _dependencyActions,
 			                                            _context)
 				.ShouldThrowException<TExceptionType>(message);
-		}
-
-		public TestWhenStaticClause<TContext> With(Action<TContext> parameterAction)
-		{
-			_parameterActions.Add(new ParameterActionWrapper<TContext>(_context, parameterAction));
-			return this;
-		}
-
-		public TestWhenStaticClause<TContext> With(Action parameterAction)
-		{
-			_parameterActions.Add(new ParameterActionWrapper(parameterAction));
-			return this;
 		}
 	}
 }

@@ -26,6 +26,8 @@ This project also provides a simple BDD framework that lets you write tests that
         .Should(Populate_the_id_property_of_the_person)
         .Verify();
 
+![BDD DSL Flow][flow]
+		
 ## License		
 
 [MIT License][mitlicense]
@@ -34,3 +36,4 @@ This project is part of [MVBA Law Commons][mvbalawcommons].
 
 [mvbalawcommons]: http://code.google.com/p/mvbalaw-commons/
 [mitlicense]: http://www.opensource.org/licenses/mit-license.php
+[flow]: /mvba/FluentAssert/raw/master/bdd_dsl_flow.png  "BDD DSL Flow"
