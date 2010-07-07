@@ -48,6 +48,8 @@
     <Compile Include="TestRunner.cs" />
     <Compile Include="TestShouldClause.cs" />
     <Compile Include="TestShouldStaticClause.cs" />
+    <Compile Include="TestStep.cs" />
+    <Compile Include="TestVerifyClause.cs" />
     <Compile Include="WhenActionWrapper.cs" />
     <Compile Include="ActionContainerSource.cs" />
     <Compile Include="AssertExtensions.cs" />

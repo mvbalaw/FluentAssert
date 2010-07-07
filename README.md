@@ -14,18 +14,25 @@ instead of
 This project also provides a simple BDD framework that lets you write tests that can be easily understood and verified by non-developers:
 
     Test.Given(_personRepository)
-        .When(Save_is_called)
-		.With(A_person_without_a_first_name)
-        .Should(Not_populate_the_id_property_of_the_person)
+        .When(save_is_called)
+		.With(a_person_without_a_first_name)
+        .Should(not_populate_the_id_property_of_the_person)
         .Verify();
 
     Test.Given(_personRepository)
-        .When(Save_is_called)
-		.With(A_valid_person)
-        .Should(Save_the_person_data_in_the_database)
-        .Should(Populate_the_id_property_of_the_person)
+        .When(save_is_called)
+		.With(a_valid_person)
+        .Should(save_the_person_data_in_the_database)
+        .Should(populate_the_id_property_of_the_person)
         .Verify();
 
+    Test.Verify(
+        when_save_is_called,
+		with_a_valid_person,
+        should_save_the_person_data_in_the_database,
+        should_populate_the_id_property_of_the_person
+        );
+		
 ![BDD DSL Flow][flow]
 		
 ## License		

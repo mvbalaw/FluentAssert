@@ -6,19 +6,11 @@ using System.Text;
 
 namespace FluentAssert
 {
-	internal class TestStep
-	{
-		public Action Action;
-		public string Description;
-		public string FailureSuffix;
-		public string SuccessSuffix;
-	}
-
 	[DebuggerNonUserCode]
 	[DebuggerStepThrough]
-	internal static class TestRunner
+	internal class TestStepExecutor
 	{
-		private static void DoStep(StringBuilder scenarioDescription, TestStep testStep)
+		public static void Verify(StringBuilder scenarioDescription, ITestStep testStep)
 		{
 			scenarioDescription.Append(testStep.Description);
 			try
@@ -33,7 +25,12 @@ namespace FluentAssert
 				throw;
 			}
 		}
+	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
+	internal static class TestRunner
+	{
 		public static void Verify(string actionDescription,
 		                          IEnumerable<IParameterActionWrapper> parameterActions,
 		                          Action action,
@@ -41,43 +38,24 @@ namespace FluentAssert
 		                          IEnumerable<IAssertionActionWrapper> assertions)
 		{
 			var steps = parameterActions
-				.Select(arrange => new TestStep
-					{
-						Description = "WITH " + arrange.Description,
-						Action = arrange.Setup,
-						FailureSuffix = " - FAILED",
-						SuccessSuffix = ""
-					})
+				.Select(arrange => new WithTestStep(arrange.Setup, arrange.Description))
+				.Cast<ITestStep>()
 				.ToList();
 
 			steps.AddRange(
-				dependencyActions.Select(assertion => new TestStep
-				{
-					Description = "EXPECT " +assertion.Description,
-					Action = assertion.Verify,
-					FailureSuffix = " - FAILED",
-					SuccessSuffix = ""
-				}));
+				dependencyActions
+					.Select(assertion => new ExpectTestStep(assertion.Verify, assertion.Description))
+					.Cast<ITestStep>()
+				);
 
-			steps.Add(new TestStep
-				{
-					Description = "WHEN " + actionDescription,
-					Action = action,
-					FailureSuffix = " - FAILED",
-					SuccessSuffix = ""
-				});
+			steps.Add(new WhenTestStep(action, actionDescription));
 
 			steps.AddRange(
-				assertions.Select(assertion => new TestStep
-					{
-						Description = "SHOULD " + assertion.Description,
-						Action = assertion.Verify,
-						FailureSuffix = " - FAILED",
-						SuccessSuffix = " - PASSED"
-					}));
+				assertions.Select(assertion => new ShouldTestStep(assertion.Verify, assertion.Description))
+					.Cast<ITestStep>()
+				);
 
-			var scenarioDescription = new StringBuilder();
-			steps.ForEach(x => DoStep(scenarioDescription, x));
+			new TestVerifyClause().Verify(steps);
 		}
 	}
 }

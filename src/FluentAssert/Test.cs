@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace FluentAssert
@@ -22,6 +23,11 @@ namespace FluentAssert
 		public static TestGivenStaticClause Static()
 		{
 			return new TestGivenStaticClause();
+		}
+
+		public static void Verify(params Action[] actions)
+		{
+			new TestVerifyClause().Verify(actions);
 		}
 	}
 }
