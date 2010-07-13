@@ -14,8 +14,8 @@ namespace FluentAssert
 		{
 			string name = action.Method.Name;
 			return BuildFor(name);
-		}	
-		
+		}
+
 		public static string BuildFor(MulticastDelegate action, string prefixToExclude)
 		{
 			string name = action.Method.Name;

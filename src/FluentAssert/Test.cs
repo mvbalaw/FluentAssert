@@ -29,5 +29,17 @@ namespace FluentAssert
 		{
 			new TestVerifyClause().Verify(actions);
 		}
+
+		public static void VerifyThrowsException<TExceptionType>(params Action[] actions)
+			where TExceptionType : Exception
+		{
+			new TestVerifyClause(typeof(TExceptionType)).Verify(actions);
+		}
+
+		public static void VerifyThrowsException<TExceptionType>(string expectedExceptionMessage, params Action[] actions)
+			where TExceptionType : Exception
+		{
+			new TestVerifyClause(typeof(TExceptionType), expectedExceptionMessage).Verify(actions);
+		}
 	}
 }

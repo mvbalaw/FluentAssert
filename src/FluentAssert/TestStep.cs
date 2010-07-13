@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace FluentAssert
@@ -35,6 +36,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class WithTestStep : TestStep, ITestStepCreator
 	{
 		private const string ActionTypeDescription = "WITH";
@@ -68,6 +71,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class ExpectTestStep : TestStep, ITestStepCreator
 	{
 		private const string ActionTypeDescription = "EXPECT";
@@ -78,7 +83,7 @@ namespace FluentAssert
 		}
 
 		public ExpectTestStep(Action action, string description)
-			:this()
+			: this()
 		{
 			Description = description;
 			Action = action;
@@ -101,6 +106,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class WhenTestStep : TestStep, ITestStepCreator
 	{
 		private const string ActionTypeDescription = "WHEN";
@@ -111,7 +118,7 @@ namespace FluentAssert
 		}
 
 		public WhenTestStep(Action action, string description)
-			:this()
+			: this()
 		{
 			Description = description;
 			Action = action;
@@ -134,6 +141,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class ShouldTestStep : TestStep, ITestStepCreator
 	{
 		private const string ActionTypeDescription = "SHOULD";
@@ -144,7 +153,7 @@ namespace FluentAssert
 		}
 
 		public ShouldTestStep(Action action, string description)
-			:this()
+			: this()
 		{
 			Description = description;
 			Action = action;
@@ -167,6 +176,8 @@ namespace FluentAssert
 		}
 	}
 
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	internal class DefaultTestStep : TestStep, ITestStepCreator
 	{
 		public DefaultTestStep(Action action)
