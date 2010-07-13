@@ -12,30 +12,16 @@ namespace FluentAssert
 	[DebuggerStepThrough]
 	public class TestVerifyClause
 	{
-		private readonly bool _expectException;
-		private readonly bool _expectExceptionMessage;
-		private readonly string _expectedExceptionMessage;
-		private readonly Type _expectedExceptionType;
+		private readonly ExceptionConfiguration _exceptionConfiguration;
 
 		public TestVerifyClause()
+			: this(new ExceptionConfiguration())
 		{
-			_expectException = false;
-			_expectExceptionMessage = false;
 		}
 
-		internal TestVerifyClause(Type expectedExceptionType)
+		public TestVerifyClause(ExceptionConfiguration exceptionConfiguration)
 		{
-			_expectException = true;
-			_expectExceptionMessage = false;
-			_expectedExceptionType = expectedExceptionType;
-		}
-
-		internal TestVerifyClause(Type expectedExceptionType, string expectedExceptionMessage)
-		{
-			_expectException = true;
-			_expectExceptionMessage = true;
-			_expectedExceptionType = expectedExceptionType;
-			_expectedExceptionMessage = expectedExceptionMessage;
+			_exceptionConfiguration = exceptionConfiguration;
 		}
 
 		private static ITestStep TestStepCreator(IEnumerable<ITestStepCreator> testStepCreators, Action x)
@@ -49,41 +35,25 @@ namespace FluentAssert
 			var testStepCreators = new ITestStepCreator[] { new WithTestStep(), new WhenTestStep(), new ExpectTestStep(), new ShouldTestStep(), new DefaultTestStep() };
 			var steps = actions.Select(x => TestStepCreator(testStepCreators, x)).ToList();
 
-			try
-			{
-				Verify(steps);
-			}
-			catch (Exception e)
-			{
-				if (!_expectException)
-				{
-					throw;
-				}
-				var exceptionType = e.GetType();
-				if (exceptionType != _expectedExceptionType)
-				{
-					throw new AssertionException(String.Format("Expected exception of type {0} but caught type {1}",
-					                                           _expectedExceptionType,
-					                                           exceptionType),
-					                             e);
-				}
-				if (_expectExceptionMessage)
-				{
-					if (e.Message != _expectedExceptionMessage)
-					{
-						throw new AssertionException(String.Format("Expected exception message '{0}' but had '{1}'",
-						                                           _expectedExceptionMessage,
-						                                           e.Message),
-						                             e);
-					}
-				}
-			}
+			Verify(steps, _exceptionConfiguration);
 		}
 
 		internal void Verify(List<ITestStep> steps)
 		{
+			Verify(steps, new ExceptionConfiguration());
+		}
+
+		private void Verify(List<ITestStep> steps, ExceptionConfiguration exceptionConfiguration)
+		{
 			var scenarioDescription = new StringBuilder();
-			steps.ForEach(x => TestStepExecutor.Verify(scenarioDescription, x));
+			steps.ForEach(x => TestStepExecutor.Verify(scenarioDescription, x, exceptionConfiguration));
+			if (_exceptionConfiguration.ExpectException)
+			{
+				Console.Error.WriteLine(scenarioDescription.ToString());
+
+				throw new AssertionException(String.Format("Expected exception of type {0} was not thrown.",
+				                                           _exceptionConfiguration.ExpectedExceptionType));
+			}
 		}
 	}
 }

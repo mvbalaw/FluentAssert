@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="ActionDescriptionBuilder.cs" />
     <Compile Include="DependencyActionWrapper.cs" />
+    <Compile Include="ExceptionConfiguration.cs" />
     <Compile Include="TestExpectClause.cs" />
     <Compile Include="TestExpectStaticClause.cs" />
     <Compile Include="TestRunner.cs" />
