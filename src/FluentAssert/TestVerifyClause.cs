@@ -51,7 +51,7 @@ namespace FluentAssert
 			{
 				Console.Error.WriteLine(scenarioDescription.ToString());
 
-				throw new AssertionException(String.Format("Expected exception of type {0} was not thrown.",
+				throw new NUnit.Framework.AssertionException(String.Format("Expected exception of type {0} was not thrown.",
 				                                           _exceptionConfiguration.ExpectedExceptionType));
 			}
 		}

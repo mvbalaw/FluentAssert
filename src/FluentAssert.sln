@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssert", "FluentAssert\FluentAssert.csproj", "{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssert.Tests", "FluentAssert.Tests\FluentAssert.Tests.csproj", "{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

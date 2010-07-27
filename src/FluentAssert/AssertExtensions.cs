@@ -33,7 +33,31 @@ namespace FluentAssert
 
 		public static T ShouldBeEqualTo<T>(this T item, T expected)
 		{
-			Assert.AreEqual(expected, item);
+			bool itemIsNull = (object)item == null;
+			bool expectedIsNull = (object)expected == null;
+			if (itemIsNull && expectedIsNull)
+			{
+				return item;
+			}
+			if (ReferenceEquals(item, expected))
+			{
+				return item;
+			}
+			if (typeof(T) != typeof(string))
+			{
+				Assert.AreEqual(expected, item);
+			}
+
+			if (itemIsNull || expectedIsNull)
+			{
+				throw new NotEqualException(item, expected);
+			}
+
+			if (!item.Equals(expected))
+			{
+				throw new NotEqualException(item, expected);
+			}
+
 			return item;
 		}
 
@@ -261,7 +285,7 @@ namespace FluentAssert
 				}
 				return exception;
 			}
-			throw new AssertionException(String.Format("Should have thrown {0}.", typeof(T).Name));
+			throw new NUnit.Framework.AssertionException(String.Format("Should have thrown {0}.", typeof(T).Name));
 		}
 
 		[Obsolete("use item.ShouldThrow<TExceptionType>(x=>x.Method(args), \"Message\")")]

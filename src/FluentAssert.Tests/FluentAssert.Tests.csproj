@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}</ProjectGuid>
+    <ProjectGuid>{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FluentAssert</RootNamespace>
-    <AssemblyName>FluentAssert</AssemblyName>
+    <RootNamespace>FluentAssert.Tests</RootNamespace>
+    <AssemblyName>FluentAssert.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,32 +39,24 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionDescriptionBuilder.cs" />
-    <Compile Include="AssertionException.cs" />
-    <Compile Include="DependencyActionWrapper.cs" />
-    <Compile Include="ExceptionConfiguration.cs" />
-    <Compile Include="NotEqualException.cs" />
-    <Compile Include="TestExpectClause.cs" />
-    <Compile Include="TestExpectStaticClause.cs" />
-    <Compile Include="TestRunner.cs" />
-    <Compile Include="TestShouldClause.cs" />
-    <Compile Include="TestShouldStaticClause.cs" />
-    <Compile Include="TestStep.cs" />
-    <Compile Include="TestVerifyClause.cs" />
-    <Compile Include="WhenActionWrapper.cs" />
-    <Compile Include="ActionContainerSource.cs" />
-    <Compile Include="AssertExtensions.cs" />
-    <Compile Include="AssertionActionWrapper.cs" />
-    <Compile Include="ParameterActionWrapper.cs" />
+    <Compile Include="AssertExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="TestGivenClause.cs" />
-    <Compile Include="TestGivenClauseWithoutActionContainerSource.cs" />
-    <Compile Include="TestGivenStaticClause.cs" />
-    <Compile Include="TestWhenClause.cs" />
-    <Compile Include="TestWhenStaticClause.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FluentAssert\FluentAssert.csproj">
+      <Project>{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}</Project>
+      <Name>FluentAssert</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
