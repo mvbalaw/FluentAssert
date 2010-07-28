@@ -33,44 +33,51 @@ namespace FluentAssert
 
 		public static T ShouldBeEqualTo<T>(this T item, T expected)
 		{
-			bool itemIsNull = (object)item == null;
-			bool expectedIsNull = (object)expected == null;
-			if (itemIsNull && expectedIsNull)
-			{
-				return item;
-			}
-			if (ReferenceEquals(item, expected))
-			{
-				return item;
-			}
-			if (typeof(T) != typeof(string))
-			{
-				Assert.AreEqual(expected, item);
-			}
-
-			if (itemIsNull || expectedIsNull)
-			{
-				throw new NotEqualException(item, expected);
-			}
-
-			if (!item.Equals(expected))
-			{
-				throw new NotEqualException(item, expected);
-			}
-
-			return item;
+			return ShouldBeEqualTo(item, expected, () => NotEqualException.CreateMessage(item, expected));
 		}
 
 		public static T? ShouldBeEqualTo<T>(this T? item, T? expected) where T : struct
 		{
-			Assert.AreEqual(expected, item);
-			return item;
+			return ShouldBeEqualTo(item, expected, () => NotEqualException.CreateMessage(item, expected));
 		}
 
 		public static T ShouldBeEqualTo<T>(this T item, T expected, string errorMessage)
 		{
-			Assert.AreEqual(expected, item, errorMessage);
+			return ShouldBeEqualTo(item, expected, () => errorMessage);
+		}
+
+		public static T ShouldBeEqualTo<T>(this T item, T expected, Func<string> getErrorMessage)
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			if (ReferenceEquals(item, expected))
+			{
+				return item;
+			}
+
+			bool itemIsNull = IsNull(item);
+			bool expectedIsNull = IsNull(expected);
+
+			if (itemIsNull && expectedIsNull)
+			{
+				return item;
+			}
+
+			if (itemIsNull || expectedIsNull || !item.Equals(expected))
+			{
+				throw new NotEqualException(getErrorMessage());
+			}
+
 			return item;
+		}
+
+		private static bool IsNull<T>(T expected)
+		{
+			object objectExpected = expected;
+			return objectExpected == null;
 		}
 
 		public static void ShouldBeFalse(this bool item)
