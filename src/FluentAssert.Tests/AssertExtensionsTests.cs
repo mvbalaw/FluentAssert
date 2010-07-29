@@ -9,6 +9,303 @@ namespace FluentAssert.Tests
 	public class AssertExtensionsTests
 	{
 		[TestFixture]
+		public class When_asserting_that_a_nullable_integer_should_not_be_null
+		{
+			private Exception _exception;
+			private int? _input;
+			private int? _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_null_input,
+					when_asserting_that_the_nullable_integer_is_not_null,
+					should_return_the_input,
+					should_not_throw_an_exception
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_null()
+			{
+				Test.Verify(
+					with_a_null_input,
+					when_asserting_that_the_nullable_integer_is_not_null,
+					should_throw_a_ShouldNotBeNullAssertionException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldNotBeNullAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_nullable_integer_is_not_null()
+			{
+				try
+				{
+					_result = _input.ShouldNotBeNull();
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_non_null_input()
+			{
+				_input = 6;
+			}
+
+			private void with_a_null_input()
+			{
+				_input = null;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_a_nullable_integer_should_not_be_null_with_a_specific_error_message
+		{
+			private const string ExpectedErrorMessage = "Hello world";
+
+			private Exception _exception;
+			private int? _input;
+			private int? _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_null_input,
+					when_asserting_that_the_nullable_integer_is_not_null_with_a_specific_error_message,
+					should_return_the_input,
+					should_not_throw_an_exception
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_null()
+			{
+				Test.Verify(
+					with_a_null_input,
+					when_asserting_that_the_nullable_integer_is_not_null_with_a_specific_error_message,
+					should_throw_a_ShouldNotBeNullAssertionException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldNotBeNullAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_nullable_integer_is_not_null_with_a_specific_error_message()
+			{
+				try
+				{
+					_result = _input.ShouldNotBeNull(ExpectedErrorMessage);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_non_null_input()
+			{
+				_input = 6;
+			}
+
+			private void with_a_null_input()
+			{
+				_input = null;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_a_string_should_not_be_null
+		{
+			private Exception _exception;
+			private string _input;
+			private string _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_null_input,
+					when_asserting_that_the_string_is_not_null,
+					should_return_the_input,
+					should_not_throw_an_exception
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_null()
+			{
+				Test.Verify(
+					with_a_null_input,
+					when_asserting_that_the_string_is_not_null,
+					should_throw_a_ShouldNotBeNullAssertionException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreSame(_input, _result);
+				_exception.ShouldBeNull("should not throw an exception");
+			}
+
+			private void should_throw_a_ShouldNotBeNullAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_string_is_not_null()
+			{
+				try
+				{
+					_result = _input.ShouldNotBeNull();
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_non_null_input()
+			{
+				_input = "Hello";
+			}
+
+			private void with_a_null_input()
+			{
+				_input = null;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_a_string_should_not_be_null_with_a_specific_error_message
+		{
+			private const string ExpectedErrorMessage = "Hello world";
+			private Exception _exception;
+			private string _input;
+			private string _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_null_input,
+					when_asserting_that_the_string_is_not_null_with_a_specific_error_message,
+					should_return_the_input,
+					should_not_throw_an_exception
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_null()
+			{
+				Test.Verify(
+					with_a_null_input,
+					when_asserting_that_the_string_is_not_null_with_a_specific_error_message,
+					should_throw_a_ShouldNotBeNullAssertionException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreSame(_input, _result);
+				_exception.ShouldBeNull("should not throw an exception");
+			}
+
+			private void should_throw_a_ShouldNotBeNullAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_string_is_not_null_with_a_specific_error_message()
+			{
+				try
+				{
+					_result = _input.ShouldNotBeNull(ExpectedErrorMessage);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_non_null_input()
+			{
+				_input = "Hello";
+			}
+
+			private void with_a_null_input()
+			{
+				_input = null;
+			}
+		}
+
+		[TestFixture]
 		public class When_asserting_that_two_Types_should_be_equal
 		{
 			private Exception _exception;
@@ -41,7 +338,7 @@ namespace FluentAssert.Tests
 					with_a_non_null_input_Type,
 					with_a_non_matching_expected_Type,
 					when_asserting_that_Types_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -74,7 +371,7 @@ namespace FluentAssert.Tests
 					with_a_non_null_input_Type,
 					with_a_null_expected_Type,
 					when_asserting_that_Types_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -85,7 +382,7 @@ namespace FluentAssert.Tests
 					with_a_null_input_Type,
 					with_a_non_null_expected_Type,
 					when_asserting_that_Types_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -94,7 +391,7 @@ namespace FluentAssert.Tests
 				Assert.AreSame(_input, _result);
 			}
 
-			private void should_throw_a_NotEqualException()
+			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
@@ -191,7 +488,7 @@ namespace FluentAssert.Tests
 					with_a_non_default_input_integer,
 					with_a_non_matching_expected_integer,
 					when_asserting_that_integers_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -200,7 +497,7 @@ namespace FluentAssert.Tests
 				Assert.AreEqual(_input, _result);
 			}
 
-			private void should_throw_a_NotEqualException()
+			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
@@ -271,7 +568,7 @@ namespace FluentAssert.Tests
 					with_a_non_null_input_nullable_integer,
 					with_a_non_matching_expected_nullable_integer,
 					when_asserting_that_nullable_integers_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -304,7 +601,7 @@ namespace FluentAssert.Tests
 					with_a_non_null_input_nullable_integer,
 					with_a_null_expected_nullable_integer,
 					when_asserting_that_nullable_integers_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -315,7 +612,7 @@ namespace FluentAssert.Tests
 					with_a_null_input_nullable_integer,
 					with_a_non_null_expected_nullable_integer,
 					when_asserting_that_nullable_integers_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -324,7 +621,7 @@ namespace FluentAssert.Tests
 				Assert.AreEqual(_input, _result);
 			}
 
-			private void should_throw_a_NotEqualException()
+			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
@@ -410,7 +707,7 @@ namespace FluentAssert.Tests
 					with_a_non_null_input_string,
 					with_a_non_matching_expected_string,
 					when_asserting_that_strings_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -443,7 +740,7 @@ namespace FluentAssert.Tests
 					with_a_non_null_input_string,
 					with_a_null_expected_string,
 					when_asserting_that_strings_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -454,7 +751,7 @@ namespace FluentAssert.Tests
 					with_a_null_input_string,
 					with_a_non_null_expected_string,
 					when_asserting_that_strings_are_equal,
-					should_throw_a_NotEqualException
+					should_throw_a_ShouldBeEqualAssertionException
 					);
 			}
 
@@ -463,7 +760,7 @@ namespace FluentAssert.Tests
 				Assert.AreSame(_input, _result);
 			}
 
-			private void should_throw_a_NotEqualException()
+			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
@@ -565,7 +862,7 @@ namespace FluentAssert.Tests
 					with_a_non_matching_expected_item,
 					with_a_non_null_Func_to_get_the_error_message,
 					when_asserting_that_items_are_equal,
-					should_throw_a_NotEqualException,
+					should_throw_a_ShouldBeEqualAssertionException,
 					should_get_the_expected_message
 					);
 			}
@@ -592,7 +889,7 @@ namespace FluentAssert.Tests
 				Assert.AreEqual(_input, _result);
 			}
 
-			private void should_throw_a_NotEqualException()
+			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
@@ -674,7 +971,7 @@ namespace FluentAssert.Tests
 					with_a_non_default_input_item,
 					with_a_non_matching_expected_item,
 					when_asserting_that_items_are_equal_with_a_specific_error_message,
-					should_throw_a_NotEqualException,
+					should_throw_a_ShouldBeEqualAssertionException,
 					should_get_the_expected_message
 					);
 			}
@@ -689,7 +986,7 @@ namespace FluentAssert.Tests
 				Assert.AreEqual(_input, _result);
 			}
 
-			private void should_throw_a_NotEqualException()
+			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}

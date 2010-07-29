@@ -13,6 +13,12 @@ namespace FluentAssert
 	[DebuggerStepThrough]
 	public static class AssertExtensions
 	{
+		private static bool IsNull<T>(T expected)
+		{
+			object objectExpected = expected;
+			return objectExpected == null;
+		}
+
 		public static Exception OfType<T>(this Exception item)
 		{
 			Assert.IsInstanceOf(typeof(T), item);
@@ -34,11 +40,6 @@ namespace FluentAssert
 		}
 
 		public static T ShouldBeEqualTo<T>(this T item, T expected)
-		{
-			return ShouldBeEqualTo(item, expected, () => ShouldBeEqualAssertionException.CreateMessage(item, expected));
-		}
-
-		public static T? ShouldBeEqualTo<T>(this T? item, T? expected) where T : struct
 		{
 			return ShouldBeEqualTo(item, expected, () => ShouldBeEqualAssertionException.CreateMessage(item, expected));
 		}
@@ -67,19 +68,12 @@ namespace FluentAssert
 			{
 				return item;
 			}
-
 			if (itemIsNull || expectedIsNull || !item.Equals(expected))
 			{
 				throw new ShouldBeEqualAssertionException(getErrorMessage());
 			}
 
 			return item;
-		}
-
-		private static bool IsNull<T>(T expected)
-		{
-			object objectExpected = expected;
-			return objectExpected == null;
 		}
 
 		public static void ShouldBeFalse(this bool item)
@@ -220,32 +214,50 @@ namespace FluentAssert
 
 		public static T ShouldNotBeNull<T>(this T item) where T : class
 		{
-			Assert.IsNotNull(item);
+			if (item == null)
+			{
+				throw new ShouldNotBeNullAssertionException();
+			}
 			return item;
 		}
 
 		public static T? ShouldNotBeNull<T>(this T? item) where T : struct
 		{
-			Assert.IsTrue(item.HasValue);
+			if (!item.HasValue)
+			{
+				throw new ShouldNotBeNullAssertionException();
+			}
 			return item;
 		}
 
 		public static T ShouldNotBeNull<T>(this T item, string errorMessage) where T : class
 		{
-			Assert.IsNotNull(item, errorMessage);
+			if (item == null)
+			{
+				throw new ShouldNotBeNullAssertionException(errorMessage);
+			}
+			return item;
+		}
+
+		public static T? ShouldNotBeNull<T>(this T? item, string errorMessage) where T : struct
+		{
+			if (!item.HasValue)
+			{
+				throw new ShouldNotBeNullAssertionException(errorMessage);
+			}
 			return item;
 		}
 
 		public static string ShouldNotBeNullOrEmpty(this string item)
 		{
-			Assert.IsNotNull(item);
+			item.ShouldNotBeNull();
 			Assert.IsNotEmpty(item);
 			return item;
 		}
 
 		public static string ShouldNotBeNullOrEmpty(this string item, string message)
 		{
-			Assert.IsNotNull(item, message);
+			item.ShouldNotBeNull(message);
 			Assert.IsNotEmpty(item, message);
 			return item;
 		}

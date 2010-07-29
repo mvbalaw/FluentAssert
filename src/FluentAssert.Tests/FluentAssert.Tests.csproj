@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="AssertExtensionsTests.cs" />
     <Compile Include="Exceptions\ShouldBeEqualAssertionExceptionTests.cs" />
+    <Compile Include="Exceptions\ShouldNotBeNullAssertionExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
