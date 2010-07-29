@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensionsTests.cs" />
-    <Compile Include="NotEqualExceptionTests.cs" />
+    <Compile Include="Exceptions\NotEqualAssertionExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

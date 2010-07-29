@@ -1,9 +1,11 @@
 using System;
 using System.Linq;
 
+using FluentAssert.Exceptions;
+
 using NUnit.Framework;
 
-namespace FluentAssert.Tests
+namespace FluentAssert.Tests.Exceptions
 {
 	public class NotEqualExceptionTests
 	{

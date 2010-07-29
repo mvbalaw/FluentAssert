@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FluentAssert
+namespace FluentAssert.Exceptions
 {
 	public class NotEqualException : AssertionException
 	{

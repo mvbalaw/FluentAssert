@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
+using FluentAssert.Exceptions;
+
 using NUnit.Framework;
 
 namespace FluentAssert

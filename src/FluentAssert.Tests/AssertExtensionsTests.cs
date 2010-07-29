@@ -1,5 +1,7 @@
 using System;
 
+using FluentAssert.Exceptions;
+
 using NUnit.Framework;
 
 namespace FluentAssert.Tests
