@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace FluentAssert.Tests.Exceptions
 {
-	public class NotEqualExceptionTests
+	public class ShouldBeEqualAssertionExceptionTests
 	{
 		[TestFixture]
 		public class When_creating_the_exception_message_for_two_unequal_Types
@@ -71,7 +71,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = NotEqualException.CreateMessage(_input, _expected);
+				_result = ShouldBeEqualAssertionException.CreateMessage(_input, _expected);
 			}
 
 			private void with_a_non_null_expected_Type()
@@ -135,7 +135,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = NotEqualException.CreateMessage(_input, _expected);
+				_result = ShouldBeEqualAssertionException.CreateMessage(_input, _expected);
 			}
 
 			private void with_a_non_default_expected_integer()
@@ -289,7 +289,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = NotEqualException.CreateMessage(_input, _expected);
+				_result = ShouldBeEqualAssertionException.CreateMessage(_input, _expected);
 			}
 
 			private void with_a_non_empty_expected_string()

@@ -96,7 +96,7 @@ namespace FluentAssert.Tests
 
 			private void should_throw_a_NotEqualException()
 			{
-				Assert.AreEqual(typeof(NotEqualException), _exception.GetType());
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
 
 			private void when_asserting_that_Types_are_equal()
@@ -202,7 +202,7 @@ namespace FluentAssert.Tests
 
 			private void should_throw_a_NotEqualException()
 			{
-				Assert.AreEqual(typeof(NotEqualException), _exception.GetType());
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
 
 			private void when_asserting_that_integers_are_equal()
@@ -326,7 +326,7 @@ namespace FluentAssert.Tests
 
 			private void should_throw_a_NotEqualException()
 			{
-				Assert.AreEqual(typeof(NotEqualException), _exception.GetType());
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
 
 			private void when_asserting_that_nullable_integers_are_equal()
@@ -465,7 +465,7 @@ namespace FluentAssert.Tests
 
 			private void should_throw_a_NotEqualException()
 			{
-				Assert.AreEqual(typeof(NotEqualException), _exception.GetType());
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
 
 			private void when_asserting_that_strings_are_equal()
@@ -594,7 +594,7 @@ namespace FluentAssert.Tests
 
 			private void should_throw_a_NotEqualException()
 			{
-				Assert.AreEqual(typeof(NotEqualException), _exception.GetType());
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
 
 			private void should_throw_an_ArgumentNullException()
@@ -691,7 +691,7 @@ namespace FluentAssert.Tests
 
 			private void should_throw_a_NotEqualException()
 			{
-				Assert.AreEqual(typeof(NotEqualException), _exception.GetType());
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
 			}
 
 			private void when_asserting_that_items_are_equal_with_a_specific_error_message()

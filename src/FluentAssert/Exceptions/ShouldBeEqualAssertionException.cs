@@ -2,13 +2,13 @@
 
 namespace FluentAssert.Exceptions
 {
-	public class NotEqualException : AssertionException
+	public class ShouldBeEqualAssertionException : AssertionException
 	{
 		private const string Ellipsis = "...";
 		private const int MaxStringLength = 61;
 		private static readonly int StringLeftStart = (int)Math.Ceiling(MaxStringLength / 2.0);
 
-		public NotEqualException(string message)
+		public ShouldBeEqualAssertionException(string message)
 			: base(message)
 		{
 		}

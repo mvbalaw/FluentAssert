@@ -35,12 +35,12 @@ namespace FluentAssert
 
 		public static T ShouldBeEqualTo<T>(this T item, T expected)
 		{
-			return ShouldBeEqualTo(item, expected, () => NotEqualException.CreateMessage(item, expected));
+			return ShouldBeEqualTo(item, expected, () => ShouldBeEqualAssertionException.CreateMessage(item, expected));
 		}
 
 		public static T? ShouldBeEqualTo<T>(this T? item, T? expected) where T : struct
 		{
-			return ShouldBeEqualTo(item, expected, () => NotEqualException.CreateMessage(item, expected));
+			return ShouldBeEqualTo(item, expected, () => ShouldBeEqualAssertionException.CreateMessage(item, expected));
 		}
 
 		public static T ShouldBeEqualTo<T>(this T item, T expected, string errorMessage)
@@ -70,7 +70,7 @@ namespace FluentAssert
 
 			if (itemIsNull || expectedIsNull || !item.Equals(expected))
 			{
-				throw new NotEqualException(getErrorMessage());
+				throw new ShouldBeEqualAssertionException(getErrorMessage());
 			}
 
 			return item;
