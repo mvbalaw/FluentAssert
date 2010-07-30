@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace FluentAssert
+namespace FluentAssert.Exceptions
 {
 	public class AssertionException : Exception
 	{
-		protected AssertionException(string message)
-			: base(message)
+		protected AssertionException(string errorMessage)
+			: base(errorMessage)
 		{
 		}
 	}

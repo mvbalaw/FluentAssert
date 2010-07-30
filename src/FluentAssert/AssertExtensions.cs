@@ -7,6 +7,8 @@ using FluentAssert.Exceptions;
 
 using NUnit.Framework;
 
+using AssertionException = FluentAssert.Exceptions.AssertionException;
+
 namespace FluentAssert
 {
 	[DebuggerNonUserCode]
@@ -78,12 +80,31 @@ namespace FluentAssert
 
 		public static void ShouldBeFalse(this bool item)
 		{
-			Assert.IsFalse(item);
+			if (item)
+			{
+				throw new ShouldBeFalseAssertionException();
+			}
 		}
 
 		public static void ShouldBeFalse(this bool item, string errorMessage)
 		{
-			Assert.IsFalse(item, errorMessage);
+			if (item)
+			{
+				throw new ShouldBeFalseAssertionException(errorMessage);
+			}
+		}
+
+		public static void ShouldBeFalse(this bool item, Func<string> getErrorMessage)
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			if (item)
+			{
+				throw new ShouldBeFalseAssertionException(getErrorMessage());
+			}
 		}
 
 		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange) where T : IComparable
@@ -214,36 +235,48 @@ namespace FluentAssert
 
 		public static T ShouldNotBeNull<T>(this T item) where T : class
 		{
-			if (item == null)
-			{
-				throw new ShouldNotBeNullAssertionException();
-			}
-			return item;
+			return ShouldNotBeNull(item, ShouldNotBeNullAssertionException.CreateMessage);
 		}
 
 		public static T? ShouldNotBeNull<T>(this T? item) where T : struct
 		{
-			if (!item.HasValue)
-			{
-				throw new ShouldNotBeNullAssertionException();
-			}
-			return item;
+			return ShouldNotBeNull(item, ShouldNotBeNullAssertionException.CreateMessage);
 		}
 
 		public static T ShouldNotBeNull<T>(this T item, string errorMessage) where T : class
 		{
+			return ShouldNotBeNull(item, () => errorMessage);
+		}
+
+		public static T ShouldNotBeNull<T>(this T item, Func<string> getErrorMessage) where T : class
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
 			if (item == null)
 			{
-				throw new ShouldNotBeNullAssertionException(errorMessage);
+				throw new ShouldNotBeNullAssertionException(getErrorMessage());
 			}
 			return item;
 		}
 
 		public static T? ShouldNotBeNull<T>(this T? item, string errorMessage) where T : struct
 		{
+			return ShouldNotBeNull(item, () => errorMessage);
+		}
+
+		public static T? ShouldNotBeNull<T>(this T? item, Func<string> getErrorMessage) where T : struct
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
 			if (!item.HasValue)
 			{
-				throw new ShouldNotBeNullAssertionException(errorMessage);
+				throw new ShouldNotBeNullAssertionException(getErrorMessage());
 			}
 			return item;
 		}

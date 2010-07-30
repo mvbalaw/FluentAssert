@@ -45,7 +45,9 @@
     <Compile Include="DependencyActionWrapper.cs" />
     <Compile Include="ExceptionConfiguration.cs" />
     <Compile Include="Exceptions\AssertionException.cs" />
+    <Compile Include="Exceptions\ExpectedMessageBuilder.cs" />
     <Compile Include="Exceptions\ShouldBeEqualAssertionException.cs" />
+    <Compile Include="Exceptions\ShouldBeFalseAssertionException.cs" />
     <Compile Include="Exceptions\ShouldNotBeNullAssertionException.cs" />
     <Compile Include="TestExpectClause.cs" />
     <Compile Include="TestExpectStaticClause.cs" />

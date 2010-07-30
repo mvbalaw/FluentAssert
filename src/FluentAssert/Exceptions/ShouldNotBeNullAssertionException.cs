@@ -1,5 +1,3 @@
-using System;
-
 namespace FluentAssert.Exceptions
 {
 	public class ShouldNotBeNullAssertionException : AssertionException
@@ -16,8 +14,7 @@ namespace FluentAssert.Exceptions
 
 		public static string CreateMessage()
 		{
-			string message = "  Expected: not null" + Environment.NewLine
-			                 + "  But was:  null" + Environment.NewLine;
+			string message = ExpectedMessageBuilder.BuildFor("not null", "null");
 			return message;
 		}
 	}

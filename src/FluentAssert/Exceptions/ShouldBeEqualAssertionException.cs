@@ -40,8 +40,7 @@ namespace FluentAssert.Exceptions
 				prefix += " Strings differ at index " + differenceIndex + "." + Environment.NewLine;
 			}
 
-			string message = "  Expected: " + displayExpected + Environment.NewLine
-			                 + "  But was:  " + displayInput + Environment.NewLine;
+			string message = ExpectedMessageBuilder.BuildFor(displayExpected, displayInput);
 			string suffix = "";
 			if (showStringDifferences)
 			{
