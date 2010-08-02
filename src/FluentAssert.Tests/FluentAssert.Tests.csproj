@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensionsTests.cs" />
+    <Compile Include="Exceptions\ExpectedMessageBuilderTests.cs" />
     <Compile Include="Exceptions\ShouldBeEqualAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldBeFalseAssertionExceptionTests.cs" />
+    <Compile Include="Exceptions\ShouldNotBeEqualAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldNotBeNullAssertionExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,10 +4,6 @@ namespace FluentAssert.Exceptions
 {
 	public class ShouldBeEqualAssertionException : AssertionException
 	{
-		private const string Ellipsis = "...";
-		private const int MaxStringLength = 61;
-		private static readonly int StringLeftStart = (int)Math.Ceiling(MaxStringLength / 2.0);
-
 		public ShouldBeEqualAssertionException(string message)
 			: base(message)
 		{
@@ -15,8 +11,8 @@ namespace FluentAssert.Exceptions
 
 		public static string CreateMessage(object input, object expected)
 		{
-			string displayInput = ToDisplayableString(input);
-			string displayExpected = ToDisplayableString(expected);
+			string displayInput = ExpectedMessageBuilder.ToDisplayableString(input);
+			string displayExpected = ExpectedMessageBuilder.ToDisplayableString(expected);
 			string prefix = "";
 			bool showStringDifferences = expected != null && input != null && input.GetType() == typeof(string);
 			int differenceIndex = 0;
@@ -25,8 +21,8 @@ namespace FluentAssert.Exceptions
 				string stringInput = input as string;
 				string stringExpected = expected as string;
 				differenceIndex = GetDifferenceIndex(stringInput, stringExpected);
-				displayInput = ToDisplayableString(stringInput, differenceIndex);
-				displayExpected = ToDisplayableString(stringExpected, differenceIndex);
+				displayInput = ExpectedMessageBuilder.ToDisplayableString(stringInput, differenceIndex);
+				displayExpected = ExpectedMessageBuilder.ToDisplayableString(stringExpected, differenceIndex);
 				int inputLength = stringInput.Length;
 				int expectedLength = stringExpected.Length;
 				if (inputLength == expectedLength)
@@ -46,7 +42,7 @@ namespace FluentAssert.Exceptions
 			{
 				if (differenceIndex > displayExpected.Length)
 				{
-					differenceIndex = Ellipsis.Length + StringLeftStart;
+					differenceIndex = ExpectedMessageBuilder.Ellipsis.Length + ExpectedMessageBuilder.StringLeftStart;
 				}
 				suffix += "  " + "^".PadLeft(12 + differenceIndex, '-') + Environment.NewLine;
 			}
@@ -67,60 +63,6 @@ namespace FluentAssert.Exceptions
 				}
 			}
 			return input.Length;
-		}
-
-		private static string QuoteString(string input)
-		{
-			return "\"" + input + "\"";
-		}
-
-		private static string ShortenString(string input, int differenceIndex)
-		{
-			if (differenceIndex > MaxStringLength)
-			{
-				int start = differenceIndex - StringLeftStart;
-				string substring = input.Substring(start, Math.Min(input.Length - start, MaxStringLength));
-				input = Ellipsis + substring;
-				return input;
-			}
-			if (input.Length > MaxStringLength)
-			{
-				return input.Substring(0, MaxStringLength) + Ellipsis;
-			}
-			return input;
-		}
-
-		private static string ToDisplayableString(object input)
-		{
-			if (input == null)
-			{
-				return "null";
-			}
-			var type = input.GetType();
-			if (type == typeof(string))
-			{
-				return ToDisplayableString(input as string, 0);
-			}
-			if (typeof(Type).IsAssignableFrom(type))
-			{
-				return "<" + input + ">";
-			}
-			return input.ToString();
-		}
-
-		private static string ToDisplayableString(string input, int differenceIndex)
-		{
-			string result;
-			if (input.Length == 0)
-			{
-				result = "<string.Empty>";
-			}
-			else
-			{
-				input = ShortenString(input, differenceIndex);
-				result = QuoteString(input);
-			}
-			return result;
 		}
 	}
 }

@@ -221,15 +221,49 @@ namespace FluentAssert
 			return list;
 		}
 
+		public static string ShouldEndWith(this string item, string expected)
+		{
+			item.EndsWith(expected).ShouldBeTrue();
+			return item;
+		}
+
+		public static string ShouldEndWith(this string item, string expected, string errorMessage)
+		{
+			item.EndsWith(expected).ShouldBeTrue(errorMessage);
+			return item;
+		}
+
 		public static T ShouldNotBeEqualTo<T>(this T item, T expected)
 		{
-			Assert.AreNotEqual(expected, item);
-			return item;
+			return ShouldNotBeEqualTo(item, expected, () => ShouldNotBeEqualAssertionException.CreateMessage(item, expected));
 		}
 
 		public static T ShouldNotBeEqualTo<T>(this T item, T expected, string errorMessage)
 		{
-			Assert.AreNotEqual(expected, item, errorMessage);
+			return ShouldNotBeEqualTo(item, expected, () => errorMessage);
+		}
+
+		public static T ShouldNotBeEqualTo<T>(this T item, T expected, Func<string> getErrorMessage)
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			if (ReferenceEquals(item, expected))
+			{
+				throw new ShouldNotBeEqualAssertionException(getErrorMessage());
+			}
+
+			bool itemIsNull = IsNull(item);
+			bool expectedIsNull = IsNull(expected);
+
+			if (itemIsNull && expectedIsNull ||
+			    !itemIsNull && item.Equals(expected))
+			{
+				throw new ShouldNotBeEqualAssertionException(getErrorMessage());
+			}
+
 			return item;
 		}
 
@@ -304,6 +338,36 @@ namespace FluentAssert
 		public static string ShouldNotContain(this string item, string expectedSubstring)
 		{
 			item.Contains(expectedSubstring).ShouldBeFalse();
+			return item;
+		}
+
+		public static string ShouldNotEndWith(this string item, string expected)
+		{
+			item.EndsWith(expected).ShouldBeFalse();
+			return item;
+		}
+
+		public static string ShouldNotEndWith(this string item, string expected, string errorMessage)
+		{
+			item.EndsWith(expected).ShouldBeFalse(errorMessage);
+			return item;
+		}
+
+		public static string ShouldNotStartWith(this string item, string expected)
+		{
+			item.StartsWith(expected).ShouldBeFalse();
+			return item;
+		}
+
+		public static string ShouldNotStartWith(this string item, string expected, string errorMessage)
+		{
+			item.StartsWith(expected).ShouldBeFalse(errorMessage);
+			return item;
+		}
+
+		public static string ShouldStartWith(this string item, string expected)
+		{
+			item.StartsWith(expected).ShouldBeTrue();
 			return item;
 		}
 
