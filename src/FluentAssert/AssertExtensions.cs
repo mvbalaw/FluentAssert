@@ -80,18 +80,12 @@ namespace FluentAssert
 
 		public static void ShouldBeFalse(this bool item)
 		{
-			if (item)
-			{
-				throw new ShouldBeFalseAssertionException();
-			}
+			ShouldBeFalse(item, ShouldBeFalseAssertionException.CreateMessage);
 		}
 
 		public static void ShouldBeFalse(this bool item, string errorMessage)
 		{
-			if (item)
-			{
-				throw new ShouldBeFalseAssertionException(errorMessage);
-			}
+			ShouldBeFalse(item, () => errorMessage);
 		}
 
 		public static void ShouldBeFalse(this bool item, Func<string> getErrorMessage)
@@ -177,12 +171,25 @@ namespace FluentAssert
 
 		public static void ShouldBeTrue(this bool item)
 		{
-			Assert.IsTrue(item);
+			ShouldBeTrue(item, ShouldBeTrueAssertionException.CreateMessage);
 		}
 
 		public static void ShouldBeTrue(this bool item, string errorMessage)
 		{
-			Assert.IsTrue(item, errorMessage);
+			ShouldBeTrue(item, () => errorMessage);
+		}
+
+		public static void ShouldBeTrue(this bool item, Func<string> getErrorMessage)
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			if (!item)
+			{
+				throw new ShouldBeTrueAssertionException(getErrorMessage());
+			}
 		}
 
 		public static string ShouldContain(this string item, string expectedSubstring)
