@@ -1,20 +1,38 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 using FluentAssert.Exceptions;
 
 using NUnit.Framework;
 
-using AssertionException = FluentAssert.Exceptions.AssertionException;
-
 namespace FluentAssert
 {
-	[DebuggerNonUserCode]
-	[DebuggerStepThrough]
+//	[DebuggerNonUserCode]
+//	[DebuggerStepThrough]
 	public static class AssertExtensions
 	{
+		private static KeyValuePair<bool, object> FindMissingItem(this IEnumerable list, IEnumerable expected)
+		{
+			var listList = new ArrayList();
+			foreach(var item in list)
+			{
+				listList.Add(item);
+			}
+			foreach (var item in expected)
+			{
+				int index = listList.IndexOf(item);
+				if (index == -1)
+				{
+					return new KeyValuePair<bool, object>(true, item);
+				}
+				listList.RemoveAt(index);
+			}
+
+			return new KeyValuePair<bool, object>(false, null);
+		}
+
 		private static bool IsNull<T>(T expected)
 		{
 			object objectExpected = expected;
@@ -31,13 +49,6 @@ namespace FluentAssert
 		{
 			list.ShouldNotBeNull();
 			list.Count.ShouldBeEqualTo(0);
-			return list;
-		}
-
-		public static IList<T> ShouldBeEqualTo<T>(this IList<T> list, IEnumerable<T> expected) where T : IEquatable<T>
-		{
-			list.ToList().ShouldContainAll(expected);
-			expected.ToList().ShouldContainAll(list);
 			return list;
 		}
 
@@ -70,7 +81,33 @@ namespace FluentAssert
 			{
 				return item;
 			}
-			if (itemIsNull || expectedIsNull || !item.Equals(expected))
+			if (itemIsNull || expectedIsNull)
+			{
+				throw new ShouldBeEqualAssertionException(getErrorMessage());
+			}		
+			
+			if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+			{
+				var itemContainer = new ArrayList();
+				foreach(var value in (IEnumerable)item)
+				{
+					itemContainer.Add(value);
+				}
+				var expectedContainer = new ArrayList();
+				foreach (var value in (IEnumerable)expected)
+				{
+					expectedContainer.Add(value);
+				}
+
+				itemContainer.Count.ShouldBeEqualTo(expectedContainer.Count, () => "  Expected " + expectedContainer.Count + " items but contained " + itemContainer.Count);
+
+				var expectedItemMissingFromList = FindMissingItem(itemContainer, expectedContainer);
+				if (expectedItemMissingFromList.Key)
+				{
+					throw new ShouldBeEqualAssertionException("  Expected list to contain: " + expectedItemMissingFromList.Value);
+				}
+			}
+			else if (!item.Equals(expected))
 			{
 				throw new ShouldBeEqualAssertionException(getErrorMessage());
 			}
@@ -198,14 +235,14 @@ namespace FluentAssert
 			return item;
 		}
 
-		public static IList<T> ShouldContainAll<T>(this IList<T> list, IEnumerable<T> expected) where T : IEquatable<T>
+		public static IList<T> ShouldContainAll<T>(this IList<T> list, IEnumerable<T> expected)
 		{
-			foreach (var item in expected)
+			var result = FindMissingItem(list, expected);
+			if (!result.Key)
 			{
-				var other = item;
-				list.Any(x => x.Equals(other)).ShouldBeTrue("Collection does not contain '" + item + "'");
+				return list;
 			}
-			return list;
+			throw new ShouldBeTrueAssertionException("Collection does not contain '" + result.Value + "'");
 		}
 
 		public static IEnumerable<T> ShouldContainAllInOrder<T>(this IEnumerable<T> list, IEnumerable<T> expected) where T : IEquatable<T>
@@ -384,16 +421,56 @@ namespace FluentAssert
 			return item;
 		}
 
-		public static T ShouldThrow<T>(this T item, Func<T, object> methodToCall) where T : Exception
+		public static void ShouldThrow<TException>(Action action) where TException : Exception
 		{
-			Assert.Throws<T>(() => methodToCall(item));
-			return item;
+			try
+			{
+				action();
+			}
+			catch (TException)
+			{
+				return;
+			}
+			catch (ShouldThrowExceptionAssertionException)
+			{
+				throw;
+			}
+			catch (Exception exception)
+			{
+				throw new ShouldThrowExceptionAssertionException(typeof(TException), exception);
+			}
+			throw new ShouldThrowExceptionAssertionException(typeof(TException));
 		}
 
-		public static T ShouldThrow<T>(this T item, Func<T, object> methodToCall, string exceptionMessage) where T : Exception
+		public static void ShouldThrow<TException>(Action action, string errorMessage) where TException : Exception
 		{
-			Assert.Throws<T>(() => methodToCall(item), exceptionMessage);
-			return item;
+			ShouldThrow<TException>(action, () => errorMessage);
+		}
+
+		public static void ShouldThrow<TException>(Action action, Func<string> getErrorMessage) where TException : Exception
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			try
+			{
+				action();
+			}
+			catch (TException)
+			{
+				return;
+			}
+			catch (ShouldThrowExceptionAssertionException)
+			{
+				throw;
+			}
+			catch (Exception)
+			{
+				throw new ShouldThrowExceptionAssertionException(getErrorMessage());
+			}
+			throw new ShouldThrowExceptionAssertionException(getErrorMessage());
 		}
 
 		public static Exception ShouldThrowAnException<T>(this T item, Func<T, object> methodToCall) where T : Exception
@@ -402,22 +479,15 @@ namespace FluentAssert
 			{
 				methodToCall(item);
 			}
+			catch (ShouldThrowExceptionAssertionException)
+			{
+				throw;
+			}
 			catch (Exception exception)
 			{
-				if (typeof(AssertionException).IsAssignableFrom(exception.GetType()))
-				{
-					throw;
-				}
 				return exception;
 			}
-			throw new NUnit.Framework.AssertionException(String.Format("Should have thrown {0}.", typeof(T).Name));
-		}
-
-		[Obsolete("use item.ShouldThrow<TExceptionType>(x=>x.Method(args), \"Message\")")]
-		public static Exception WithMessage(this Exception item, string expectedMessage)
-		{
-			item.Message.ShouldBeEqualTo(expectedMessage);
-			return item;
+			throw new ShouldThrowExceptionAssertionException(typeof(T));
 		}
 	}
 }

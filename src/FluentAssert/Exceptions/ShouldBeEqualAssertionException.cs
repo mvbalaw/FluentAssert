@@ -55,14 +55,15 @@ namespace FluentAssert.Exceptions
 			{
 				return 0;
 			}
-			for (int i = 0; i < input.Length; i++)
+			int last = Math.Min(input.Length, expected.Length);
+			for (int i = 0; i < last; i++)
 			{
 				if (input[i] != expected[i])
 				{
 					return i;
 				}
 			}
-			return input.Length;
+			return last;
 		}
 	}
 }

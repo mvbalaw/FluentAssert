@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using FluentAssert.Exceptions;
 
@@ -1668,6 +1669,155 @@ namespace FluentAssert.Tests
 			}
 
 			private void with_expected_nullable_integer_being_the_same_object()
+			{
+				_expected = _input;
+			}
+		}
+		[TestFixture]
+		public class When_asserting_that_two_IEnumerables_should_be_equal
+		{
+			private Exception _exception;
+			private IEnumerable<int> _expected;
+			private IEnumerable<int> _input;
+			private IEnumerable<int> _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_expected_are_both_null()
+			{
+				Test.Verify(
+					with_a_null_input,
+					with_a_null_expected,
+					when_asserting_that_IEnumerables_are_equal,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_expected_nullable_integers_are_not_null_and_contain_different_objects()
+			{
+				Test.Verify(
+					with_a_non_null_non_empty_input,
+					with_a_non_matching_expected,
+					when_asserting_that_IEnumerables_are_equal,
+					should_throw_a_ShouldBeEqualAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_expected_nullable_integers_are_not_null_not_the_same_object_and_contain_the_same_objects()
+			{
+				Test.Verify(
+					with_a_non_null_non_empty_input,
+					with_a_matching_expected,
+					when_asserting_that_IEnumerables_are_equal,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_expected_are_the_same_object()
+			{
+				Test.Verify(
+					with_a_null_input,
+					with_expected_being_the_same_object,
+					when_asserting_that_IEnumerables_are_equal,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_not_null_and_the_expected_is_null()
+			{
+				Test.Verify(
+					with_a_non_null_non_empty_input,
+					with_a_null_expected,
+					when_asserting_that_IEnumerables_are_equal,
+					should_throw_a_ShouldBeEqualAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_null_and_the_expected_is_not_null()
+			{
+				Test.Verify(
+					with_a_null_input,
+					with_a_non_null_non_empty_expected,
+					when_asserting_that_IEnumerables_are_equal,
+					should_throw_a_ShouldBeEqualAssertionException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreSame(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeEqualAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_IEnumerables_are_equal()
+			{
+				try
+				{
+					_result = _input.ShouldBeEqualTo(_expected);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_matching_expected()
+			{
+				_expected = new List<int>(_input);
+			}
+
+			private void with_a_non_matching_expected()
+			{
+				_expected = new[]{1000};
+			}
+
+			private void with_a_non_null_non_empty_expected()
+			{
+				_expected = new[]{7};
+			}
+
+			private void with_a_non_null_non_empty_input()
+			{
+				_input = new List<int>
+					{
+						6
+					};
+			}
+
+			private void with_a_null_expected()
+			{
+				_expected = null;
+			}
+
+			private void with_a_null_input()
+			{
+				_input = null;
+			}
+
+			private void with_expected_being_the_same_object()
 			{
 				_expected = _input;
 			}

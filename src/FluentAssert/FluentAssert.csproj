@@ -51,6 +51,7 @@
     <Compile Include="Exceptions\ShouldBeTrueAssertionException.cs" />
     <Compile Include="Exceptions\ShouldNotBeEqualAssertionException.cs" />
     <Compile Include="Exceptions\ShouldNotBeNullAssertionException.cs" />
+    <Compile Include="Exceptions\ShouldThrowExceptionAssertionException.cs" />
     <Compile Include="TestExpectClause.cs" />
     <Compile Include="TestExpectStaticClause.cs" />
     <Compile Include="TestRunner.cs" />

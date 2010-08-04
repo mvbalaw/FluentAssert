@@ -50,13 +50,13 @@ namespace FluentAssert
 
 		public TestShouldClause<T> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
-			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
+			_performAction = (T item) => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest.Act());
 			return this;
 		}
 
 		public TestShouldClause<T> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
-			_performAction = (T item) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
+			_performAction = (T item) => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest.Act(), message);
 			return this;
 		}
 
@@ -151,7 +151,7 @@ namespace FluentAssert
 			where TExceptionType : Exception
 		{
 			_performAction =
-				(T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
+				(T item, TContext testContext) => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest.Act(), message);
 			return this;
 		}
 

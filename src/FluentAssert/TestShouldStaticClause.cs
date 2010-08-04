@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using NUnit.Framework;
-
 namespace FluentAssert
 {
 	[DebuggerNonUserCode]
@@ -40,13 +38,13 @@ namespace FluentAssert
 
 		public TestShouldStaticClause ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
-			_performAction = () => Assert.Throws<TExceptionType>(() => _actionUnderTest());
+			_performAction = () => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest());
 			return this;
 		}
 
 		public TestShouldStaticClause ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
-			_performAction = () => Assert.Throws<TExceptionType>(() => _actionUnderTest(), message);
+			_performAction = () => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest(), message);
 			return this;
 		}
 
@@ -116,13 +114,13 @@ namespace FluentAssert
 
 		public TestShouldStaticClause<TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
-			_performAction = (TContext context) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
+			_performAction = (TContext context) => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest.Act());
 			return this;
 		}
 
 		public TestShouldStaticClause<TContext> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
-			_performAction = (TContext context) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act(), message);
+			_performAction = (TContext context) => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest.Act(), message);
 			return this;
 		}
 

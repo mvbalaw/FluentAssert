@@ -163,14 +163,46 @@ namespace FluentAssert.Tests.Exceptions
 			}
 
 			[Test]
-			public void Given_input_and_expected_are_different_lengths()
+			public void Given_input_and_expected_are_different_lengths_and_neither_starts_with_the_other()
 			{
 				Test.Verify(
 					with_a_non_empty_input_string,
-					with_an_expected_string_of_different_length,
+					with_an_expected_string_of_different_length_and_content,
 					when_building_the_exception_message,
 					should_describe_the_string_differences_correctly
 					);
+			}
+
+			[Test]
+			public void Given_input_and_expected_are_different_lengths_and_the_expected_string_starts_with_the_input_string()
+			{
+				Test.Verify(
+					with_a_non_empty_input_string,
+					with_an_expected_string_that_starts_with_the_input_string,
+					when_building_the_exception_message,
+					should_describe_the_string_differences_correctly
+					);
+			}
+
+			[Test]
+			public void Given_input_and_expected_are_different_lengths_and_the_input_string_starts_with_the_expected_string()
+			{
+				Test.Verify(
+					with_a_non_empty_expected_string,
+					with_an_input_string_that_starts_with_the_expected_string,
+					when_building_the_exception_message,
+					should_describe_the_string_differences_correctly
+					);
+			}
+
+			private void with_an_expected_string_that_starts_with_the_input_string()
+			{
+				_expected = _input + "!";
+			}
+
+			private void with_an_input_string_that_starts_with_the_expected_string()
+			{
+				_input = _expected + "!";
 			}
 
 			[Test]
@@ -342,7 +374,7 @@ namespace FluentAssert.Tests.Exceptions
 				_input = "";
 			}
 
-			private void with_an_expected_string_of_different_length()
+			private void with_an_expected_string_of_different_length_and_content()
 			{
 				_expected = "Old";
 			}

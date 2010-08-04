@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly:AssemblyTitle("FluentAssert - http://code.google.com/p/fluent-assert/")]
+[assembly:AssemblyTitle("FluentAssert - http://github.com/mvba/fluentassert/")]
 [assembly:AssemblyDescription("")]
 [assembly:AssemblyConfiguration("")]
 [assembly:AssemblyCompany("McCreary, Veselka, Bragg & Allen, P.C.")]
 [assembly:AssemblyProduct("FluentAssert")]
-[assembly:AssemblyCopyright("Copyright © 2009 McCreary, Veselka, Bragg & Allen, P.C.")]
+[assembly:AssemblyCopyright("Copyright © 2009-2010 McCreary, Veselka, Bragg & Allen, P.C.")]
 [assembly:AssemblyTrademark("")]
 [assembly:AssemblyCulture("")]
 
