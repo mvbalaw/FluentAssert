@@ -86,7 +86,8 @@ namespace FluentAssert
 				throw new ShouldBeEqualAssertionException(getErrorMessage());
 			}		
 			
-			if (typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+			if (typeof(T) != typeof(string) &&
+				typeof(IEnumerable).IsAssignableFrom(typeof(T)))
 			{
 				var itemContainer = new ArrayList();
 				foreach(var value in (IEnumerable)item)
