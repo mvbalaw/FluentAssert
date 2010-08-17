@@ -16,7 +16,7 @@ namespace FluentAssert
 		private static KeyValuePair<bool, object> FindMissingItem(this IEnumerable list, IEnumerable expected)
 		{
 			var listList = new ArrayList();
-			foreach(var item in list)
+			foreach (var item in list)
 			{
 				listList.Add(item);
 			}
@@ -84,13 +84,13 @@ namespace FluentAssert
 			if (itemIsNull || expectedIsNull)
 			{
 				throw new ShouldBeEqualAssertionException(getErrorMessage());
-			}		
-			
+			}
+
 			if (typeof(T) != typeof(string) &&
-				typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+			    typeof(IEnumerable).IsAssignableFrom(typeof(T)))
 			{
 				var itemContainer = new ArrayList();
-				foreach(var value in (IEnumerable)item)
+				foreach (var value in (IEnumerable)item)
 				{
 					itemContainer.Add(value);
 				}
@@ -177,15 +177,51 @@ namespace FluentAssert
 			return item;
 		}
 
-		public static T ShouldBeNull<T>(this T item)
+		public static T ShouldBeNull<T>(this T item) where T : class
 		{
-			Assert.IsNull(item);
-			return item;
+			return ShouldBeNull(item, () => ShouldBeNullAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item)));
+		}
+
+		public static T? ShouldBeNull<T>(this T? item) where T : struct
+		{
+			return ShouldBeNull(item, () => ShouldBeNullAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeNull<T>(this T item, string errorMessage) where T : class
 		{
-			Assert.IsNull(item, errorMessage);
+			return ShouldBeNull(item, () => errorMessage);
+		}
+
+		public static T ShouldBeNull<T>(this T item, Func<string> getErrorMessage) where T : class
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			if (item != null)
+			{
+				throw new ShouldBeNullAssertionException(getErrorMessage());
+			}
+			return item;
+		}
+
+		public static T? ShouldBeNull<T>(this T? item, string errorMessage) where T : struct
+		{
+			return ShouldBeNull(item, () => errorMessage);
+		}
+
+		public static T? ShouldBeNull<T>(this T? item, Func<string> getErrorMessage) where T : struct
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			if (item.HasValue)
+			{
+				throw new ShouldBeNullAssertionException(getErrorMessage());
+			}
 			return item;
 		}
 

@@ -53,6 +53,7 @@
     <Compile Include="Exceptions\ExpectedMessageBuilderTests.cs" />
     <Compile Include="Exceptions\ShouldBeEqualAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldBeFalseAssertionExceptionTests.cs" />
+    <Compile Include="Exceptions\ShouldBeNullAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldBeTrueAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldNotBeEqualAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldNotBeNullAssertionExceptionTests.cs" />
