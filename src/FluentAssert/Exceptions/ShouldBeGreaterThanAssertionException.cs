@@ -1,16 +1,9 @@
-﻿using System;
-
-namespace FluentAssert.Exceptions
+﻿namespace FluentAssert.Exceptions
 {
 	public class ShouldBeGreaterThanAssertionException : AssertionException
 	{
 		internal ShouldBeGreaterThanAssertionException(string errorMessage)
 			: base(errorMessage)
-		{
-		}
-
-		internal ShouldBeGreaterThanAssertionException(string errorMessage, Exception innerException)
-			: base(errorMessage, innerException)
 		{
 		}
 

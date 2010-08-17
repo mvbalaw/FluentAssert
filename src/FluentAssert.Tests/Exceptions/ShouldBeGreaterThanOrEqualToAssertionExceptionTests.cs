@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace FluentAssert.Tests.Exceptions
 {
-	public class ShouldBeGreaterThanAssertionExceptionTests
+	public class ShouldBeGreaterThanOrEqualToAssertionExceptionTests
 	{
 		[TestFixture]
 		public class When_creating_the_exception_message_for_two_integers
@@ -26,7 +26,7 @@ namespace FluentAssert.Tests.Exceptions
 			{
 				Test.Verify(
 					with_a_non_empty_input_integer,
-					with_a_larger_other_integer,
+					with_a_greater_other_integer,
 					when_building_the_exception_message,
 					should_describe_the_problem_correctly
 					);
@@ -37,7 +37,7 @@ namespace FluentAssert.Tests.Exceptions
 				string message = "";
 				try
 				{
-					Assert.That(_input, Is.GreaterThan(_other));
+					Assert.That(_input, Is.GreaterThanOrEqualTo(_other));
 				}
 				catch (Exception exception)
 				{
@@ -49,10 +49,10 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = ShouldBeGreaterThanAssertionException.CreateMessage(_other.ToString(), _input.ToString());
+				_result = ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(_other.ToString(), _input.ToString());
 			}
 
-			private void with_a_larger_other_integer()
+			private void with_a_greater_other_integer()
 			{
 				_other = 1 + _input;
 			}
@@ -92,7 +92,7 @@ namespace FluentAssert.Tests.Exceptions
 				string message = "";
 				try
 				{
-					Assert.That(_input, Is.GreaterThan(_other));
+					Assert.That(_input, Is.GreaterThanOrEqualTo(_other));
 				}
 				catch (Exception exception)
 				{
@@ -104,7 +104,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(_other), ExpectedMessageBuilder.ToDisplayableString(_input));
+				_result = ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(_other), ExpectedMessageBuilder.ToDisplayableString(_input));
 			}
 
 			private void with_a_non_empty_input_string()
@@ -115,6 +115,11 @@ namespace FluentAssert.Tests.Exceptions
 			private void with_an_alphabetically_higher_other_string()
 			{
 				_other = "Z" + _input;
+			}
+
+			private void with_an_empty_input_string()
+			{
+				_input = "";
 			}
 		}
 	}

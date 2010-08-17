@@ -171,7 +171,31 @@ namespace FluentAssert
 
 		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange) where T : IComparable
 		{
-			Assert.That(Is.GreaterThanOrEqualTo(lowEndOfRange).Matches(item));
+			return ShouldBeGreaterThanOrEqualTo(item,
+			                                    lowEndOfRange,
+			                                    () => ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
+			                                                                                                       ExpectedMessageBuilder.ToDisplayableString(lowEndOfRange)));
+		}
+
+		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange, string errorMessage) where T : IComparable
+		{
+			return ShouldBeGreaterThanOrEqualTo(item, lowEndOfRange, () => errorMessage);
+		}
+
+		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange, Func<string> getErrorMessage) where T : IComparable
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			object obj = item;
+			obj.ShouldNotBeNull();
+
+			if (item.CompareTo(lowEndOfRange) == -1)
+			{
+				throw new ShouldBeGreaterThanOrEqualToAssertionException(getErrorMessage());
+			}
 			return item;
 		}
 
