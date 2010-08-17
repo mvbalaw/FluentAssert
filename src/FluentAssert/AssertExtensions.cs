@@ -141,13 +141,31 @@ namespace FluentAssert
 
 		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange) where T : IComparable
 		{
-			Assert.That(Is.GreaterThan(lowEndOfRange).Matches(item));
-			return item;
+			return ShouldBeGreaterThan(item,
+			                           lowEndOfRange,
+			                           () => ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
+			                                                                                     ExpectedMessageBuilder.ToDisplayableString(lowEndOfRange)));
 		}
 
 		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange, string errorMessage) where T : IComparable
 		{
-			Assert.That(Is.GreaterThan(lowEndOfRange).Matches(item), errorMessage);
+			return ShouldBeGreaterThan(item, lowEndOfRange, () => errorMessage);
+		}
+
+		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange, Func<string> getErrorMessage) where T : IComparable
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			object obj = item;
+			obj.ShouldNotBeNull();
+
+			if (item.CompareTo(lowEndOfRange) != 1)
+			{
+				throw new ShouldBeGreaterThanAssertionException(getErrorMessage());
+			}
 			return item;
 		}
 
@@ -314,6 +332,24 @@ namespace FluentAssert
 			return item;
 		}
 
+		public static string ShouldNotBeEmpty(this string item)
+		{
+			item.Length.ShouldBeGreaterThan(0);
+			return item;
+		}
+
+		public static string ShouldNotBeEmpty(this string item, string errorMessage)
+		{
+			item.Length.ShouldBeGreaterThan(0, errorMessage);
+			return item;
+		}
+
+		public static string ShouldNotBeEmpty(this string item, Func<string> getErrorMessage)
+		{
+			item.Length.ShouldBeGreaterThan(0, getErrorMessage);
+			return item;
+		}
+
 		public static T ShouldNotBeEqualTo<T>(this T item, T expected)
 		{
 			return ShouldNotBeEqualTo(item, expected, () => ShouldNotBeEqualAssertionException.CreateMessage(item, expected));
@@ -399,14 +435,14 @@ namespace FluentAssert
 		public static string ShouldNotBeNullOrEmpty(this string item)
 		{
 			item.ShouldNotBeNull();
-			Assert.IsNotEmpty(item);
+			item.ShouldNotBeEmpty();
 			return item;
 		}
 
-		public static string ShouldNotBeNullOrEmpty(this string item, string message)
+		public static string ShouldNotBeNullOrEmpty(this string item, string errorMessage)
 		{
-			item.ShouldNotBeNull(message);
-			Assert.IsNotEmpty(item, message);
+			item.ShouldNotBeNull(errorMessage);
+			item.ShouldNotBeEmpty(errorMessage);
 			return item;
 		}
 

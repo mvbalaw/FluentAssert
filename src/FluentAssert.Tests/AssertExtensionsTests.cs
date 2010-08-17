@@ -1604,6 +1604,848 @@ namespace FluentAssert.Tests
 		}
 
 		[TestFixture]
+		public class When_asserting_that_one_integer_should_be_greater_than_another
+		{
+			private Exception _exception;
+			private int _input;
+			private int _other;
+			private int _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = 0;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_other_integer_being_the_same_object,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_matching_other_integer,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_greater()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_larger_other_integer,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_lower()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_lower_other_integer,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeGreaterThanAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_input_is_greater_than_the_other()
+			{
+				try
+				{
+					_result = _input.ShouldBeGreaterThan(_other);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_larger_other_integer()
+			{
+				_other = 1000;
+			}
+
+			private void with_a_lower_other_integer()
+			{
+				_other = _input - 1;
+			}
+
+			private void with_a_matching_other_integer()
+			{
+				_other = 6;
+			}
+
+			private void with_a_non_default_input_integer()
+			{
+				_input = 6;
+			}
+
+			private void with_other_integer_being_the_same_object()
+			{
+				_other = _input;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_one_integer_should_be_greater_than_another_with_a_Func_to_get_the_specific_error_message
+		{
+			private const string ExpectedErrorMessage = "Hello world";
+			private Exception _exception;
+			private Func<string> _getErrorMessage;
+			private int _input;
+			private int _other;
+			private int _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = 0;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_other_integer_being_the_same_object,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_other_integer_being_the_same_object,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_matching_other_integer,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_matching_other_integer,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_greater_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_larger_other_integer,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_greater_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_larger_other_integer,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_lower_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_lower_other_integer,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_lower_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_lower_other_integer,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeGreaterThanAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+			}
+
+			private void should_throw_an_ArgumentNullException()
+			{
+				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_input_is_greater_than_the_other()
+			{
+				try
+				{
+					_result = _input.ShouldBeGreaterThan(_other, _getErrorMessage);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_larger_other_integer()
+			{
+				_other = 1000;
+			}
+
+			private void with_a_lower_other_integer()
+			{
+				_other = _input - 1;
+			}
+
+			private void with_a_matching_other_integer()
+			{
+				_other = 6;
+			}
+
+			private void with_a_non_default_input_integer()
+			{
+				_input = 6;
+			}
+
+			private void with_a_non_null_Func_to_get_the_error_message()
+			{
+				_getErrorMessage = () => ExpectedErrorMessage;
+			}
+
+			private void with_a_null_Func_to_get_the_error_message()
+			{
+				_getErrorMessage = null;
+			}
+
+			private void with_other_integer_being_the_same_object()
+			{
+				_other = _input;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_one_integer_should_be_greater_than_another_with_a_specific_error_message
+		{
+			private const string ExpectedErrorMessage = "Hello world";
+
+			private Exception _exception;
+			private int _input;
+			private int _other;
+			private int _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = 0;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_other_integer_being_the_same_object,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_matching_other_integer,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_greater()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_larger_other_integer,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_integers_are_not_the_same_object_and_other_is_lower()
+			{
+				Test.Verify(
+					with_a_non_default_input_integer,
+					with_a_lower_other_integer,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeGreaterThanAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message()
+			{
+				try
+				{
+					_result = _input.ShouldBeGreaterThan(_other, ExpectedErrorMessage);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_larger_other_integer()
+			{
+				_other = 1000;
+			}
+
+			private void with_a_lower_other_integer()
+			{
+				_other = _input - 1;
+			}
+
+			private void with_a_matching_other_integer()
+			{
+				_other = 6;
+			}
+
+			private void with_a_non_default_input_integer()
+			{
+				_input = 6;
+			}
+
+			private void with_other_integer_being_the_same_object()
+			{
+				_other = _input;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_one_string_should_be_greater_than_another
+		{
+			private Exception _exception;
+			private string _input;
+			private string _other;
+			private string _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_other_string_being_the_same_object,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_matching_other_string,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_greater()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_larger_other_string,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_lower()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_lower_other_string,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeGreaterThanAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_input_is_greater_than_the_other()
+			{
+				try
+				{
+					_result = _input.ShouldBeGreaterThan(_other);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_larger_other_string()
+			{
+				_other = "ZZZ";
+			}
+
+			private void with_a_lower_other_string()
+			{
+				_other = "AAA";
+			}
+
+			private void with_a_matching_other_string()
+			{
+				_other = _input;
+			}
+
+			private void with_a_non_default_input_string()
+			{
+				_input = "CCC";
+			}
+
+			private void with_other_string_being_the_same_object()
+			{
+				_other = _input;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_one_string_should_be_greater_than_another_with_a_Func_to_get_the_specific_error_message
+		{
+			private const string ExpectedErrorMessage = "Hello world";
+			private Exception _exception;
+			private Func<string> _getErrorMessage;
+			private string _input;
+			private string _other;
+			private string _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_other_string_being_the_same_object,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_other_string_being_the_same_object,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_matching_other_string,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_matching_other_string,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_greater_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_larger_other_string,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_greater_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_larger_other_string,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_lower_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_lower_other_string,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_lower_and_the_error_message_Func_is_null()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_lower_other_string,
+					with_a_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_an_ArgumentNullException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_is_null_and_the_error_message_Func_is_not_null()
+			{
+				Test.Verify(
+					with_a_null_input_string,
+					with_a_lower_other_string,
+					with_a_non_null_Func_to_get_the_error_message,
+					when_asserting_that_the_input_is_greater_than_the_other,
+					should_throw_a_ShouldNotBeNullAssertionException
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeGreaterThanAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+			}
+
+			private void should_throw_a_ShouldNotBeNullAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+			}
+
+			private void should_throw_an_ArgumentNullException()
+			{
+				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_input_is_greater_than_the_other()
+			{
+				try
+				{
+					_result = _input.ShouldBeGreaterThan(_other, _getErrorMessage);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_larger_other_string()
+			{
+				_other = "ZZZ";
+			}
+
+			private void with_a_lower_other_string()
+			{
+				_other = "AAA";
+			}
+
+			private void with_a_matching_other_string()
+			{
+				_other = _input;
+			}
+
+			private void with_a_non_default_input_string()
+			{
+				_input = "CCC";
+			}
+
+			private void with_a_non_null_Func_to_get_the_error_message()
+			{
+				_getErrorMessage = () => ExpectedErrorMessage;
+			}
+
+			private void with_a_null_Func_to_get_the_error_message()
+			{
+				_getErrorMessage = null;
+			}
+
+			private void with_a_null_input_string()
+			{
+				_input = null;
+			}
+
+			private void with_other_string_being_the_same_object()
+			{
+				_other = _input;
+			}
+		}
+
+		[TestFixture]
+		public class When_asserting_that_one_string_should_be_greater_than_another_with_a_specific_error_message
+		{
+			private const string ExpectedErrorMessage = "Hello world";
+
+			private Exception _exception;
+			private string _input;
+			private string _other;
+			private string _result;
+
+			[SetUp]
+			public void BeforeEachTest()
+			{
+				_result = null;
+				_exception = null;
+			}
+
+			[Test]
+			public void Given_the_input_and_other_and_are_the_same_object()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_other_string_being_the_same_object,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_are_not_the_same_object_but_are_equal()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_matching_other_string,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_greater()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_larger_other_string,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_throw_a_ShouldBeGreaterThanAssertionException
+					);
+			}
+
+			[Test]
+			public void Given_the_input_and_other_strings_are_not_the_same_object_and_other_is_lower()
+			{
+				Test.Verify(
+					with_a_non_default_input_string,
+					with_a_lower_other_string,
+					when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message,
+					should_not_throw_an_exception,
+					should_return_the_input
+					);
+			}
+
+			private void should_not_throw_an_exception()
+			{
+				Assert.IsNull(_exception);
+			}
+
+			private void should_return_the_input()
+			{
+				Assert.AreEqual(_input, _result);
+			}
+
+			private void should_throw_a_ShouldBeGreaterThanAssertionException()
+			{
+				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+			}
+
+			private void when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message()
+			{
+				try
+				{
+					_result = _input.ShouldBeGreaterThan(_other, ExpectedErrorMessage);
+				}
+				catch (Exception exception)
+				{
+					_exception = exception;
+				}
+			}
+
+			private void with_a_larger_other_string()
+			{
+				_other = "ZZZ";
+			}
+
+			private void with_a_lower_other_string()
+			{
+				_other = "AAA";
+			}
+
+			private void with_a_matching_other_string()
+			{
+				_other = _input;
+			}
+
+			private void with_a_non_default_input_string()
+			{
+				_input = "CCC";
+			}
+
+			private void with_other_string_being_the_same_object()
+			{
+				_other = _input;
+			}
+		}
+
+		[TestFixture]
 		public class When_asserting_that_two_IEnumerables_should_be_equal
 		{
 			private Exception _exception;
