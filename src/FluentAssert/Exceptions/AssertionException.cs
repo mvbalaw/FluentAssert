@@ -4,8 +4,13 @@ namespace FluentAssert.Exceptions
 {
 	public class AssertionException : Exception
 	{
-		protected AssertionException(string errorMessage)
+		internal AssertionException(string errorMessage)
 			: base(errorMessage)
+		{
+		}
+
+		internal AssertionException(string errorMessage, Exception innerException)
+			: base(errorMessage, innerException)
 		{
 		}
 	}

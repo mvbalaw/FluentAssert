@@ -195,16 +195,6 @@ namespace FluentAssert.Tests.Exceptions
 					);
 			}
 
-			private void with_an_expected_string_that_starts_with_the_input_string()
-			{
-				_expected = _input + "!";
-			}
-
-			private void with_an_input_string_that_starts_with_the_expected_string()
-			{
-				_input = _expected + "!";
-			}
-
 			[Test]
 			public void Given_input_and_expected_are_same_length_and_differ_at_the_beginning()
 			{
@@ -387,6 +377,16 @@ namespace FluentAssert.Tests.Exceptions
 			private void with_an_expected_string_of_equal_length_differing_at_the_end()
 			{
 				_expected = "hellO";
+			}
+
+			private void with_an_expected_string_that_starts_with_the_input_string()
+			{
+				_expected = _input + "!";
+			}
+
+			private void with_an_input_string_that_starts_with_the_expected_string()
+			{
+				_input = _expected + "!";
 			}
 		}
 	}

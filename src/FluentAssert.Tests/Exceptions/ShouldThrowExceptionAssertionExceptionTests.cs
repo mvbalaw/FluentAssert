@@ -46,7 +46,7 @@ namespace FluentAssert.Tests.Exceptions
 			{
 				string expected = GetExpectedExceptionDescription();
 				string actual = "  But threw " + _actualException.GetType().Name + ": " + _actualException.Message + Environment.NewLine;
-				_result.ShouldBeEqualTo(expected+actual);
+				_result.ShouldBeEqualTo(expected + actual);
 			}
 
 			private void should_only_describe_the_expected_type()

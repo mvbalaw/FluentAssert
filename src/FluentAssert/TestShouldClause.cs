@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using NUnit.Framework;
 
 namespace FluentAssert
 {
@@ -143,7 +142,7 @@ namespace FluentAssert
 
 		public TestShouldClause<T, TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
-			_performAction = (T item, TContext testContext) => Assert.Throws<TExceptionType>(() => _actionUnderTest.Act());
+			_performAction = (T item, TContext testContext) => AssertExtensions.ShouldThrow<TExceptionType>(() => _actionUnderTest.Act());
 			return this;
 		}
 

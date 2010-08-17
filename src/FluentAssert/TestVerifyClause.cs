@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-using NUnit.Framework;
+using FluentAssert.Exceptions;
 
 namespace FluentAssert
 {
@@ -51,7 +51,7 @@ namespace FluentAssert
 			{
 				Console.Error.WriteLine(scenarioDescription.ToString());
 
-				throw new NUnit.Framework.AssertionException(String.Format("Expected exception of type {0} was not thrown.",
+				throw new AssertionException(String.Format("Expected exception of type {0} was not thrown.",
 				                                           _exceptionConfiguration.ExpectedExceptionType));
 			}
 		}
