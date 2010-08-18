@@ -1,16 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using FluentAssert.Exceptions;
 
-using NUnit.Framework;
-
 namespace FluentAssert
 {
-//	[DebuggerNonUserCode]
-//	[DebuggerStepThrough]
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public static class AssertExtensions
 	{
 		private static KeyValuePair<bool, object> FindMissingItem(this IEnumerable list, IEnumerable expected)
@@ -37,12 +36,6 @@ namespace FluentAssert
 		{
 			object objectExpected = expected;
 			return objectExpected == null;
-		}
-
-		public static Exception OfType<T>(this Exception item)
-		{
-			Assert.IsInstanceOf(typeof(T), item);
-			return item;
 		}
 
 		public static IList<T> ShouldBeEmpty<T>(this IList<T> list)
