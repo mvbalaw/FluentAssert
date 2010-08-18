@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace FluentAssert.Tests.Exceptions
 {
-	public class ShouldBeGreaterThanOrEqualToAssertionExceptionTests
+	public class ShouldBeLessThanOrEqualToAssertionExceptionTests
 	{
 		[TestFixture]
 		public class When_creating_the_exception_message_for_two_integers
@@ -22,11 +22,11 @@ namespace FluentAssert.Tests.Exceptions
 			}
 
 			[Test]
-			public void Given_the_other_is_greater_than_the_input()
+			public void Given_the_other_is_less_than_the_input()
 			{
 				Test.Verify(
 					with_a_non_empty_input_integer,
-					with_a_greater_other_integer,
+					with_a_lower_other_integer,
 					when_building_the_exception_message,
 					should_describe_the_problem_correctly
 					);
@@ -37,7 +37,7 @@ namespace FluentAssert.Tests.Exceptions
 				string message = "";
 				try
 				{
-					Assert.That(_input, Is.GreaterThanOrEqualTo(_other));
+					Assert.That(_input, Is.LessThanOrEqualTo(_other));
 				}
 				catch (Exception exception)
 				{
@@ -49,12 +49,12 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(_other.ToString(), _input.ToString());
+				_result = ShouldBeLessThanOrEqualToAssertionException.CreateMessage(_other.ToString(), _input.ToString());
 			}
 
-			private void with_a_greater_other_integer()
+			private void with_a_lower_other_integer()
 			{
-				_other = 1 + _input;
+				_other = _input - 1;
 			}
 
 			private void with_a_non_empty_input_integer()
@@ -77,11 +77,11 @@ namespace FluentAssert.Tests.Exceptions
 			}
 
 			[Test]
-			public void Given_the_other_is_alphabetically_higher()
+			public void Given_the_other_is_alphabetically_lower()
 			{
 				Test.Verify(
 					with_a_non_empty_input_string,
-					with_an_alphabetically_higher_other_string,
+					with_an_other_string_that_sorts_alphabetically_before_the_input,
 					when_building_the_exception_message,
 					should_describe_the_problem_correctly
 					);
@@ -92,7 +92,7 @@ namespace FluentAssert.Tests.Exceptions
 				string message = "";
 				try
 				{
-					Assert.That(_input, Is.GreaterThanOrEqualTo(_other));
+					Assert.That(_input, Is.LessThanOrEqualTo(_other));
 				}
 				catch (Exception exception)
 				{
@@ -104,7 +104,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void when_building_the_exception_message()
 			{
-				_result = ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(_other), ExpectedMessageBuilder.ToDisplayableString(_input));
+				_result = ShouldBeLessThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(_other), ExpectedMessageBuilder.ToDisplayableString(_input));
 			}
 
 			private void with_a_non_empty_input_string()
@@ -112,9 +112,9 @@ namespace FluentAssert.Tests.Exceptions
 				_input = "hello";
 			}
 
-			private void with_an_alphabetically_higher_other_string()
+			private void with_an_other_string_that_sorts_alphabetically_before_the_input()
 			{
-				_other = "Z" + _input;
+				_other = "A" + _input;
 			}
 		}
 	}
