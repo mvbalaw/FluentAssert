@@ -50,6 +50,7 @@
     <Compile Include="Exceptions\ShouldBeFalseAssertionException.cs" />
     <Compile Include="Exceptions\ShouldBeGreaterThanAssertionException.cs" />
     <Compile Include="Exceptions\ShouldBeGreaterThanOrEqualToAssertionException.cs" />
+    <Compile Include="Exceptions\ShouldBeLessThanAssertionException.cs" />
     <Compile Include="Exceptions\ShouldBeNullAssertionException.cs" />
     <Compile Include="Exceptions\ShouldBeTrueAssertionException.cs" />
     <Compile Include="Exceptions\ShouldNotBeEqualAssertionException.cs" />

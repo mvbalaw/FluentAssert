@@ -139,20 +139,20 @@ namespace FluentAssert
 			}
 		}
 
-		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange) where T : IComparable
+		public static T ShouldBeGreaterThan<T>(this T item, T other) where T : IComparable
 		{
 			return ShouldBeGreaterThan(item,
-			                           lowEndOfRange,
+			                           other,
 			                           () => ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
-			                                                                                     ExpectedMessageBuilder.ToDisplayableString(lowEndOfRange)));
+			                                                                                     ExpectedMessageBuilder.ToDisplayableString(other)));
 		}
 
-		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange, string errorMessage) where T : IComparable
+		public static T ShouldBeGreaterThan<T>(this T item, T other, string errorMessage) where T : IComparable
 		{
-			return ShouldBeGreaterThan(item, lowEndOfRange, () => errorMessage);
+			return ShouldBeGreaterThan(item, other, () => errorMessage);
 		}
 
-		public static T ShouldBeGreaterThan<T>(this T item, T lowEndOfRange, Func<string> getErrorMessage) where T : IComparable
+		public static T ShouldBeGreaterThan<T>(this T item, T other, Func<string> getErrorMessage) where T : IComparable
 		{
 			if (getErrorMessage == null)
 			{
@@ -162,27 +162,27 @@ namespace FluentAssert
 			object obj = item;
 			obj.ShouldNotBeNull();
 
-			if (item.CompareTo(lowEndOfRange) != 1)
+			if (item.CompareTo(other) != 1)
 			{
 				throw new ShouldBeGreaterThanAssertionException(getErrorMessage());
 			}
 			return item;
 		}
 
-		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange) where T : IComparable
+		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T other) where T : IComparable
 		{
 			return ShouldBeGreaterThanOrEqualTo(item,
-			                                    lowEndOfRange,
+			                                    other,
 			                                    () => ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
-			                                                                                                       ExpectedMessageBuilder.ToDisplayableString(lowEndOfRange)));
+			                                                                                                       ExpectedMessageBuilder.ToDisplayableString(other)));
 		}
 
-		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange, string errorMessage) where T : IComparable
+		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T other, string errorMessage) where T : IComparable
 		{
-			return ShouldBeGreaterThanOrEqualTo(item, lowEndOfRange, () => errorMessage);
+			return ShouldBeGreaterThanOrEqualTo(item, other, () => errorMessage);
 		}
 
-		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T lowEndOfRange, Func<string> getErrorMessage) where T : IComparable
+		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T other, Func<string> getErrorMessage) where T : IComparable
 		{
 			if (getErrorMessage == null)
 			{
@@ -192,7 +192,7 @@ namespace FluentAssert
 			object obj = item;
 			obj.ShouldNotBeNull();
 
-			if (item.CompareTo(lowEndOfRange) == -1)
+			if (item.CompareTo(other) == -1)
 			{
 				throw new ShouldBeGreaterThanOrEqualToAssertionException(getErrorMessage());
 			}
@@ -207,9 +207,33 @@ namespace FluentAssert
 			return item;
 		}
 
-		public static T ShouldBeLessThan<T>(this T item, T highEndOfRange) where T : IComparable
+		public static T ShouldBeLessThan<T>(this T item, T other) where T : IComparable
 		{
-			Assert.That(Is.LessThan(highEndOfRange).Matches(item));
+			return ShouldBeLessThan(item,
+			                        other,
+			                        () => ShouldBeLessThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
+			                                                                               ExpectedMessageBuilder.ToDisplayableString(other)));
+		}
+
+		public static T ShouldBeLessThan<T>(this T item, T other, string errorMessage) where T : IComparable
+		{
+			return ShouldBeLessThan(item, other, () => errorMessage);
+		}
+
+		public static T ShouldBeLessThan<T>(this T item, T other, Func<string> getErrorMessage) where T : IComparable
+		{
+			if (getErrorMessage == null)
+			{
+				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+			}
+
+			object obj = item;
+			obj.ShouldNotBeNull();
+
+			if (item.CompareTo(other) != -1)
+			{
+				throw new ShouldBeLessThanAssertionException(getErrorMessage());
+			}
 			return item;
 		}
 
