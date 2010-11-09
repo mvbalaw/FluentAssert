@@ -5039,9 +5039,9 @@ namespace FluentAssert.Tests
 			private void with_a_non_null_non_empty_input()
 			{
 				_input = new List<int>
-					{
-						6
-					};
+				{
+					6
+				};
 			}
 
 			private void with_a_null_expected()

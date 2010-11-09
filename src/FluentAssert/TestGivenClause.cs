@@ -29,9 +29,9 @@ namespace FluentAssert
 		public TestGivenClause<T, TContext> WithContext<TContext>(TContext context)
 		{
 			var actionContainerSource = new ActionContainerSource<T, TContext>
-				{
-					GetActionContainer = delegate { return _actionContainerSource.GetActionContainer(); }
-				};
+			{
+				GetActionContainer = delegate { return _actionContainerSource.GetActionContainer(); }
+			};
 			return new TestGivenClause<T, TContext>(actionContainerSource, context);
 		}
 	}

@@ -14,17 +14,17 @@ namespace FluentAssert
 		public TestGivenClause<T> CreatedBy(Func<T> createActionContainer)
 		{
 			return new TestGivenClause<T>(new ActionContainerSource<T>
-				{
-					GetActionContainer = createActionContainer
-				});
+			{
+				GetActionContainer = createActionContainer
+			});
 		}
 
 		public TestGivenClause<T, TContext> CreatedBy<TContext>(Func<TContext, T> createActionContainer, TContext context)
 		{
 			return new TestGivenClause<T, TContext>(new ActionContainerSource<T, TContext>
-				{
-					GetActionContainer = createActionContainer
-				},
+			{
+				GetActionContainer = createActionContainer
+			},
 			                                        context);
 		}
 	}

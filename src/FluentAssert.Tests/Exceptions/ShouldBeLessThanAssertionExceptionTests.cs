@@ -52,14 +52,14 @@ namespace FluentAssert.Tests.Exceptions
 				_result = ShouldBeLessThanAssertionException.CreateMessage(_other.ToString(), _input.ToString());
 			}
 
-			private void with_a_smaller_other_integer()
-			{
-				_other = _input - 1;
-			}
-
 			private void with_a_non_empty_input_integer()
 			{
 				_input = 6;
+			}
+
+			private void with_a_smaller_other_integer()
+			{
+				_other = _input - 1;
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void with_an_alphabetically_lower_other_string()
 			{
-				_other = " "+_input;
+				_other = " " + _input;
 			}
 		}
 	}

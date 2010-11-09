@@ -8,12 +8,32 @@ namespace FluentAssert.Exceptions
 		public const int MaxStringLength = 61;
 		internal static readonly int StringLeftStart = (int)Math.Ceiling(MaxStringLength / 2.0);
 
-
 		public static string BuildFor(string expected, string actual)
 		{
 			string message = "  Expected: " + expected + Environment.NewLine
 			                 + "  But was:  " + actual + Environment.NewLine;
 			return message;
+		}
+
+		private static string QuoteString(string input)
+		{
+			return "\"" + input + "\"";
+		}
+
+		private static string ShortenString(string input, int differenceIndex)
+		{
+			if (differenceIndex > MaxStringLength)
+			{
+				int start = differenceIndex - StringLeftStart;
+				string substring = input.Substring(start, Math.Min(input.Length - start, MaxStringLength));
+				input = Ellipsis + substring;
+				return input;
+			}
+			if (input.Length > MaxStringLength)
+			{
+				return input.Substring(0, MaxStringLength) + Ellipsis;
+			}
+			return input;
 		}
 
 		public static string ToDisplayableString(object input)
@@ -47,27 +67,6 @@ namespace FluentAssert.Exceptions
 				result = QuoteString(input);
 			}
 			return result;
-		}
-
-		private static string QuoteString(string input)
-		{
-			return "\"" + input + "\"";
-		}
-
-		private static string ShortenString(string input, int differenceIndex)
-		{
-			if (differenceIndex > MaxStringLength)
-			{
-				int start = differenceIndex - StringLeftStart;
-				string substring = input.Substring(start, Math.Min(input.Length - start, MaxStringLength));
-				input = Ellipsis + substring;
-				return input;
-			}
-			if (input.Length > MaxStringLength)
-			{
-				return input.Substring(0, MaxStringLength) + Ellipsis;
-			}
-			return input;
 		}
 	}
 }

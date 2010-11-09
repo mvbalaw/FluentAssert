@@ -22,7 +22,7 @@ namespace FluentAssert.Exceptions
 
 		public static string CreateMessage(Type type, Exception actualException)
 		{
-			string message = "  Should have thrown " + type.Name+Environment.NewLine;
+			string message = "  Should have thrown " + type.Name + Environment.NewLine;
 			if (actualException != null)
 			{
 				message += "  But threw " + actualException.GetType().Name + ": " + actualException.Message + Environment.NewLine;
