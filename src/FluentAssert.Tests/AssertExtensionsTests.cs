@@ -1686,7 +1686,10 @@ namespace FluentAssert.Tests
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
-			}
+                _exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: greater than {0}
+  But was:  {1}
+", _other, _input));
+            }
 
 			private void when_asserting_that_the_input_is_greater_than_the_other()
 			{
@@ -2098,6 +2101,9 @@ namespace FluentAssert.Tests
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
+			    _exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: greater than or equal to {0}
+  But was:  {1}
+", _other, _input));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other()
@@ -2511,6 +2517,9 @@ namespace FluentAssert.Tests
 			private void should_throw_a_ShouldBeLessThanAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeLessThanAssertionException), _exception.GetType());
+                _exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: less than {0}
+  But was:  {1}
+", _other, _input));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_the_other()
@@ -2923,6 +2932,9 @@ namespace FluentAssert.Tests
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
 				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
+			    _exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: less than or equal to {0}
+  But was:  {1}
+", _other, _input));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other()

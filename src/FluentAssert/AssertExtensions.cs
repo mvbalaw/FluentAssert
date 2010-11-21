@@ -146,8 +146,8 @@ namespace FluentAssert
 		{
 			return ShouldBeGreaterThan(item,
 			                           other,
-			                           () => ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
-			                                                                                     ExpectedMessageBuilder.ToDisplayableString(other)));
+			                           () => ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+			                                                                                     ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeGreaterThan<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -176,8 +176,8 @@ namespace FluentAssert
 		{
 			return ShouldBeGreaterThanOrEqualTo(item,
 			                                    other,
-			                                    () => ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
-			                                                                                                       ExpectedMessageBuilder.ToDisplayableString(other)));
+			                                    () => ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+			                                                                                                       ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -214,8 +214,8 @@ namespace FluentAssert
 		{
 			return ShouldBeLessThan(item,
 			                        other,
-			                        () => ShouldBeLessThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
-			                                                                               ExpectedMessageBuilder.ToDisplayableString(other)));
+			                        () => ShouldBeLessThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+			                                                                               ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeLessThan<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -244,8 +244,8 @@ namespace FluentAssert
 		{
 			return ShouldBeLessThanOrEqualTo(item,
 			                                 other,
-			                                 () => ShouldBeLessThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(item),
-			                                                                                                 ExpectedMessageBuilder.ToDisplayableString(other)));
+			                                 () => ShouldBeLessThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+			                                                                                                 ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeLessThanOrEqualTo<T>(this T item, T other, string errorMessage) where T : IComparable
