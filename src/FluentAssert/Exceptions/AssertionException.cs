@@ -8,11 +8,17 @@
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
 using System;
+using System.Runtime.Serialization;
 
 namespace FluentAssert.Exceptions
 {
 	public class AssertionException : Exception
 	{
+		protected AssertionException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+
 		internal AssertionException(string errorMessage)
 			: base(errorMessage)
 		{

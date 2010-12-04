@@ -7,28 +7,25 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
-using System;
-using System.Runtime.Serialization;
+using System.Diagnostics;
+using System.IO;
 
-namespace FluentAssert.Exceptions
+namespace FluentAssert.Exceptions.Rewriting
 {
-	[Serializable]
-	public class ShouldBeLessThanAssertionException : AssertionException
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
+	public class BinarySerializationBoxedPrimitiveSegment : IBinarySerializationSegment
 	{
-		protected ShouldBeLessThanAssertionException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
+		public bool IsMatch(MemoryStream memoryStream)
 		{
+			byte typeId = memoryStream.PeekByte();
+			return typeId == BinarySerializationSegment.BoxedPrimitiveSegment.TypeId;
 		}
 
-		internal ShouldBeLessThanAssertionException(string errorMessage)
-			: base(errorMessage)
+		public void Skip(MemoryStream memoryStream)
 		{
-		}
-
-		public static string CreateMessage(string other, string actual)
-		{
-			string message = ExpectedMessageBuilder.BuildFor("less than " + other, actual);
-			return message;
+			memoryStream.ReadByte();
+			memoryStream.ReadByte();
 		}
 	}
 }

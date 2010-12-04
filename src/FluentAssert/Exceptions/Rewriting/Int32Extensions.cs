@@ -7,28 +7,29 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
-using System;
-using System.Runtime.Serialization;
+using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace FluentAssert.Exceptions
+namespace FluentAssert.Exceptions.Rewriting
 {
-	[Serializable]
-	public class ShouldBeLessThanAssertionException : AssertionException
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
+	public static class Int32Extensions
 	{
-		protected ShouldBeLessThanAssertionException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
+		public static byte[] To7bitVariableLengthByteArray(this int input)
 		{
-		}
-
-		internal ShouldBeLessThanAssertionException(string errorMessage)
-			: base(errorMessage)
-		{
-		}
-
-		public static string CreateMessage(string other, string actual)
-		{
-			string message = ExpectedMessageBuilder.BuildFor("less than " + other, actual);
-			return message;
+			var bytes = new List<byte>();
+			do
+			{
+				byte value = (byte)(input & 0x7f);
+				input = input >> 7;
+				if (input > 0)
+				{
+					value |= 0x80;
+				}
+				bytes.Add(value);
+			} while (input > 0);
+			return bytes.ToArray();
 		}
 	}
 }

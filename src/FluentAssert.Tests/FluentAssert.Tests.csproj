@@ -50,7 +50,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensionsTests.cs" />
+    <Compile Include="EmbeddedResource.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationAssemblyInfoSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationBoxedPrimitiveSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationEndVariableLengthObjectSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationExternalVariableLengthObjectSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationHeaderSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationPartialExceptionClassSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationVariableLengthObjectSegmentTests.cs" />
+    <Compile Include="Exceptions\Rewriting\ExceptionRewriterTests.cs" />
     <Compile Include="Exceptions\ExpectedMessageBuilderTests.cs" />
+    <Compile Include="Exceptions\Rewriting\Int32ExtensionsTests.cs" />
+    <Compile Include="Exceptions\Rewriting\MemoryStreamExtensionsTests.cs" />
     <Compile Include="Exceptions\ShouldBeEqualAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldBeFalseAssertionExceptionTests.cs" />
     <Compile Include="Exceptions\ShouldBeGreaterThanAssertionExceptionTests.cs" />
@@ -69,6 +80,18 @@
       <Project>{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}</Project>
       <Name>FluentAssert</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\NotImplementedException.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\ShouldBeEqualAssertionException.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\ArgumentException.bin" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestData\AssertionException.bin" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,28 +7,13 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
-using System;
-using System.Runtime.Serialization;
+using System.IO;
 
-namespace FluentAssert.Exceptions
+namespace FluentAssert.Exceptions.Rewriting
 {
-	[Serializable]
-	public class ShouldBeLessThanAssertionException : AssertionException
-	{
-		protected ShouldBeLessThanAssertionException(SerializationInfo info, StreamingContext context)
-			: base(info, context)
-		{
-		}
-
-		internal ShouldBeLessThanAssertionException(string errorMessage)
-			: base(errorMessage)
-		{
-		}
-
-		public static string CreateMessage(string other, string actual)
-		{
-			string message = ExpectedMessageBuilder.BuildFor("less than " + other, actual);
-			return message;
-		}
-	}
+    public interface IBinarySerializationSegment
+    {
+        bool IsMatch(MemoryStream memoryStream);
+        void Skip(MemoryStream memoryStream);
+    }
 }

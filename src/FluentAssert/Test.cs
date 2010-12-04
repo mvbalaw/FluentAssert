@@ -7,8 +7,11 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Diagnostics;
+
+using FluentAssert.Exceptions.Rewriting;
 
 namespace FluentAssert
 {
@@ -36,7 +39,29 @@ namespace FluentAssert
 
 		public static void Verify(params Action[] actions)
 		{
-			new TestVerifyClause().Verify(actions);
+			try
+			{
+				new TestVerifyClause().Verify(actions);
+			}
+			catch (Exception e)
+			{
+				Exception result = null;
+				bool succeeded = true;
+				try
+				{
+					result = new ExceptionRewriter().RewriteStacktrace(e, "FluentAssert", "FluentAssert.Test.Verify");
+				}
+				catch
+				{
+					succeeded = false;
+				}
+				if (succeeded)
+				{
+					throw result;
+				}
+
+				throw;
+			}
 		}
 
 		public static void VerifyThrowsException<TExceptionType>(params Action[] actions)

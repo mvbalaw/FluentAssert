@@ -7,10 +7,19 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+using System;
+using System.Runtime.Serialization;
+
 namespace FluentAssert.Exceptions
 {
+	[Serializable]
 	public class ShouldBeTrueAssertionException : AssertionException
 	{
+		protected ShouldBeTrueAssertionException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+
 		public ShouldBeTrueAssertionException()
 			: base(CreateMessage())
 		{

@@ -8,11 +8,18 @@
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
 using System;
+using System.Runtime.Serialization;
 
 namespace FluentAssert.Exceptions
 {
+	[Serializable]
 	public class ShouldNotBeEqualAssertionException : AssertionException
 	{
+		protected ShouldNotBeEqualAssertionException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+
 		public ShouldNotBeEqualAssertionException(string input, string expected)
 			: base(CreateMessage(input, expected))
 		{

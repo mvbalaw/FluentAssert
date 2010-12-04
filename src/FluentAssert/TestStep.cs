@@ -27,7 +27,9 @@ namespace FluentAssert
 		bool IsMatch(Action action);
 	}
 
-	internal class TestStep : ITestStep
+    [DebuggerNonUserCode]
+    [DebuggerStepThrough]
+    internal class TestStep : ITestStep
 	{
 		public Action Action { get; set; }
 		public string Description { get; set; }

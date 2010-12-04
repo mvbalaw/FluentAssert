@@ -12,9 +12,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using FluentAssert.Exceptions;
+using FluentAssert.Exceptions.Rewriting;
 
 namespace FluentAssert
 {
@@ -42,10 +44,31 @@ namespace FluentAssert
 
 		public void Verify(params Action[] actions)
 		{
-			var testStepCreators = new ITestStepCreator[] { new WithTestStep(), new WhenTestStep(), new ExpectTestStep(), new ShouldTestStep(), new DefaultTestStep() };
-			var steps = actions.Select(x => TestStepCreator(testStepCreators, x)).ToList();
+			try
+			{
+				var testStepCreators = new ITestStepCreator[] { new WithTestStep(), new WhenTestStep(), new ExpectTestStep(), new ShouldTestStep(), new DefaultTestStep() };
+				var steps = actions.Select(x => TestStepCreator(testStepCreators, x)).ToList();
+				Verify(steps, _exceptionConfiguration);
+			}
+			catch (Exception e)
+			{
+				Exception result = null;
+				bool succeeded = true;
+				try
+				{
+					result = new ExceptionRewriter().RewriteStacktrace(e, "FluentAssert", "FluentAssert.TestVerifyClause.Verify");
+				}
+				catch
+				{
+					succeeded = false;
+				}
+				if (succeeded)
+				{
+					throw result;
+				}
 
-			Verify(steps, _exceptionConfiguration);
+				throw;
+			}
 		}
 
 		internal void Verify(List<ITestStep> steps)
@@ -53,10 +76,13 @@ namespace FluentAssert
 			Verify(steps, new ExceptionConfiguration());
 		}
 
-		private void Verify(List<ITestStep> steps, ExceptionConfiguration exceptionConfiguration)
+		private void Verify(IEnumerable<ITestStep> steps, ExceptionConfiguration exceptionConfiguration)
 		{
 			var scenarioDescription = new StringBuilder();
-			steps.ForEach(x => TestStepExecutor.Verify(scenarioDescription, x, exceptionConfiguration));
+			foreach (var step in steps)
+			{
+				TestStepExecutor.Verify(scenarioDescription, step, exceptionConfiguration);
+			}
 			if (_exceptionConfiguration.ExpectException)
 			{
 				Console.Error.WriteLine(scenarioDescription.ToString());

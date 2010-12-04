@@ -7,10 +7,19 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+using System;
+using System.Runtime.Serialization;
+
 namespace FluentAssert.Exceptions
 {
+	[Serializable]
 	public class ShouldBeGreaterThanAssertionException : AssertionException
 	{
+		protected ShouldBeGreaterThanAssertionException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+		}
+
 		internal ShouldBeGreaterThanAssertionException(string errorMessage)
 			: base(errorMessage)
 		{
