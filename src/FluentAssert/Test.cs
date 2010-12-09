@@ -49,18 +49,19 @@ namespace FluentAssert
 				bool succeeded = true;
 				try
 				{
-					result = new ExceptionRewriter().RewriteStacktrace(e, "FluentAssert", "FluentAssert.Test.Verify");
+					result = new ExceptionRewriter().RewriteStacktrace(e);
 				}
 				catch
 				{
 					succeeded = false;
 				}
-				if (succeeded)
+				if (!succeeded)
 				{
-					throw result;
+					e.PreserveStackTrace();
+					throw;
 				}
-
-				throw;
+				result.PreserveStackTrace();
+				throw result;
 			}
 		}
 
@@ -68,14 +69,60 @@ namespace FluentAssert
 			where TExceptionType : Exception
 		{
 			var exceptionConfiguration = new ExceptionConfiguration(typeof(TExceptionType));
-			new TestVerifyClause(exceptionConfiguration).Verify(actions);
+			try
+			{
+				new TestVerifyClause(exceptionConfiguration).Verify(actions);
+			}
+			catch (Exception e)
+			{
+				Exception result = null;
+				bool succeeded = true;
+				try
+				{
+					result = new ExceptionRewriter().RewriteStacktrace(e);
+				}
+				catch
+				{
+					succeeded = false;
+				}
+				if (!succeeded)
+				{
+					e.PreserveStackTrace();
+					throw;
+				}
+				result.PreserveStackTrace();
+				throw result;
+			}
 		}
 
 		public static void VerifyThrowsException<TExceptionType>(string expectedExceptionMessage, params Action[] actions)
 			where TExceptionType : Exception
 		{
 			var exceptionConfiguration = new ExceptionConfiguration(typeof(TExceptionType), expectedExceptionMessage);
-			new TestVerifyClause(exceptionConfiguration).Verify(actions);
+			try
+			{
+				new TestVerifyClause(exceptionConfiguration).Verify(actions);
+			}
+			catch (Exception e)
+			{
+				Exception result = null;
+				bool succeeded = true;
+				try
+				{
+					result = new ExceptionRewriter().RewriteStacktrace(e);
+				}
+				catch
+				{
+					succeeded = false;
+				}
+				if (!succeeded)
+				{
+					e.PreserveStackTrace();
+					throw;
+				}
+				result.PreserveStackTrace();
+				throw result;
+			}
 		}
 	}
 }

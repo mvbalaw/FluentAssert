@@ -14,12 +14,12 @@ namespace FluentAssert.Exceptions.Rewriting
 {
 	[DebuggerNonUserCode]
 	[DebuggerStepThrough]
-	public class BinarySerializationVariableLengthObjectSegment : IBinarySerializationSegment
+	public class BinarySerializationObjectReferenceSegment : IBinarySerializationSegment
 	{
 		public bool IsMatch(MemoryStream memoryStream)
 		{
 			byte typeId = memoryStream.PeekByte();
-			return typeId == BinarySerializationSegment.VariableLengthObjectSegment.TypeId;
+			return typeId == BinarySerializationSegment.ObjectReferenceSegment.TypeId;
 		}
 
 		public void Skip(MemoryStream memoryStream)
@@ -27,15 +27,6 @@ namespace FluentAssert.Exceptions.Rewriting
 			memoryStream.ReadByte();
 			memoryStream.ReadLEShort();
 			memoryStream.ReadLEShort();
-			memoryStream.ReadStringHaving7bitVariableLengthInt32Prefix();
-			byte typeId;
-			do
-			{
-				typeId = memoryStream.PeekByte();
-				var handler = BinarySerializationSegment.GetFor(typeId);
-				handler.Skip(memoryStream);
-			} while (typeId != BinarySerializationSegment.EndVariableLengthObjectSegment.TypeId &&
-			         typeId != BinarySerializationSegment.ObjectReferenceSegment.TypeId);
 		}
 	}
 }

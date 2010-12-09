@@ -24,6 +24,7 @@ namespace FluentAssert.Exceptions.Rewriting
 		public static BinarySerializationSegment EndVariableLengthObjectSegment = new BinarySerializationSegment(0x0a, new BinarySerializationEndVariableLengthObjectSegment());
 		public static BinarySerializationSegment ExternalClassSegment = new BinarySerializationSegment(0x05, new BinarySerializationPartialExceptionClassSegment());
 		public static BinarySerializationSegment ExternalVariableLengthObjectSegment = new BinarySerializationSegment(0x02, new BinarySerializationExternalVariableLengthObjectSegment());
+		public static BinarySerializationSegment ObjectReferenceSegment = new BinarySerializationSegment(0x09, new BinarySerializationObjectReferenceSegment());
 		public static BinarySerializationSegment RuntimeClassSegment = new BinarySerializationSegment(0x04, new BinarySerializationPartialExceptionClassSegment());
 		public static BinarySerializationSegment VariableLengthObjectSegment = new BinarySerializationSegment(0x06, new BinarySerializationVariableLengthObjectSegment());
 

@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+using FluentAssert.Exceptions.Rewriting;
+
 namespace FluentAssert
 {
 	[DebuggerNonUserCode]
@@ -59,11 +61,34 @@ namespace FluentAssert
 
 		public void Verify()
 		{
-			TestRunner.Verify(ActionDescriptionBuilder.BuildFor(_actionUnderTest),
-			                  _parameterActions,
-			                  () => _performAction(),
-			                  _dependencyActions,
-			                  _assertions);
+			try
+			{
+				TestRunner.Verify(ActionDescriptionBuilder.BuildFor(_actionUnderTest),
+								  _parameterActions,
+								  () => _performAction(),
+								  _dependencyActions,
+								  _assertions);
+			}
+			catch (Exception e)
+			{
+				Exception result = null;
+				bool succeeded = true;
+				try
+				{
+					result = new ExceptionRewriter().RewriteStacktrace(e);
+				}
+				catch
+				{
+					succeeded = false;
+				}
+				if (!succeeded)
+				{
+					e.PreserveStackTrace();
+					throw;
+				}
+				result.PreserveStackTrace();
+				throw result;
+			}
 		}
 	}
 
@@ -135,11 +160,34 @@ namespace FluentAssert
 
 		public void Verify()
 		{
-			TestRunner.Verify(_actionUnderTest.Description,
-			                  _parameterActions,
-			                  () => _performAction(_context),
-			                  _dependencyActions,
-			                  _assertions);
+			try
+			{
+				TestRunner.Verify(_actionUnderTest.Description,
+								  _parameterActions,
+								  () => _performAction(_context),
+								  _dependencyActions,
+								  _assertions);
+			}
+			catch (Exception e)
+			{
+				Exception result = null;
+				bool succeeded = true;
+				try
+				{
+					result = new ExceptionRewriter().RewriteStacktrace(e);
+				}
+				catch
+				{
+					succeeded = false;
+				}
+				if (!succeeded)
+				{
+					e.PreserveStackTrace();
+					throw;
+				}
+				result.PreserveStackTrace();
+				throw result;
+			}
 		}
 	}
 }

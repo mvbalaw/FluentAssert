@@ -56,8 +56,8 @@ namespace FluentAssert.Exceptions.Rewriting
 			if (nextTypeId == BinarySerializationSegment.EndVariableLengthObjectSegment.TypeId)
 			{
 				BinarySerializationSegment.EndVariableLengthObjectSegment.Handler.Skip(memoryStream);
+				nextTypeId = memoryStream.PeekByte();
 			}
-			nextTypeId = memoryStream.PeekByte();
 			if (nextTypeId != BinarySerializationSegment.VariableLengthObjectSegment.TypeId)
 			{
 				throw new ArgumentException("Expected next segment to be " + BinarySerializationSegment.VariableLengthObjectSegment.TypeId

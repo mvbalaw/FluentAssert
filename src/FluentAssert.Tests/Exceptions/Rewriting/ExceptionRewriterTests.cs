@@ -13,12 +13,10 @@ namespace FluentAssert.Tests.Exceptions.Rewriting
 		[TestFixture]
 		public class When_asked_to_rewrite_the_stacktrace
 		{
-			private const string StartRemovingAt = "FluentAssert";
-			private const string StopRemovingAt = "FluentAssert.Test";
 			private byte[] _bytes;
 			private ExceptionRewriter _rewriter;
 			private Exception _result;
-			private int _stackTracePosition;
+			private string _expectedStackTrace;
 
 			[SetUp]
 			public void BeforeEachTest()
@@ -64,29 +62,18 @@ namespace FluentAssert.Tests.Exceptions.Rewriting
 					when_asked_to_rewrite_the_stacktrace,
 					should_return_an_Exception_that_has_a_rewritten_stacktrace
 					);
-			}
-
-
+			}		
+			
 			private void should_return_an_Exception_that_has_a_rewritten_stacktrace()
 			{
-				var stream = new MemoryStream(_bytes)
-				{
-					Position = _stackTracePosition
-				};
-				var stackTrace = stream.ReadStringHaving7bitVariableLengthInt32Prefix();
-				var start = stackTrace.IndexOf("  at "+StartRemovingAt);
-				start.ShouldBeGreaterThan(0);
-				var end = stackTrace.LastIndexOf("  at "+StopRemovingAt);
-				end.ShouldBeGreaterThan(start);
-				stackTrace = stackTrace.Remove(start, end - start);
-
-				_result.StackTrace.ShouldBeEqualTo(stackTrace);
+				Console.WriteLine(_result.StackTrace);
+				_result.StackTrace.ShouldBeEqualTo(_expectedStackTrace);
 			}
 
 			private void when_asked_to_rewrite_the_stacktrace()
 			{
 				var exception = GetException();
-				_result = _rewriter.RewriteStacktrace(exception, StartRemovingAt, StopRemovingAt);
+				_result = _rewriter.RewriteStacktrace(exception);
 			}
 
 			public Exception GetException()
@@ -104,25 +91,32 @@ namespace FluentAssert.Tests.Exceptions.Rewriting
 			private void with_an_ArgumentException()
 			{
 				_bytes = EmbeddedResource.Read("ArgumentException.bin");
-				_stackTracePosition = 0x15b;
+				_expectedStackTrace = @"   at FluentAssert.Test.Verify(Action[] actions) in D:\projects\git-fluentassert\src\FluentAssert\Test.cs:line 43";
 			}
 
 			private void with_an_AssertionException()
 			{
 				_bytes = EmbeddedResource.Read("AssertionException.bin");
-				_stackTracePosition = 0x208;
+				_expectedStackTrace = @"   at NUnit.Framework.Assert.That(Object actual, IResolveConstraint expression, String message, Object[] args)
+   at FluentAssert.Tests.AssertExtensionsTests.When_asserting_that_a_boolean_should_be_false_with_a_Func_to_get_the_specific_error_message.should_throw_a_ShouldBeFalseAssertionException() in D:\projects\git-fluentassert\src\FluentAssert.Tests\AssertExtensionsTests.cs:line 158
+   at FluentAssert.Test.Verify(Action[] actions) in D:\projects\git-fluentassert\src\FluentAssert\Test.cs:line 43";
 			}
 
 			private void with_a_NotImplementedException()
 			{
 				_bytes = EmbeddedResource.Read("NotImplementedException.bin");
-				_stackTracePosition = 0x159;
+				_expectedStackTrace = @"   at FluentAssert.BinarySerializationParser.Parse(Byte[] input) in D:\projects\git-fluentassert\src\FluentAssert\BinarySerializationParser.cs:line 13
+   at FluentAssert.Tests.BinarySerializationParserTests.When_asked_to_parse_binary_serialized_data.when_asked_to_parse() in D:\projects\git-fluentassert\src\FluentAssert.Tests\BinarySerializationParserTests.cs:line 83
+   at FluentAssert.Test.Verify(Action[] actions) in D:\projects\git-fluentassert\src\FluentAssert\Test.cs:line 56
+   at FluentAssert.Tests.BinarySerializationParserTests.When_asked_to_parse_binary_serialized_data.Given_a_serialized_NotImplementedException() in D:\projects\git-fluentassert\src\FluentAssert.Tests\BinarySerializationParserTests.cs:line 43";
 			}
 
 			private void with_a_ShouldBeEqualAssertionException()
 			{
 				_bytes = EmbeddedResource.Read("ShouldBeEqualAssertionException.bin");
-				_stackTracePosition = 0x1cc;
+				_expectedStackTrace = @"   at FluentAssert.AssertExtensions.ShouldBeEqualTo[T](T item, T expected) in d:\projects\git-fluentassert\src\FluentAssert\AssertExtensions.cs:line 60
+   at SuitSystem.Web.Tests.TemplateGeneration.TemplateServiceTests.When_asked_to_generate_a_file_path_for_a_template.Return_the_file_path() in D:\projects\Enterprise\WorkingCopy\src\SuitSystem.Web.Tests\TemplateGeneration\TemplateServiceTests.cs:line 111
+   at FluentAssert.TestShouldClause`1.Verify() in d:\projects\git-fluentassert\src\FluentAssert\TestShouldClause.cs:line 78";
 			}
 		}
 	}

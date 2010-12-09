@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
@@ -48,14 +49,14 @@ namespace FluentAssert.Exceptions.Rewriting
 			exceptionClassSegment.SkipPrefix(stream);
 		}
 
-		public Exception RewriteStacktrace(Exception exception, string startRemovingAt, string stopRemovingAt)
+		public Exception RewriteStacktrace(Exception exception)
 		{
 			var stream = Serialize(exception);
 			FindStackTraceSegment(stream);
 			int stackTraceStart = (int)stream.Position;
 			string stackTrace = stream.ReadStringHaving7bitVariableLengthInt32Prefix();
 			int stackTraceEnd = (int)stream.Position;
-			stackTrace = RemoveSegmentFromStacktrace(stackTrace, startRemovingAt, stopRemovingAt);
+			stackTrace = RemoveSegmentFromStacktrace(stackTrace);
 			stream.Position = 0;
 			var bytes = stream.ToArray().ToList();
 			TransferUpdatedStacktraceToException(stackTrace, bytes, stackTraceStart, stackTraceEnd);
@@ -64,13 +65,64 @@ namespace FluentAssert.Exceptions.Rewriting
 			return result;
 		}
 
-		private static string RemoveSegmentFromStacktrace(string stackTrace, string startRemovingAt, string stopRemovingAt)
+		private static string RemoveSegmentFromStacktrace(string stackTrace)
 		{
-			int start = stackTrace.IndexOf("  at " + startRemovingAt);
-			start.ShouldBeGreaterThan(0);
-			int end = stackTrace.LastIndexOf("  at " + stopRemovingAt);
-			end.ShouldBeGreaterThan(start);
-			return stackTrace.Remove(start, end - start);
+			var originalTraceLines = stackTrace.Split(new[] { "\r\n" }, StringSplitOptions.None);
+			var callingAssembly = Assembly.GetCallingAssembly();
+			var result = new List<string>();
+
+			int? lastFluentAssert = null;
+			for (int i = 0; i < originalTraceLines.Length; i++)
+			{
+				var line = originalTraceLines[i];
+				var paren = line.IndexOf('(');
+				if (paren == -1)
+				{
+					lastFluentAssert = null;
+					result.Add(line);
+					continue;
+				}
+				line = line.Substring(0, paren);
+				var generic = line.IndexOf(".<");
+				if (generic != -1)
+				{
+					line = line.Substring(0, generic+1);
+				}
+				var dot = line.LastIndexOf('.');
+				if (dot == -1)
+				{
+					lastFluentAssert = null;
+					result.Add(originalTraceLines[i]);
+					continue;
+				}
+				var lastSpace = line.LastIndexOf(' ')+1;
+				var className = line.Substring(lastSpace, dot-lastSpace);
+				if (callingAssembly.GetType(className, false) != null)
+				{
+					lastFluentAssert = i;
+					continue;
+				}
+
+				if (lastFluentAssert != null)
+				{
+					var systemIndex = line.IndexOf("  at System.");
+					var isSystem = systemIndex < 2 && systemIndex > -1;
+					if (isSystem)
+					{
+						continue;
+					}
+					result.Add(originalTraceLines[lastFluentAssert.Value]);
+					lastFluentAssert = null;
+				}
+				result.Add(originalTraceLines[i]);
+			}
+
+			if (lastFluentAssert != null)
+			{
+				result.Add(originalTraceLines[lastFluentAssert.Value]);
+			}
+
+			return String.Join("\r\n", result.ToArray());
 		}
 
 		private static void TransferUpdatedStacktraceToException(string stackTrace, List<byte> bytes, int stackTraceStart, int stackTraceEnd)

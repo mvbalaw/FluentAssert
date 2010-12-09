@@ -56,18 +56,19 @@ namespace FluentAssert
 				bool succeeded = true;
 				try
 				{
-					result = new ExceptionRewriter().RewriteStacktrace(e, "FluentAssert", "FluentAssert.TestVerifyClause.Verify");
+					result = new ExceptionRewriter().RewriteStacktrace(e);
 				}
 				catch
 				{
 					succeeded = false;
 				}
-				if (succeeded)
+				if (!succeeded)
 				{
-					throw result;
+					e.PreserveStackTrace();
+					throw;
 				}
-
-				throw;
+				result.PreserveStackTrace();
+				throw result;
 			}
 		}
 

@@ -40,12 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionDescriptionBuilder.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationAssemblyInfoSegment.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationEndVariableLengthObjectSegment.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationExternalVariableLengthObjectSegment.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationHeaderSegment.cs" />
     <Compile Include="DependencyActionWrapper.cs" />
     <Compile Include="ExceptionConfiguration.cs" />
+    <Compile Include="Exceptions\Rewriting\BinarySerializationObjectReferenceSegment.cs" />
     <Compile Include="Exceptions\Rewriting\ExceptionRewriter.cs" />
     <Compile Include="Exceptions\AssertionException.cs" />
     <Compile Include="Exceptions\ExpectedMessageBuilder.cs" />

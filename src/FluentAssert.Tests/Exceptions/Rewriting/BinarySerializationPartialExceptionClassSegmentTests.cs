@@ -162,7 +162,7 @@ namespace FluentAssert.Tests.Exceptions.Rewriting
 			[Test]
 			public void Given_a_serialized_ShouldBeEqualAssertionException()
 			{
-				_expectedOffset = 0x1c7;
+				_expectedOffset = 0x2cf;
 
 				Test.Verify(
 					with_a_serialized_ShouldBeEqualAssertionException,
