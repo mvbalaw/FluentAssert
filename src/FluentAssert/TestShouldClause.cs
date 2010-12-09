@@ -93,10 +93,8 @@ namespace FluentAssert
 				}
 				if (!succeeded)
 				{
-					e.PreserveStackTrace();
 					throw;
 				}
-				result.PreserveStackTrace();
 				throw result;
 			}
 		}
@@ -212,10 +210,8 @@ namespace FluentAssert
 				}
 				if (!succeeded)
 				{
-					e.PreserveStackTrace();
 					throw;
 				}
-				result.PreserveStackTrace();
 				throw result;
 			}
 		}

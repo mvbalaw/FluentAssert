@@ -40,7 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionDescriptionBuilder.cs" />
-    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationAssemblyInfoSegment.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationEndVariableLengthObjectSegment.cs" />
     <Compile Include="Exceptions\Rewriting\BinarySerializationExternalVariableLengthObjectSegment.cs" />

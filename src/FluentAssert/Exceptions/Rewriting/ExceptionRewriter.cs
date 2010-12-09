@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
@@ -24,7 +25,8 @@ namespace FluentAssert.Exceptions.Rewriting
 	{
 		private static Exception Deserialize(byte[] bytes)
 		{
-			var bf = new BinaryFormatter();
+			var context = new StreamingContext(StreamingContextStates.CrossAppDomain);
+			var bf = new BinaryFormatter(null, context);
 			var stream = new MemoryStream(bytes);
 			var result = (Exception)bf.Deserialize(stream);
 			stream.Close();
