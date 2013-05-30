@@ -41,6 +41,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ActionDescriptionBuilder.cs" />
     <Compile Include="DependencyActionWrapper.cs" />
     <Compile Include="ExceptionConfiguration.cs" />

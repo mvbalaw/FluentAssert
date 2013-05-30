@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AssertExtensionsTests.cs" />
     <Compile Include="EmbeddedResource.cs" />
     <Compile Include="Exceptions\ExpectedMessageBuilderTests.cs" />
