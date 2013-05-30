@@ -1,0 +1,155 @@
+# encoding: utf-8
+require 'albacore'
+
+PRODUCT_NAME = "FluentAssert"
+COMPILE_TARGET = ENV['compile_mode'].nil? ? "Debug" : ENV['compile_mode']
+CLR_TOOLS_VERSION = "v3.5"
+DEFAULT_BUILD_NUMBER = "1.0.0"
+COMPANY_NAME = "MVBA, P.C."
+COPYRIGHT = "MVBA, P.C. (c) 2009-2013"
+ARTIFACTS = File.expand_path("dist")
+STAGE = File.expand_path("build")
+SETTINGS_DIR = "settings"
+
+nunit_cmd = "tools/NUnit/bin/nunit-console.exe"
+
+beginning = Time.now
+
+default_settings = { :artifacts => ARTIFACTS, 
+					 :stage => STAGE
+					}
+
+def read_config(settings_directory, env)
+	settings = {}
+	default_settings_file = "#{settings_directory}/#{env}.default.yaml"
+	if File.exists?(default_settings_file) then
+		settings = YAML.load_file(default_settings_file)
+	end
+	settings_file = "#{settings_directory}/#{env}.yaml"
+	if File.exists?(settings_file) then
+		overrides = YAML.load_file(settings_file)
+		overrides.each do |k,v|
+			settings[k] = v
+		end	
+	end
+	return settings
+end
+
+environment = ENV['environment']
+settings = read_config(SETTINGS_DIR, environment)
+default_settings.each { |key, val| if settings[key].nil? then settings[key] = default_settings[key] end }
+
+puts "Rakefile settings:"
+settings.each { |key, val| puts "#{key} => #{val}" }
+puts
+
+
+desc "** Default **"
+task :default => [:build, :copy_artifacts, :test, :archive] do
+  puts "Build Succeeded - time elapsed: #{Time.now - beginning} seconds"
+end
+
+desc "Creates CommonAssemblyInfo.cs file"
+assemblyinfo :assemblyinfo do |asm| 
+  build_number = get_build_number
+  build_number_with_hash = get_build_number_with_hash
+  asm.product_name = PRODUCT_NAME
+  asm.version = build_number
+  asm.file_version = build_number
+  asm.trademark = build_number_with_hash
+  asm.company_name = COMPANY_NAME
+  asm.copyright = COPYRIGHT 
+  asm.output_file = "src/CommonAssemblyInfo.cs"
+end
+
+desc "Builds the #{PRODUCT_NAME} solution"
+msbuild :build => [:clean, :assemblyinfo] do |msb|
+  puts "Compiling #{PRODUCT_NAME} in #{COMPILE_TARGET} mode..."
+  msb.properties :configuration => COMPILE_TARGET
+  msb.targets :Clean, :Build
+  msb.solution = "src/#{PRODUCT_NAME}.sln"
+  msb.verbosity = "quiet"
+  sleep 1
+end
+
+desc "Copy build artifacts to the staging folder"
+task :copy_artifacts => [:build] do
+  puts "Copying files from bin folders to the build folder (#{settings[:stage]})..."
+  copy_output_files "src/#{PRODUCT_NAME}/bin/#{COMPILE_TARGET}", "*.{dll,pdb,exe}", settings[:stage]
+  copy_output_files "src/#{PRODUCT_NAME}.Tests/bin/#{COMPILE_TARGET}", "*.{dll,pdb,exe}", settings[:stage]
+end
+
+desc "Prepares the working directory for a new build"
+task :clean do
+  FileUtils.rm_rf settings[:stage]  
+  # work around nasty latency issue where folder still exists for a short while after it is removed
+  wait_for { !Dir.exists?(settings[:stage]) }
+  Dir.mkdir settings[:stage]
+  Dir.mkdir settings[:artifacts] unless Dir.exists?(settings[:artifacts])
+end
+
+desc "Runs the unit tests"
+nunit :test do |nunit|
+  puts "Running the unit tests in the build folder (#{settings[:stage]})..."
+  nunit.command = nunit_cmd
+  nunit.options "/framework #{CLR_TOOLS_VERSION}"
+  nunit.assemblies "#{settings[:stage]}/#{PRODUCT_NAME}.Tests.dll"
+end
+
+desc "Zips up the build results"
+zip :archive do |zip|
+  puts "Zipping up the build folder and copying to artifact folder (#{settings[:artifacts]})..."
+  mkdir settings[:artifacts] unless Dir.exists?(settings[:artifacts])
+  build_number = get_build_number
+  zip.directories_to_zip = [settings[:stage]]
+  zip.output_file = "#{PRODUCT_NAME}_#{build_number}.#{COMPILE_TARGET}.zip"
+  zip.output_path = [settings[:artifacts]]
+  puts "Artifacts are available in the artifact folder: #{settings[:artifacts]}"
+end
+
+
+def copy_output_files(fromDir, filePattern, outDir)
+  Dir.glob(File.join(fromDir, filePattern)){|file| 		
+	copy(file, outDir) if File.file?(file)
+  } 
+end
+
+def get_build_number
+  begin
+    gittag = `git describe --long`.chomp # looks something like v0.1.0-63-g3f10c2e
+    puts "gittag: #{gittag}"
+    parts = gittag.split("-")
+    base_version = parts[0].gsub("v","")
+    git_build_revision = parts[1]
+    git_short_hash = parts[2]
+    puts "base_version: #{base_version}"
+    puts "git_build_revision: #{git_build_revision}"
+    puts "git_short_hash: #{git_short_hash}"
+    build_number = "#{base_version}.#{git_build_revision}"	
+  rescue
+    build_number = DEFAULT_BUILD_NUMBER
+  end
+end
+
+def get_build_number_with_hash
+  begin
+    gittag = `git describe --long`.chomp # looks something like v0.1.0-63-g3f10c2e
+    #puts "gittag: #{gittag}"
+    parts = gittag.split("-")
+    base_version = parts[0].gsub("v","")
+    git_build_revision = parts[1]
+    git_short_hash = parts[2]
+    build_number_with_hash = "#{base_version}.#{git_build_revision}-#{git_short_hash}"	
+  rescue
+    build_number_with_hash = DEFAULT_BUILD_NUMBER
+  end
+end
+
+def wait_for(&block) 
+  checks = 0
+  until block.call || checks >10 
+    sleep 0.5
+    checks += 1
+  end
+  raise 'waitfor timeout expired' if checks > 10
+end

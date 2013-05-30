@@ -12,11 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 using FluentAssert.Exceptions;
-using FluentAssert.Exceptions.Rewriting;
 
 namespace FluentAssert
 {
@@ -52,21 +50,7 @@ namespace FluentAssert
 			}
 			catch (Exception e)
 			{
-				Exception result = null;
-				bool succeeded = true;
-				try
-				{
-					result = new ExceptionRewriter().RewriteStacktrace(e);
-				}
-				catch
-				{
-					succeeded = false;
-				}
-				if (!succeeded)
-				{
-					throw;
-				}
-				throw result;
+				throw new AssertionException(e);
 			}
 		}
 

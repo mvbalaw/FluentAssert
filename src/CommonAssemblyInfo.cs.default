@@ -1,0 +1,7 @@
+using System.Reflection;
+using System.Runtime.InteropServices;
+[assembly: AssemblyCompany("MVBA, P.C.")]
+[assembly: AssemblyProduct("FluentAssert")]
+[assembly: AssemblyCopyright("MVBA, P.C. (c) 2013")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

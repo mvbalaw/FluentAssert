@@ -42,22 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionDescriptionBuilder.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationAssemblyInfoSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationEndVariableLengthObjectSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationExternalVariableLengthObjectSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationHeaderSegment.cs" />
     <Compile Include="DependencyActionWrapper.cs" />
     <Compile Include="ExceptionConfiguration.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationObjectReferenceSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\ExceptionRewriter.cs" />
     <Compile Include="Exceptions\AssertionException.cs" />
     <Compile Include="Exceptions\ExpectedMessageBuilder.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationPartialExceptionClassSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationPropertyType.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationBoxedPrimitiveSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\BinarySerializationVariableLengthObjectSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\Int32Extensions.cs" />
     <Compile Include="Exceptions\ShouldBeEqualAssertionException.cs" />
     <Compile Include="Exceptions\ShouldBeFalseAssertionException.cs" />
     <Compile Include="Exceptions\ShouldBeGreaterThanAssertionException.cs" />
@@ -69,8 +57,6 @@
     <Compile Include="Exceptions\ShouldNotBeEqualAssertionException.cs" />
     <Compile Include="Exceptions\ShouldNotBeNullAssertionException.cs" />
     <Compile Include="Exceptions\ShouldThrowExceptionAssertionException.cs" />
-    <Compile Include="Exceptions\Rewriting\IBinarySerializationSegment.cs" />
-    <Compile Include="Exceptions\Rewriting\MemoryStreamExtensions.cs" />
     <Compile Include="TestExpectClause.cs" />
     <Compile Include="TestExpectStaticClause.cs" />
     <Compile Include="TestRunner.cs" />

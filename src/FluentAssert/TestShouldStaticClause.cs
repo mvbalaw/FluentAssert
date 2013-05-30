@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-using FluentAssert.Exceptions.Rewriting;
+using FluentAssert.Exceptions;
 
 namespace FluentAssert
 {
@@ -71,21 +71,7 @@ namespace FluentAssert
 			}
 			catch (Exception e)
 			{
-				Exception result = null;
-				bool succeeded = true;
-				try
-				{
-					result = new ExceptionRewriter().RewriteStacktrace(e);
-				}
-				catch
-				{
-					succeeded = false;
-				}
-				if (!succeeded)
-				{
-					throw;
-				}
-				throw result;
+				throw new AssertionException(e);
 			}
 		}
 	}
@@ -168,21 +154,7 @@ namespace FluentAssert
 			}
 			catch (Exception e)
 			{
-				Exception result = null;
-				bool succeeded = true;
-				try
-				{
-					result = new ExceptionRewriter().RewriteStacktrace(e);
-				}
-				catch
-				{
-					succeeded = false;
-				}
-				if (!succeeded)
-				{
-					throw;
-				}
-				throw result;
+				throw new AssertionException(e);
 			}
 		}
 	}

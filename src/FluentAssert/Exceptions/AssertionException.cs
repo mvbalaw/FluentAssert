@@ -8,6 +8,7 @@
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
 using System;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace FluentAssert.Exceptions
@@ -27,6 +28,20 @@ namespace FluentAssert.Exceptions
 		internal AssertionException(string errorMessage, Exception innerException)
 			: base(errorMessage, innerException)
 		{
+		}
+
+		public AssertionException(Exception exception)
+			:base("",exception)
+		{
+		}
+
+		public override string StackTrace
+		{
+			get
+			{
+				var result = String.Join(Environment.NewLine, base.StackTrace.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Where(x => !x.Contains("FluentAssert.")).ToArray());
+				return result;
+			}
 		}
 	}
 }
