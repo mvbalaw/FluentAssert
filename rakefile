@@ -8,6 +8,7 @@ DEFAULT_BUILD_NUMBER = "1.0.0"
 COMPANY_NAME = "MVBA, P.C."
 COPYRIGHT = "MVBA, P.C. (c) 2009-2013"
 ARTIFACTS = File.expand_path("dist")
+COMPILE_TARGET = "Debug"
 STAGE = File.expand_path("build")
 SETTINGS_DIR = "settings"
 
@@ -16,6 +17,7 @@ nunit_cmd = "tools/NUnit/bin/nunit-console.exe"
 beginning = Time.now
 
 default_settings = { :artifacts => ARTIFACTS, 
+					 :compile_target => COMPILE_TARGET,
 					 :stage => STAGE
 					}
 
@@ -64,8 +66,8 @@ end
 
 desc "Builds the #{PRODUCT_NAME} solution"
 msbuild :build => [:clean, :assemblyinfo] do |msb|
-  puts "Compiling #{PRODUCT_NAME} in #{COMPILE_TARGET} mode..."
-  msb.properties :configuration => COMPILE_TARGET
+  puts "Compiling #{PRODUCT_NAME} in #{settings[:compile_target]} mode..."
+  msb.properties :configuration => settings[:compile_target]
   msb.targets :Clean, :Build
   msb.solution = "src/#{PRODUCT_NAME}.sln"
   msb.verbosity = "quiet"
@@ -75,8 +77,8 @@ end
 desc "Copy build artifacts to the staging folder"
 task :copy_artifacts => [:build] do
   puts "Copying files from bin folders to the build folder (#{settings[:stage]})..."
-  copy_output_files "src/#{PRODUCT_NAME}/bin/#{COMPILE_TARGET}", "*.{dll,pdb,exe}", settings[:stage]
-  copy_output_files "src/#{PRODUCT_NAME}.Tests/bin/#{COMPILE_TARGET}", "*.{dll,pdb,exe}", settings[:stage]
+  copy_output_files "src/#{PRODUCT_NAME}/bin/#{settings[:compile_target]}", "*.{dll,pdb,exe}", settings[:stage]
+  copy_output_files "src/#{PRODUCT_NAME}.Tests/bin/#{settings[:compile_target]}", "*.{dll,pdb,exe}", settings[:stage]
 end
 
 desc "Prepares the working directory for a new build"
@@ -102,7 +104,7 @@ zip :archive do |zip|
   mkdir settings[:artifacts] unless Dir.exists?(settings[:artifacts])
   build_number = get_build_number
   zip.directories_to_zip = [settings[:stage]]
-  zip.output_file = "#{PRODUCT_NAME}_#{build_number}.#{COMPILE_TARGET}.zip"
+  zip.output_file = "#{PRODUCT_NAME}_#{build_number}.#{settings[:compile_target]}.zip"
   zip.output_path = [settings[:artifacts]]
   puts "Artifacts are available in the artifact folder: #{settings[:artifacts]}"
 end
