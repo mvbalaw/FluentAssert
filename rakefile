@@ -1,8 +1,6 @@
-# encoding: utf-8
 require 'albacore'
 
 PRODUCT_NAME = "FluentAssert"
-COMPILE_TARGET = ENV['compile_mode'].nil? ? "Debug" : ENV['compile_mode']
 CLR_TOOLS_VERSION = "v3.5"
 DEFAULT_BUILD_NUMBER = "1.0.0"
 COMPANY_NAME = "MVBA, P.C."
