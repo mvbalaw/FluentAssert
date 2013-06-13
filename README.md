@@ -47,7 +47,7 @@ The build script requires Ruby with rake installed.
 If you do not have ruby:
 
 1. You need to create a src\CommonAssemblyInfo.cs file. Go.bat will copy src\CommonAssemblyInfo.cs.default to src\CommonAssemblyInfo.cs
-1. open src\StarterTree.sln with Visual Studio and build the solution
+1. open src\FluentAssert.sln with Visual Studio and build the solution
 		
 ### License		
 
