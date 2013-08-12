@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,13 +22,13 @@ namespace FluentAssert
 	{
 		public static string BuildFor(MulticastDelegate action)
 		{
-			string name = action.Method.Name;
+			var name = action.Method.Name;
 			return BuildFor(name);
 		}
 
 		public static string BuildFor(MulticastDelegate action, string prefixToExclude)
 		{
-			string name = action.Method.Name;
+			var name = action.Method.Name;
 			if (name.StartsWith(prefixToExclude, true, CultureInfo.CurrentCulture))
 			{
 				name = name.Substring(prefixToExclude.Length).TrimStart('_');
@@ -37,7 +38,7 @@ namespace FluentAssert
 
 		private static string BuildFor(string name)
 		{
-			var readable = name.SelectMany(x => Cleanup(x)).ToArray();
+			var readable = name.SelectMany(Cleanup).ToArray();
 			return new string(readable).TrimStart();
 		}
 

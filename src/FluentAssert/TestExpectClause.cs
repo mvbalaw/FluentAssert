@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,8 +24,8 @@ namespace FluentAssert
 		private readonly IEnumerable<IParameterActionWrapper> _parameterActions;
 
 		internal TestExpectClause(T actionContainer,
-		                          IWhenActionWrapper actionUnderTest,
-		                          IEnumerable<IParameterActionWrapper> parameterActions)
+			IWhenActionWrapper actionUnderTest,
+			IEnumerable<IParameterActionWrapper> parameterActions)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
@@ -40,36 +41,36 @@ namespace FluentAssert
 		public TestShouldClause<T> Should(Action assertion)
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions,
-			                               _dependencyActions)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T> Should(Action<T> assertion)
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions,
-			                               _dependencyActions)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions,
-			                               _dependencyActions)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions)
 				.ShouldThrowException<TExceptionType>();
 		}
 
 		public TestShouldClause<T> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions,
-			                               _dependencyActions)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 	}
@@ -85,9 +86,9 @@ namespace FluentAssert
 		private readonly IEnumerable<IParameterActionWrapper> _parameterActions;
 
 		internal TestExpectClause(T actionContainer,
-		                          IWhenActionWrapper actionUnderTest,
-		                          IEnumerable<IParameterActionWrapper> parameterActions,
-		                          TContext context)
+			IWhenActionWrapper actionUnderTest,
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			TContext context)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
@@ -104,60 +105,60 @@ namespace FluentAssert
 		public TestShouldClause<T, TContext> Should<TBaseContext>(Action<T, TBaseContext> assertion) where TBaseContext : class
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action<T, TContext> assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action<TContext> assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action<T> assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.ShouldThrowException<TExceptionType>();
 		}
 
@@ -165,10 +166,10 @@ namespace FluentAssert
 			where TExceptionType : Exception
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _dependencyActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_dependencyActions,
+				_context)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 	}

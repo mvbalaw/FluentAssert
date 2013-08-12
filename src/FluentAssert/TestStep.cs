@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -27,9 +28,9 @@ namespace FluentAssert
 		bool IsMatch(Action action);
 	}
 
-    [DebuggerNonUserCode]
-    [DebuggerStepThrough]
-    internal class TestStep : ITestStep
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
+	internal class TestStep : ITestStep
 	{
 		public Action Action { get; set; }
 		public string Description { get; set; }

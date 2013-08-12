@@ -67,7 +67,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_Type_differences_correctly()
 			{
-				string message = "";
+				var message = "";
 				try
 				{
 					Assert.AreEqual(_expected, _input);
@@ -131,7 +131,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_differences_correctly()
 			{
-				string message = "";
+				var message = "";
 				try
 				{
 					Assert.AreEqual(_expected, _input);
@@ -306,7 +306,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_string_differences_correctly()
 			{
-				string message = "";
+				var message = "";
 				try
 				{
 					Assert.AreEqual(_expected, _input);

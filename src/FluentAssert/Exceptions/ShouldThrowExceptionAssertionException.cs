@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Runtime.Serialization;
 
@@ -38,7 +39,7 @@ namespace FluentAssert.Exceptions
 
 		public static string CreateMessage(Type type, Exception actualException)
 		{
-			string message = "  Should have thrown " + type.Name + Environment.NewLine;
+			var message = "  Should have thrown " + type.Name + Environment.NewLine;
 			if (actualException != null)
 			{
 				message += "  But threw " + actualException.GetType().Name + ": " + actualException.Message + Environment.NewLine;

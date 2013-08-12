@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,47 +32,47 @@ namespace FluentAssert
 		public TestExpectClause<T> Expect(Action dependencyAction)
 		{
 			return new TestExpectClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions)
+				_actionUnderTest,
+				_parameterActions)
 				.Expect(dependencyAction);
 		}
 
 		public TestShouldClause<T> Should(Action<T> assertion)
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions)
+				_actionUnderTest,
+				_parameterActions)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T> Should(Action assertion)
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions)
+				_actionUnderTest,
+				_parameterActions)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions)
+				_actionUnderTest,
+				_parameterActions)
 				.ShouldThrowException<TExceptionType>();
 		}
 
 		public TestShouldClause<T> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			return new TestShouldClause<T>(_actionContainer,
-			                               _actionUnderTest,
-			                               _parameterActions)
+				_actionUnderTest,
+				_parameterActions)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 
 		public TestWhenClause<T> With(Action<T> parameterAction)
 		{
 			_parameterActions.Add(new ParameterActionWrapper<T>(_actionContainer,
-			                                                    parameterAction));
+				parameterAction));
 			return this;
 		}
 
@@ -102,54 +103,54 @@ namespace FluentAssert
 		public TestExpectClause<T, TContext> Expect(Action dependencyAction)
 		{
 			return new TestExpectClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.Expect(dependencyAction);
 		}
 
 		public TestShouldClause<T, TContext> Should<TBaseContext>(Action<T, TBaseContext> assertion) where TBaseContext : class
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action<T, TContext> assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action<TContext> assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action<T> assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldClause<T, TContext> Should(Action assertion)
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
@@ -157,9 +158,9 @@ namespace FluentAssert
 		{
 			return
 				new TestShouldClause<T, TContext>(_actionContainer,
-				                                  _actionUnderTest,
-				                                  _parameterActions,
-				                                  _context)
+					_actionUnderTest,
+					_parameterActions,
+					_context)
 					.ShouldThrowException<TExceptionType>();
 		}
 
@@ -167,9 +168,9 @@ namespace FluentAssert
 			where TExceptionType : Exception
 		{
 			return new TestShouldClause<T, TContext>(_actionContainer,
-			                                         _actionUnderTest,
-			                                         _parameterActions,
-			                                         _context)
+				_actionUnderTest,
+				_parameterActions,
+				_context)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 
@@ -180,31 +181,31 @@ namespace FluentAssert
 			if (baseContext == null)
 			{
 				throw new InvalidCastException(typeof(TContext).Name + " must inherit from " + typeof(TBaseContext) +
-				                               " in order to call " + parameterAction.Method.Name);
+					" in order to call " + parameterAction.Method.Name);
 			}
 			_parameterActions.Add(new ParameterActionWrapper<T, TBaseContext>(_actionContainer, baseContext,
-			                                                                  parameterAction));
+				parameterAction));
 			return this;
 		}
 
 		public TestWhenClause<T, TContext> With(Action<T, TContext> parameterAction)
 		{
 			_parameterActions.Add(new ParameterActionWrapper<T, TContext>(_actionContainer, _context,
-			                                                              parameterAction));
+				parameterAction));
 			return this;
 		}
 
 		public TestWhenClause<T, TContext> With(Action<TContext> parameterAction)
 		{
 			_parameterActions.Add(new ParameterActionWrapper<TContext>(_context,
-			                                                           parameterAction));
+				parameterAction));
 			return this;
 		}
 
 		public TestWhenClause<T, TContext> With(Action<T> parameterAction)
 		{
 			_parameterActions.Add(new ParameterActionWrapper<T>(_actionContainer,
-			                                                    parameterAction));
+				parameterAction));
 			return this;
 		}
 

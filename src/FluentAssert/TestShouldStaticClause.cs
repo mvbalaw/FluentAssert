@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,14 +27,14 @@ namespace FluentAssert
 		private Action _performAction;
 
 		internal TestShouldStaticClause(Action actionUnderTest,
-		                                IEnumerable<IParameterActionWrapper> parameterActions)
+			IEnumerable<IParameterActionWrapper> parameterActions)
 			: this(actionUnderTest, parameterActions, new List<IDependencyActionWrapper>())
 		{
 		}
 
 		internal TestShouldStaticClause(Action actionUnderTest,
-		                                IEnumerable<IParameterActionWrapper> parameterActions,
-		                                IEnumerable<IDependencyActionWrapper> dependencyActions)
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			IEnumerable<IDependencyActionWrapper> dependencyActions)
 		{
 			_actionUnderTest = actionUnderTest;
 			_parameterActions = parameterActions;
@@ -64,10 +65,10 @@ namespace FluentAssert
 			try
 			{
 				TestRunner.Verify(ActionDescriptionBuilder.BuildFor(_actionUnderTest),
-								  _parameterActions,
-								  () => _performAction(),
-								  _dependencyActions,
-								  _assertions);
+					_parameterActions,
+					() => _performAction(),
+					_dependencyActions,
+					_assertions);
 			}
 			catch (Exception e)
 			{
@@ -88,16 +89,16 @@ namespace FluentAssert
 		private Action<TContext> _performAction;
 
 		internal TestShouldStaticClause(IWhenActionWrapper actionUnderTest,
-		                                IEnumerable<IParameterActionWrapper> parameterActions,
-		                                TContext context)
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			TContext context)
 			: this(actionUnderTest, parameterActions, new List<IDependencyActionWrapper>(), context)
 		{
 		}
 
 		internal TestShouldStaticClause(IWhenActionWrapper actionUnderTest,
-		                                IEnumerable<IParameterActionWrapper> parameterActions,
-		                                IEnumerable<IDependencyActionWrapper> dependencyActions,
-		                                TContext context)
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			IEnumerable<IDependencyActionWrapper> dependencyActions,
+			TContext context)
 		{
 			_actionUnderTest = actionUnderTest;
 			_parameterActions = parameterActions;
@@ -147,10 +148,10 @@ namespace FluentAssert
 			try
 			{
 				TestRunner.Verify(_actionUnderTest.Description,
-								  _parameterActions,
-								  () => _performAction(_context),
-								  _dependencyActions,
-								  _assertions);
+					_parameterActions,
+					() => _performAction(_context),
+					_dependencyActions,
+					_assertions);
 			}
 			catch (Exception e)
 			{

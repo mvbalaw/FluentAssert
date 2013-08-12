@@ -7,13 +7,14 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Diagnostics;
 
 namespace FluentAssert
 {
-    [DebuggerNonUserCode]
-    [DebuggerStepThrough]
+	[DebuggerNonUserCode]
+	[DebuggerStepThrough]
 	public class ExceptionConfiguration
 	{
 		public ExceptionConfiguration()

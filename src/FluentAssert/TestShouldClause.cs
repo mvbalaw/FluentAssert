@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,16 +28,16 @@ namespace FluentAssert
 		private Action<T> _performAction;
 
 		internal TestShouldClause(T actionContainer,
-		                          IWhenActionWrapper actionUnderTest,
-		                          IEnumerable<IParameterActionWrapper> parameterActions)
+			IWhenActionWrapper actionUnderTest,
+			IEnumerable<IParameterActionWrapper> parameterActions)
 			: this(actionContainer, actionUnderTest, parameterActions, new List<IDependencyActionWrapper>())
 		{
 		}
 
 		internal TestShouldClause(T actionContainer,
-		                          IWhenActionWrapper actionUnderTest,
-		                          IEnumerable<IParameterActionWrapper> parameterActions,
-		                          IEnumerable<IDependencyActionWrapper> dependencyActions)
+			IWhenActionWrapper actionUnderTest,
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			IEnumerable<IDependencyActionWrapper> dependencyActions)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
@@ -74,10 +75,10 @@ namespace FluentAssert
 			try
 			{
 				TestRunner.Verify(_actionUnderTest.Description,
-								  _parameterActions,
-								  () => _performAction(_actionContainer),
-								  _dependencyActions,
-								  _assertions);
+					_parameterActions,
+					() => _performAction(_actionContainer),
+					_dependencyActions,
+					_assertions);
 			}
 			catch (Exception e)
 			{
@@ -99,18 +100,18 @@ namespace FluentAssert
 		private Action<T, TContext> _performAction;
 
 		internal TestShouldClause(T actionContainer,
-		                          IWhenActionWrapper actionUnderTest,
-		                          IEnumerable<IParameterActionWrapper> parameterActions,
-		                          TContext context)
+			IWhenActionWrapper actionUnderTest,
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			TContext context)
 			: this(actionContainer, actionUnderTest, parameterActions, new List<IDependencyActionWrapper>(), context)
 		{
 		}
 
 		internal TestShouldClause(T actionContainer,
-		                          IWhenActionWrapper actionUnderTest,
-		                          IEnumerable<IParameterActionWrapper> parameterActions,
-		                          IEnumerable<IDependencyActionWrapper> dependencyActions,
-		                          TContext context)
+			IWhenActionWrapper actionUnderTest,
+			IEnumerable<IParameterActionWrapper> parameterActions,
+			IEnumerable<IDependencyActionWrapper> dependencyActions,
+			TContext context)
 		{
 			_actionContainer = actionContainer;
 			_actionUnderTest = actionUnderTest;
@@ -126,7 +127,7 @@ namespace FluentAssert
 			if (baseContext == null)
 			{
 				throw new InvalidCastException(typeof(TContext).Name + " must inherit from " + typeof(TBaseContext) +
-				                               " in order to call " + assertion.Method.Name);
+					" in order to call " + assertion.Method.Name);
 			}
 
 			_assertions.Add(new AssertionActionWrapper<T, TBaseContext>(_actionContainer, baseContext, assertion));
@@ -176,10 +177,10 @@ namespace FluentAssert
 			try
 			{
 				TestRunner.Verify(_actionUnderTest.Description,
-								  _parameterActions,
-								  () => _performAction(_actionContainer, _context),
-								  _dependencyActions,
-								  _assertions
+					_parameterActions,
+					() => _performAction(_actionContainer, _context),
+					_dependencyActions,
+					_assertions
 					);
 			}
 			catch (Exception e)

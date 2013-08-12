@@ -54,14 +54,14 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_expected_type_and_the_actual_exception()
 			{
-				string expected = GetExpectedExceptionDescription();
-				string actual = "  But threw " + _actualException.GetType().Name + ": " + _actualException.Message + Environment.NewLine;
+				var expected = GetExpectedExceptionDescription();
+				var actual = "  But threw " + _actualException.GetType().Name + ": " + _actualException.Message + Environment.NewLine;
 				_result.ShouldBeEqualTo(expected + actual);
 			}
 
 			private void should_only_describe_the_expected_type()
 			{
-				string expected = GetExpectedExceptionDescription();
+				var expected = GetExpectedExceptionDescription();
 				_result.ShouldBeEqualTo(expected);
 			}
 
@@ -72,6 +72,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void with_a_non_null_actual_exception()
 			{
+// ReSharper disable once NotResolvedInText
 				_actualException = new ArgumentOutOfRangeException("foo");
 			}
 

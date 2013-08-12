@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Runtime.Serialization;
 
@@ -16,7 +17,7 @@ namespace FluentAssert.Exceptions
 	public class ShouldBeEqualAssertionException : AssertionException
 	{
 		protected ShouldBeEqualAssertionException(SerializationInfo info, StreamingContext context)
-			:base(info, context)
+			: base(info, context)
 		{
 		}
 
@@ -25,22 +26,23 @@ namespace FluentAssert.Exceptions
 		{
 		}
 
-		public static string CreateMessage(object input, object expected)
+		public static string CreateMessage<T>(T input, T expected)
 		{
-			string displayInput = ExpectedMessageBuilder.ToDisplayableString(input);
-			string displayExpected = ExpectedMessageBuilder.ToDisplayableString(expected);
-			string prefix = "";
-			bool showStringDifferences = expected != null && input != null && input.GetType() == typeof(string);
-			int differenceIndex = 0;
+			var displayInput = ExpectedMessageBuilder.ToDisplayableString(input);
+			var displayExpected = ExpectedMessageBuilder.ToDisplayableString(expected);
+			var prefix = "";
+			var showStringDifferences = !Equals(expected, default(T)) && !Equals(input, default(T)) && input is string;
+			var differenceIndex = 0;
 			if (showStringDifferences)
 			{
-				string stringInput = input as string;
-				string stringExpected = expected as string;
+				var stringInput = input as string;
+				var stringExpected = expected as string;
 				differenceIndex = GetDifferenceIndex(stringInput, stringExpected);
 				displayInput = ExpectedMessageBuilder.ToDisplayableString(stringInput, differenceIndex);
 				displayExpected = ExpectedMessageBuilder.ToDisplayableString(stringExpected, differenceIndex);
-				int inputLength = stringInput.Length;
-				int expectedLength = stringExpected.Length;
+				var inputLength = stringInput.Length;
+// ReSharper disable once PossibleNullReferenceException
+				var expectedLength = stringExpected.Length;
 				if (inputLength == expectedLength)
 				{
 					prefix = "  String lengths are both " + expectedLength + ".";
@@ -52,8 +54,8 @@ namespace FluentAssert.Exceptions
 				prefix += " Strings differ at index " + differenceIndex + "." + Environment.NewLine;
 			}
 
-			string message = ExpectedMessageBuilder.BuildFor(displayExpected, displayInput);
-			string suffix = "";
+			var message = ExpectedMessageBuilder.BuildFor(displayExpected, displayInput);
+			var suffix = "";
 			if (showStringDifferences)
 			{
 				if (differenceIndex > displayExpected.Length)
@@ -71,8 +73,8 @@ namespace FluentAssert.Exceptions
 			{
 				return 0;
 			}
-			int last = Math.Min(input.Length, expected.Length);
-			for (int i = 0; i < last; i++)
+			var last = Math.Min(input.Length, expected.Length);
+			for (var i = 0; i < last; i++)
 			{
 				if (input[i] != expected[i])
 				{

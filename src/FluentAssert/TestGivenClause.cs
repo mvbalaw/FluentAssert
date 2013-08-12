@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Diagnostics;
 
@@ -38,9 +39,9 @@ namespace FluentAssert
 		public TestGivenClause<T, TContext> WithContext<TContext>(TContext context)
 		{
 			var actionContainerSource = new ActionContainerSource<T, TContext>
-			{
-				GetActionContainer = delegate { return _actionContainerSource.GetActionContainer(); }
-			};
+			                            {
+				                            GetActionContainer = delegate { return _actionContainerSource.GetActionContainer(); }
+			                            };
 			return new TestGivenClause<T, TContext>(actionContainerSource, context);
 		}
 	}
@@ -62,24 +63,24 @@ namespace FluentAssert
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
 			return new TestWhenClause<T, TContext>(actionContainer,
-			                                       new WhenActionWrapper<T, TContext>(actionContainer, _context, actionUnderTest),
-			                                       _context);
+				new WhenActionWrapper<T, TContext>(actionContainer, _context, actionUnderTest),
+				_context);
 		}
 
 		public TestWhenClause<T, TContext> When(Action<T> actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
 			return new TestWhenClause<T, TContext>(actionContainer,
-			                                       new WhenActionWrapper<T>(actionContainer, actionUnderTest),
-			                                       _context);
+				new WhenActionWrapper<T>(actionContainer, actionUnderTest),
+				_context);
 		}
 
 		public TestWhenClause<T, TContext> When(Action actionUnderTest)
 		{
 			var actionContainer = _actionContainerSource.GetActionContainer(_context);
 			return new TestWhenClause<T, TContext>(actionContainer,
-			                                       new WhenActionWrapper(actionUnderTest),
-			                                       _context);
+				new WhenActionWrapper(actionUnderTest),
+				_context);
 		}
 	}
 }

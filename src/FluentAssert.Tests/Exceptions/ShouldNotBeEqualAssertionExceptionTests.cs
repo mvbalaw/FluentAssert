@@ -44,7 +44,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_problem_correctly()
 			{
-				string message = "";
+				var message = "";
 				try
 				{
 					Assert.AreNotEqual(_expected, _input);
@@ -99,7 +99,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_problem_correctly()
 			{
-				string message = "";
+				var message = "";
 				try
 				{
 					Assert.AreNotEqual(_expected, _input);
@@ -176,7 +176,7 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void should_describe_the_problem_correctly()
 			{
-				string message = "";
+				var message = "";
 				try
 				{
 					Assert.AreNotEqual(_expected, _input);

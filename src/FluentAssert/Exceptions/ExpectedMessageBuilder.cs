@@ -7,11 +7,12 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 
 namespace FluentAssert.Exceptions
 {
-	public class ExpectedMessageBuilder
+	public static class ExpectedMessageBuilder
 	{
 		public const string Ellipsis = "...";
 		public const int MaxStringLength = 61;
@@ -19,8 +20,8 @@ namespace FluentAssert.Exceptions
 
 		public static string BuildFor(string expected, string actual)
 		{
-			string message = "  Expected: " + expected + Environment.NewLine
-			                 + "  But was:  " + actual + Environment.NewLine;
+			var message = "  Expected: " + expected + Environment.NewLine
+				+ "  But was:  " + actual + Environment.NewLine;
 			return message;
 		}
 
@@ -33,8 +34,8 @@ namespace FluentAssert.Exceptions
 		{
 			if (differenceIndex > MaxStringLength)
 			{
-				int start = differenceIndex - StringLeftStart;
-				string substring = input.Substring(start, Math.Min(input.Length - start, MaxStringLength));
+				var start = differenceIndex - StringLeftStart;
+				var substring = input.Substring(start, Math.Min(input.Length - start, MaxStringLength));
 				input = Ellipsis + substring;
 				return input;
 			}

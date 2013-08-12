@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Runtime.Serialization;
 
@@ -32,11 +33,11 @@ namespace FluentAssert.Exceptions
 
 		public static string CreateMessage(object input, object expected)
 		{
-			string displayInput = ExpectedMessageBuilder.ToDisplayableString(input);
-			string displayExpected = ExpectedMessageBuilder.ToDisplayableString(expected);
+			var displayInput = ExpectedMessageBuilder.ToDisplayableString(input);
+			var displayExpected = ExpectedMessageBuilder.ToDisplayableString(expected);
 
-			string message = "  Expected: not " + displayExpected + Environment.NewLine
-			                 + "  But was:  " + displayInput + Environment.NewLine;
+			var message = "  Expected: not " + displayExpected + Environment.NewLine
+				+ "  But was:  " + displayInput + Environment.NewLine;
 
 			return message;
 		}

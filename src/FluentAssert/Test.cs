@@ -22,9 +22,9 @@ namespace FluentAssert
 		public static TestGivenClause<T> Given<T>(T actionContainer)
 		{
 			return new TestGivenClause<T>(new ActionContainerSource<T>
-			{
-				GetActionContainer = () => actionContainer
-			});
+			                              {
+				                              GetActionContainer = () => actionContainer
+			                              });
 		}
 
 		public static TestGivenClauseWithoutActionContainerSource<T> Given<T>()

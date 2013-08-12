@@ -31,7 +31,7 @@ namespace FluentAssert
 			}
 			foreach (var item in expected)
 			{
-				int index = listList.IndexOf(item);
+				var index = listList.IndexOf(item);
 				if (index == -1)
 				{
 					return new KeyValuePair<bool, object>(true, item);
@@ -77,8 +77,8 @@ namespace FluentAssert
 				return item;
 			}
 
-			bool itemIsNull = IsNull(item);
-			bool expectedIsNull = IsNull(expected);
+			var itemIsNull = IsNull(item);
+			var expectedIsNull = IsNull(expected);
 
 			if (itemIsNull && expectedIsNull)
 			{
@@ -90,7 +90,7 @@ namespace FluentAssert
 			}
 
 			if (typeof(T) != typeof(string) &&
-			    typeof(IEnumerable).IsAssignableFrom(typeof(T)))
+				typeof(IEnumerable).IsAssignableFrom(typeof(T)))
 			{
 				var itemContainer = new ArrayList();
 				foreach (var value in (IEnumerable)item)
@@ -145,9 +145,9 @@ namespace FluentAssert
 		public static T ShouldBeGreaterThan<T>(this T item, T other) where T : IComparable
 		{
 			return ShouldBeGreaterThan(item,
-			                           other,
-			                           () => ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
-			                                                                                     ExpectedMessageBuilder.ToDisplayableString(item)));
+				other,
+				() => ShouldBeGreaterThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+					ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeGreaterThan<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -175,9 +175,9 @@ namespace FluentAssert
 		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T other) where T : IComparable
 		{
 			return ShouldBeGreaterThanOrEqualTo(item,
-			                                    other,
-			                                    () => ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
-			                                                                                                       ExpectedMessageBuilder.ToDisplayableString(item)));
+				other,
+				() => ShouldBeGreaterThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+					ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeGreaterThanOrEqualTo<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -213,9 +213,9 @@ namespace FluentAssert
 		public static T ShouldBeLessThan<T>(this T item, T other) where T : IComparable
 		{
 			return ShouldBeLessThan(item,
-			                        other,
-			                        () => ShouldBeLessThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
-			                                                                               ExpectedMessageBuilder.ToDisplayableString(item)));
+				other,
+				() => ShouldBeLessThanAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+					ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeLessThan<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -243,9 +243,9 @@ namespace FluentAssert
 		public static T ShouldBeLessThanOrEqualTo<T>(this T item, T other) where T : IComparable
 		{
 			return ShouldBeLessThanOrEqualTo(item,
-			                                 other,
-			                                 () => ShouldBeLessThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
-			                                                                                                 ExpectedMessageBuilder.ToDisplayableString(item)));
+				other,
+				() => ShouldBeLessThanOrEqualToAssertionException.CreateMessage(ExpectedMessageBuilder.ToDisplayableString(other),
+					ExpectedMessageBuilder.ToDisplayableString(item)));
 		}
 
 		public static T ShouldBeLessThanOrEqualTo<T>(this T item, T other, string errorMessage) where T : IComparable
@@ -326,7 +326,7 @@ namespace FluentAssert
 
 		public static object ShouldBeOfType<TType>(this object item, string errorMessage)
 		{
-			typeof(TType).IsAssignableFrom(item.GetType()).ShouldBeTrue(errorMessage);
+			(item is TType).ShouldBeTrue(errorMessage);
 			return item;
 		}
 
@@ -377,21 +377,23 @@ namespace FluentAssert
 
 		public static IEnumerable<T> ShouldContainAllInOrder<T>(this IEnumerable<T> list, IEnumerable<T> expected) where T : IEquatable<T>
 		{
+// ReSharper disable once PossibleMultipleEnumeration
 			var indexedSource = list.Select((x, i) => new
-			{
-				Item = x,
-				Index = i
-			}).ToList();
+			                                          {
+				                                          Item = x,
+				                                          Index = i
+			                                          }).ToList();
 			var indexedExpected = expected.Select((x, i) => new
-			{
-				Item = x,
-				Index = i
-			}).ToList();
+			                                                {
+				                                                Item = x,
+				                                                Index = i
+			                                                }).ToList();
 			indexedSource.Count.ShouldBeEqualTo(indexedExpected.Count);
-			foreach (int index in Enumerable.Range(0, indexedSource.Count))
+			foreach (var index in Enumerable.Range(0, indexedSource.Count))
 			{
 				indexedSource[index].Item.ShouldBeEqualTo(indexedExpected[index].Item, "at offset " + index);
 			}
+// ReSharper disable once PossibleMultipleEnumeration
 			return list;
 		}
 
@@ -447,11 +449,11 @@ namespace FluentAssert
 				throw new ShouldNotBeEqualAssertionException(getErrorMessage());
 			}
 
-			bool itemIsNull = IsNull(item);
-			bool expectedIsNull = IsNull(expected);
+			var itemIsNull = IsNull(item);
+			var expectedIsNull = IsNull(expected);
 
 			if (itemIsNull && expectedIsNull ||
-			    !itemIsNull && item.Equals(expected))
+				!itemIsNull && item.Equals(expected))
 			{
 				throw new ShouldNotBeEqualAssertionException(getErrorMessage());
 			}

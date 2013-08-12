@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,21 +35,21 @@ namespace FluentAssert
 		public TestShouldStaticClause Should(Action assertion)
 		{
 			return new TestShouldStaticClause(_actionUnderTest,
-			                                  _parameterActions)
+				_parameterActions)
 				.Should(assertion);
 		}
 
 		public TestShouldStaticClause ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestShouldStaticClause(_actionUnderTest,
-			                                  _parameterActions)
+				_parameterActions)
 				.ShouldThrowException<TExceptionType>();
 		}
 
 		public TestShouldStaticClause ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			return new TestShouldStaticClause(_actionUnderTest,
-			                                  _parameterActions)
+				_parameterActions)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 
@@ -82,40 +83,40 @@ namespace FluentAssert
 		public TestShouldStaticClause<TContext> Should<TBaseContext>(Action<TBaseContext> assertion) where TBaseContext : class
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
-			                                            _parameterActions,
-			                                            _context)
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldStaticClause<TContext> Should(Action<TContext> assertion)
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
-			                                            _parameterActions,
-			                                            _context)
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldStaticClause<TContext> Should(Action assertion)
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
-			                                            _parameterActions,
-			                                            _context)
+				_parameterActions,
+				_context)
 				.Should(assertion);
 		}
 
 		public TestShouldStaticClause<TContext> ShouldThrowException<TExceptionType>() where TExceptionType : Exception
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
-			                                            _parameterActions,
-			                                            _context)
+				_parameterActions,
+				_context)
 				.ShouldThrowException<TExceptionType>();
 		}
 
 		public TestShouldStaticClause<TContext> ShouldThrowException<TExceptionType>(string message) where TExceptionType : Exception
 		{
 			return new TestShouldStaticClause<TContext>(_actionUnderTest,
-			                                            _parameterActions,
-			                                            _context)
+				_parameterActions,
+				_context)
 				.ShouldThrowException<TExceptionType>(message);
 		}
 

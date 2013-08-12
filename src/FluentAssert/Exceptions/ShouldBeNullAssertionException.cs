@@ -7,6 +7,7 @@
 //  * the terms of the MIT License.
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
+
 using System;
 using System.Runtime.Serialization;
 
@@ -27,7 +28,7 @@ namespace FluentAssert.Exceptions
 
 		public static string CreateMessage(string actual)
 		{
-			string message = ExpectedMessageBuilder.BuildFor("null", actual);
+			var message = ExpectedMessageBuilder.BuildFor("null", actual);
 			return message;
 		}
 	}
