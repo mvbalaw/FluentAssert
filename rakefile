@@ -93,6 +93,8 @@ task :copy_artifacts => [:build] do
   puts "Copying files from bin folders to the build folder (#{settings[:stage]})..."
   copy_output_files "src/#{PRODUCT_NAME}/bin/#{settings[:compile_target]}", "*.{dll,pdb,exe}", settings[:stage]
   copy_output_files "src/#{PRODUCT_NAME}.Tests/bin/#{settings[:compile_target]}", "*.{dll,pdb,exe}", settings[:stage]
+  FileUtils.cp_r "License.txt", "#{settings[:stage]}/#{PRODUCT_NAME}.License.txt"
+  FileUtils.cp_r "#{PRODUCT_NAME}.xml", "#{settings[:stage]}/#{PRODUCT_NAME}.xml"
 end
 
 desc "Prepares the working directory for a new build"
