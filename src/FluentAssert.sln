@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssert", "FluentAssert\FluentAssert.csproj", "{2469E2C9-7622-4505-BDE0-0E6BFEEDE8E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentAssert.Tests", "FluentAssert.Tests\FluentAssert.Tests.csproj", "{6E5196A2-C1DE-4D5E-A9B8-90A4850C5094}"
