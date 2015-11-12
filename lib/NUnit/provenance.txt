@@ -1,6 +1,0 @@
-NUnit 2.5.10.11092
-http://www.nunit.org
-Downloaded from the NUnit website on 8/16/2011:
-http://www.nunit.org/index.php?p=download
-
-Only copied the nunit.framework.dll to the /lib folder. The NUnit program was copied to the /tools folder.
