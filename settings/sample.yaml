@@ -1,0 +1,8 @@
+# Sample settings file
+# Copy this file to your preferred name and run the build with following command:
+#
+#    rake default environment=sample.yaml
+
+# artifacts is where the nuget package gets created.
+# :artifacts: /path/to/build/artifacts
+
