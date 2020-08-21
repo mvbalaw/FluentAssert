@@ -1,7 +1,7 @@
 require 'albacore'
 
 PRODUCT_NAME = "FluentAssert"
-CLR_TOOLS_VERSION = "v4.0"
+CLR_TOOLS_VERSION = "v4.8"
 DEFAULT_BUILD_NUMBER = "1.0.0"
 COMPANY_NAME = "MVBA, P.C."
 COPYRIGHT = "MVBA, P.C. (c) 2009-2013"
@@ -10,7 +10,7 @@ COMPILE_TARGET = "Debug"
 STAGE = File.expand_path("build")
 SETTINGS_DIR = "settings"
 
-nunit_cmd = "tools/NUnit/bin/nunit-console.exe"
+nunit_cmd = "tools/NUnit/nunit-console.exe"
 
 beginning = Time.now
 
