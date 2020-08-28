@@ -19,7 +19,7 @@ end
 $MSBUILD = $MSBUILD + "msbuild.exe"
 PRODUCT_NAME = "FluentAssert"
 CLR_TOOLS_VERSION = "v4.8"
-DEFAULT_BUILD_NUMBER = "1.0.0"
+DEFAULT_BUILD_NUMBER = "1.1.0"
 COMPANY_NAME = "MVBA, P.C."
 COPYRIGHT = "MVBA, P.C. (c) 2011-2020"
 ARTIFACTS = File.expand_path("dist")
