@@ -1,12 +1,30 @@
-require 'albacore'
+require 'yaml'
 
+# path when build tools is installed from https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=15
+MSBUILD1 = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\\"
+MSBUILD2 = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\BuildTools\\MSBuild\\15.0\\Bin\\"
+MSBUILD3 = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\MSBuild\\15.0\\Bin\\" # path when VS is installed
+$MSBUILD = MSBUILD1
+if !Dir.exist?($MSBUILD)
+	$MSBUILD = MSBUILD2
+	if !Dir.exist?($MSBUILD)
+		$MSBUILD = MSBUILD3
+		if !Dir.exist?($MSBUILD)
+			puts "Can't find MsBuild.exe in #{MSBUILD1} or #{MSBUILD2}"
+			exit 1 # failure
+		end
+	end
+end
+
+$MSBUILD = $MSBUILD + "msbuild.exe"
 PRODUCT_NAME = "FluentAssert"
 CLR_TOOLS_VERSION = "v4.8"
 DEFAULT_BUILD_NUMBER = "1.0.0"
 COMPANY_NAME = "MVBA, P.C."
-COPYRIGHT = "MVBA, P.C. (c) 2009-2013"
+COPYRIGHT = "MVBA, P.C. (c) 2011-2020"
 ARTIFACTS = File.expand_path("dist")
 COMPILE_TARGET = "Debug"
+TARGET_FRAMEWORK = "net48"
 STAGE = File.expand_path("build")
 SETTINGS_DIR = "settings"
 
@@ -15,9 +33,10 @@ nunit_cmd = "tools/NUnit/nunit-console.exe"
 beginning = Time.now
 
 default_settings = { :artifacts => ARTIFACTS, 
-					 :compile_target => COMPILE_TARGET,
-					 :stage => STAGE
-					}
+                     :compile_target => COMPILE_TARGET,
+                     :target_framework => TARGET_FRAMEWORK,
+                     :stage => STAGE
+                   }
 
 def read_config(settings_directory, env)
 	settings = {}
@@ -45,60 +64,56 @@ puts
 
 
 desc "** Default **"
-task :default => [:build, :copy_artifacts, :test, :archive] do
+task :default => [:build, :copy_artifacts, :test, :pack] do
   puts "Build Succeeded - time elapsed: #{Time.now - beginning} seconds"
 end
 
-desc "Creates CommonAssemblyInfo.cs file"
-assemblyinfo :assemblyinfo do |asm| 
+desc "Create Directory.Build.props file"
+task :assemblyinfo do
   build_number = get_build_number
-  build_number_with_hash = get_build_number_with_hash
-  asm.product_name = PRODUCT_NAME
-  asm.version = build_number
-  asm.file_version = build_number
-  asm.trademark = build_number_with_hash
-  asm.company_name = COMPANY_NAME
-  asm.copyright = COPYRIGHT 
-  asm.output_file = "src/CommonAssemblyInfo.cs"
-end
+  git_hash = get_git_hash
 
-desc "Add Resharper escapes to CommonAssemblyInfo.cs file"
-task :resharperAssemblyInfo do
-  puts
-  puts "adding Resharper escapes to src/CommonAssemblyInfo.cs"
-  puts
-  
-	File.open('src/CommonAssemblyInfo.cs', 'r+') do |f|
-		contents = f.read
-		f.rewind
-	
-		f.puts "// ReSharper disable RedundantUsingDirective"
-		f.puts contents
-		f.puts "// ReSharper enable RedundantUsingDirective"
-	end
-end
+  puts "Writing src/Directory.Build.props file..."
+  File.open('src/Directory.Build.props', 'w') do |file|
+    file.write "<Project>\n"
+    file.write "  <PropertyGroup>\n"
+    file.write "    <Authors>#{COMPANY_NAME}</Authors>\n"
+    file.write "    <Company>#{COMPANY_NAME}</Company>\n"
+    file.write "    <Description>Fluent assertions express what you want tested instead of how.  This project also provides a simple BDD framework that lets you write tests that can be easily understood and verified by non-developers. (git sha for this version: #{git_hash})</Description>\n"
+    file.write "    <Copyright>#{COPYRIGHT}</Copyright>\n"
+    file.write "    <PackageLicenseFile>License.txt</PackageLicenseFile>\n"
+    file.write "    <NeutralLanguage>en-US</NeutralLanguage>\n"
+    file.write "    <RepositoryUrl>https://github.com/mvbalaw/#{PRODUCT_NAME}</RepositoryUrl>\n"
+    file.write "    <RepositoryType>git</RepositoryType>\n"
+    file.write "    <Version>#{build_number}</Version>\n"
+    file.write "    <FileVersion>#{build_number}</FileVersion>\n"
+    file.write "    <ProductName>#{PRODUCT_NAME}</ProductName>\n"
+    file.write "  </PropertyGroup>\n"
+    file.write "\n"
+    file.write "  <ItemGroup>\n"
+    file.write "    <Content Include=\"..\\..\\License.txt\" Pack=\"true\" Visible=\"false\" PackagePath=\"\" />"
+    file.write "  </ItemGroup>\n"
+    file.write "</Project>\n"
+  end
+end 
 
 desc "Builds the #{PRODUCT_NAME} solution"
-msbuild :build => [:clean, :assemblyinfo, :resharperAssemblyInfo] do |msb|
-  puts "Compiling #{PRODUCT_NAME} in #{settings[:compile_target]} mode..."
-  msb.properties :configuration => settings[:compile_target]
-  msb.targets :Clean, :Build
-  msb.solution = "src/#{PRODUCT_NAME}.sln"
-  msb.verbosity = "quiet"
-  sleep 1
+task :build => [:clean, :assemblyinfo] do |msb|	
+	puts
+	puts "Compiling #{PRODUCT_NAME} in #{settings[:compile_target]} mode..."
+	puts
+	sh "\"#{$MSBUILD}\" -t:restore /verbosity:quiet /target:#{:Rebuild} /nologo /p:Configuration=#{settings[:compile_target]} src/#{PRODUCT_NAME}.sln"
 end
 
 desc "Copy build artifacts to the staging folder"
 task :copy_artifacts => [:build] do
   puts "Copying files from bin folders to the build folder (#{settings[:stage]})..."
-  copy_output_files "src/#{PRODUCT_NAME}/bin/#{settings[:compile_target]}", "*.{dll,pdb,exe}", settings[:stage]
-  copy_output_files "src/#{PRODUCT_NAME}.Tests/bin/#{settings[:compile_target]}", "*.{dll,pdb,exe}", settings[:stage]
-  FileUtils.cp_r "License.txt", "#{settings[:stage]}/#{PRODUCT_NAME}.License.txt"
-  FileUtils.cp_r "Provenance.txt", "#{settings[:stage]}/#{PRODUCT_NAME}.Provenance.txt"
+  copy_output_files "src/#{PRODUCT_NAME}/bin/#{settings[:compile_target]}/#{settings[:target_framework]}", "*.{dll,pdb,exe}", settings[:stage]
+  copy_output_files "src/#{PRODUCT_NAME}.Tests/bin/#{settings[:compile_target]}/#{settings[:target_framework]}", "*.{dll,pdb,exe}", settings[:stage]
   FileUtils.cp_r "#{PRODUCT_NAME}.xml", "#{settings[:stage]}/#{PRODUCT_NAME}.xml"
 end
 
-desc "Prepares the working directory for a new build"
+desc "Prepare the working directory for a new build"
 task :clean do
   FileUtils.rm_rf settings[:stage]  
   # work around nasty latency issue where folder still exists for a short while after it is removed
@@ -107,25 +122,21 @@ task :clean do
   Dir.mkdir settings[:artifacts] unless Dir.exists?(settings[:artifacts])
 end
 
-desc "Runs the unit tests"
-nunit :test do |nunit|
+desc "Run the unit tests"
+task :test do
   puts "Running the unit tests in the build folder (#{settings[:stage]})..."
-  nunit.command = nunit_cmd
-  nunit.options "/framework #{CLR_TOOLS_VERSION}"
-  nunit.assemblies "#{settings[:stage]}/#{PRODUCT_NAME}.Tests.dll"
+  nunit_assemblies = "#{settings[:stage]}/#{PRODUCT_NAME}.Tests.dll"
+  nunit_options = "/framework #{CLR_TOOLS_VERSION}"  
+  sh "#{nunit_cmd} #{nunit_assemblies} #{nunit_options}" 
 end
 
-desc "Zips up the build results"
-zip :archive do |zip|
-  puts "Zipping up the build folder and copying to artifact folder (#{settings[:artifacts]})..."
-  mkdir settings[:artifacts] unless Dir.exists?(settings[:artifacts])
-  build_number = get_build_number
-  zip.directories_to_zip = [settings[:stage]]
-  zip.output_file = "#{PRODUCT_NAME}_#{build_number}.#{settings[:compile_target]}.zip"
-  zip.output_path = [settings[:artifacts]]
-  puts "Artifacts are available in the artifact folder: #{settings[:artifacts]}"
+desc "Create nuget package"
+task :pack do
+  puts
+  puts "Creating nuget package for #{PRODUCT_NAME} in artifact folder (#{settings[:artifacts]})..."
+  puts
+  sh "\"#{$MSBUILD}\" /p:PackageOutputPath=\"#{settings[:artifacts]}\" -t:pack /verbosity:quiet /nologo src/#{PRODUCT_NAME}/#{PRODUCT_NAME}.csproj"
 end
-
 
 def copy_output_files(fromDir, filePattern, outDir)
   Dir.glob(File.join(fromDir, filePattern)){|file| 		
@@ -150,17 +161,13 @@ def get_build_number
   end
 end
 
-def get_build_number_with_hash
+def get_git_hash
   begin
     gittag = `git describe --long`.chomp # looks something like v0.1.0-63-g3f10c2e
-    #puts "gittag: #{gittag}"
     parts = gittag.split("-")
-    base_version = parts[0].gsub("v","")
-    git_build_revision = parts[1]
-    git_short_hash = parts[2]
-    build_number_with_hash = "#{base_version}.#{git_build_revision}-#{git_short_hash}"	
+    git_hash = parts[2]
   rescue
-    build_number_with_hash = DEFAULT_BUILD_NUMBER
+    git_hash = "git unavailable"
   end
 end
 
