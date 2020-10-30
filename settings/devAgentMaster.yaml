@@ -1,3 +1,3 @@
 # artifacts is where the nuget package gets created.
-:artifacts: //fsJump/dev/Build Artifacts/FluentAssert/master
+:artifacts: //fs-dev/Build/BuildArtifacts/FluentAssert/master
 
