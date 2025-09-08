@@ -69,7 +69,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (ReferenceEquals(item, expected))
@@ -133,7 +133,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (item)
@@ -159,7 +159,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			object obj = item;
@@ -189,7 +189,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			object obj = item;
@@ -227,7 +227,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			object obj = item;
@@ -257,7 +257,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			object obj = item;
@@ -289,7 +289,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (item != null)
@@ -308,7 +308,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (item.HasValue)
@@ -350,7 +350,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (!item)
@@ -441,7 +441,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (ReferenceEquals(item, expected))
@@ -480,7 +480,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (item == null)
@@ -499,7 +499,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			if (!item.HasValue)
@@ -601,7 +601,7 @@ namespace FluentAssert
 		{
 			if (getErrorMessage == null)
 			{
-				throw new ArgumentNullException("getErrorMessage", "the method used to get the error message cannot be null");
+				throw new ArgumentNullException(nameof(getErrorMessage), "the method used to get the error message cannot be null");
 			}
 
 			try
