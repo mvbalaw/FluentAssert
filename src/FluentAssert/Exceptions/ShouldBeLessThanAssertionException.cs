@@ -10,6 +10,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using NUnit.Framework;
 
 namespace FluentAssert.Exceptions
 {

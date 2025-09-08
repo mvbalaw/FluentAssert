@@ -11,8 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-using FluentAssert.Exceptions;
+using NUnit.Framework;
 
 namespace FluentAssert
 {
@@ -82,7 +81,7 @@ namespace FluentAssert
 			}
 			catch (Exception e)
 			{
-				throw new AssertionException(e);
+				throw new AssertionException("", e);
 			}
 		}
 	}
@@ -185,7 +184,7 @@ namespace FluentAssert
 			}
 			catch (Exception e)
 			{
-				throw new AssertionException(e);
+				throw new AssertionException("", e);
 			}
 		}
 	}

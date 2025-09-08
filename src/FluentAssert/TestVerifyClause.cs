@@ -13,8 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-
-using FluentAssert.Exceptions;
+using NUnit.Framework;
 
 namespace FluentAssert
 {
@@ -50,7 +49,7 @@ namespace FluentAssert
 			}
 			catch (Exception e)
 			{
-				throw new AssertionException(e);
+				throw new AssertionException("", e);
 			}
 		}
 

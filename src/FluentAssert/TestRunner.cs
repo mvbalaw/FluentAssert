@@ -13,8 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-
-using FluentAssert.Exceptions;
+using NUnit.Framework;
 
 namespace FluentAssert
 {
@@ -44,9 +43,7 @@ namespace FluentAssert
 				{
 					scenarioDescription.AppendLine(testStep.FailureSuffix);
 					Console.Error.WriteLine(scenarioDescription.ToString());
-					throw new AssertionException(string.Format("Expected exception of type {0} but caught type {1}",
-						exceptionConfiguration.ExpectedExceptionType,
-						exceptionType),
+					throw new AssertionException($"Expected exception of type {exceptionConfiguration.ExpectedExceptionType} but caught type {exceptionType}",
 						e);
 				}
 
@@ -56,9 +53,7 @@ namespace FluentAssert
 					{
 						scenarioDescription.AppendLine(testStep.FailureSuffix);
 						Console.Error.WriteLine(scenarioDescription.ToString());
-						throw new AssertionException(string.Format("Expected exception message '{0}' but had '{1}'",
-							exceptionConfiguration.ExpectedExceptionMessage,
-							e.Message),
+						throw new AssertionException($"Expected exception message '{exceptionConfiguration.ExpectedExceptionMessage}' but had '{e.Message}'",
 							e);
 					}
 				}

@@ -68,7 +68,7 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_Type_differences_correctly()
 			{
 				var message = "";
-                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                Assert.Throws<AssertionException>(() =>
                 {
                     try
                     {
@@ -136,7 +136,7 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_differences_correctly()
 			{
 				var message = "";
-                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                Assert.Throws<AssertionException>(() =>
                 {
                     try
                     {
@@ -315,7 +315,7 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_string_differences_correctly()
 			{
 				var message = "";
-                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                Assert.Throws<AssertionException>(() =>
                 {
                     try
                     {

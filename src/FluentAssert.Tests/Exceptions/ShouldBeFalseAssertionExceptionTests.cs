@@ -35,7 +35,7 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                Assert.Throws<AssertionException>(() =>
                 {
                     try
                     {
