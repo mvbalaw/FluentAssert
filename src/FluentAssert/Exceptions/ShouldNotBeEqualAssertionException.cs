@@ -36,7 +36,7 @@ namespace FluentAssert.Exceptions
 			var displayInput = ExpectedMessageBuilder.ToDisplayableString(input);
 			var displayExpected = ExpectedMessageBuilder.ToDisplayableString(expected);
 
-			var message = "  Expected: not " + displayExpected + Environment.NewLine
+			var message = "  Assert.That(, )\r\n  Expected: not equal to " + displayExpected + Environment.NewLine
 				+ "  But was:  " + displayInput + Environment.NewLine;
 
 			return message;

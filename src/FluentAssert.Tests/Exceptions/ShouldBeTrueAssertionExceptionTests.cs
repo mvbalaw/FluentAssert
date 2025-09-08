@@ -13,6 +13,7 @@ using System;
 using FluentAssert.Exceptions;
 
 using NUnit.Framework;
+using AssertionException = NUnit.Framework.AssertionException;
 
 namespace FluentAssert.Tests.Exceptions
 {
@@ -35,15 +36,20 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.IsTrue(false);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
-				_result.ShouldBeEqualTo(message);
+                Assert.Throws<AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(false, Is.True);
+                    }
+                    catch (Exception exception)
+                    {
+                        message += exception.Message;
+                        throw;
+                    }
+                });
+
+				Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_default_exception_message()

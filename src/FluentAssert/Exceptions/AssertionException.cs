@@ -40,7 +40,7 @@ namespace FluentAssert.Exceptions
 		{
 			get
 			{
-				var result = String.Join(Environment.NewLine, base.StackTrace.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Where(x => !x.Contains("FluentAssert.")).ToArray());
+				var result = string.Join(Environment.NewLine, base.StackTrace.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Where(x => !x.Contains("FluentAssert.")).ToArray());
 				return result;
 			}
 		}

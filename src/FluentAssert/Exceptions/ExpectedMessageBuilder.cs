@@ -18,10 +18,14 @@ namespace FluentAssert.Exceptions
 		public const int MaxStringLength = 61;
 		internal static readonly int StringLeftStart = (int)Math.Ceiling(MaxStringLength / 2.0);
 
-		public static string BuildFor(string expected, string actual)
+		public static string BuildFor(string expected, string actual, bool prefixAssertThat=true)
 		{
 			var message = "  Expected: " + expected + Environment.NewLine
 				+ "  But was:  " + actual + Environment.NewLine;
+            if (prefixAssertThat)
+            {
+                message = "  Assert.That(, )\r\n" + message;
+            }
 			return message;
 		}
 
@@ -48,7 +52,7 @@ namespace FluentAssert.Exceptions
 
 		public static string ToDisplayableString(object input)
 		{
-			if (input == null)
+			if (input is null)
 			{
 				return "null";
 			}

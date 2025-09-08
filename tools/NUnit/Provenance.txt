@@ -1,3 +1,7 @@
-NUnit Runner 2.7.1
+NUnit Runner 3.18.3
 
-Installed NUnit.Runners via nuget package installer and replaiced the contents of the tools/NUnit folder with the contents of the tools folder in the NUnit.Runners package.
+go to https://nunit.org/download/
+click on NUnit Console (version)
+download latest NUnit.ConsoleRunner.(version).nupkg
+use 7zip to unzip it
+replace the contents of the tools/NUnit folder with the contents of the tools folder in the NUnit.ConsoleRunner package.

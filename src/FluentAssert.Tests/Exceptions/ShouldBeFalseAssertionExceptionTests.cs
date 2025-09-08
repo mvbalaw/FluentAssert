@@ -35,15 +35,19 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.IsFalse(true);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
-				_result.ShouldBeEqualTo(message);
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(true, Is.False);
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_default_exception_message()

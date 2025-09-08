@@ -68,15 +68,19 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_Type_differences_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.AreEqual(_expected, _input);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
-				_result.ShouldBeEqualTo(message);
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(_input, Is.EqualTo(_expected));
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_exception_message()
@@ -132,15 +136,19 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_differences_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.AreEqual(_expected, _input);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
-				_result.ShouldBeEqualTo(message);
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(_input, Is.EqualTo(_expected));
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_exception_message()
@@ -307,16 +315,20 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_string_differences_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.AreEqual(_expected, _input);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(_input, Is.EqualTo(_expected));
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
 
-				Assert.AreEqual(message, _result);
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_exception_message()
@@ -356,12 +368,12 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void with_a_very_long_expected_string()
 			{
-				_expected = String.Join(",", Enumerable.Range(1, 50).Select(x => x.ToString()).ToArray());
+				_expected = string.Join(",", Enumerable.Range(1, 50).Select(x => x.ToString()).ToArray());
 			}
 
 			private void with_a_very_long_input_string()
 			{
-				_input = String.Join(",", Enumerable.Range(1, 40).Select(x => x.ToString()).ToArray());
+				_input = string.Join(",", Enumerable.Range(1, 40).Select(x => x.ToString()).ToArray());
 			}
 
 			private void with_an_empty_expected_string()

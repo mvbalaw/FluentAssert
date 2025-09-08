@@ -8,7 +8,6 @@
 //  * You must not remove this notice from this software.
 //  * **************************************************************************
 
-using System;
 using System.Linq;
 
 using FluentAssert.Exceptions;
@@ -138,8 +137,8 @@ namespace FluentAssert.Tests.Exceptions
 
 			private void with_an_input_that_should_be_shortened()
 			{
-				_input = String.Join(",", Enumerable.Range(1, 50).Select(x => x.ToString()).ToArray());
-				Assert.IsTrue(_input.Length > ExpectedMessageBuilder.MaxStringLength, "make this string longer than the max");
+				_input = string.Join(",", Enumerable.Range(1, 50).Select(x => x.ToString()).ToArray());
+				Assert.That(_input.Length > ExpectedMessageBuilder.MaxStringLength, Is.True, "make this string longer than the max");
 			}
 		}
 	}

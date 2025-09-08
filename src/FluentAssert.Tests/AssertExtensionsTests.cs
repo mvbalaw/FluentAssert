@@ -53,12 +53,12 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_throw_a_ShouldBeFalseAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeFalseAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeFalseAssertionException)));
 			}
 
 			private void when_asserting_that_the_value_is_false()
@@ -150,17 +150,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_throw_a_ShouldBeFalseAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeFalseAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeFalseAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_value_is_false()
@@ -237,12 +237,12 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_throw_a_ShouldBeFalseAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeFalseAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeFalseAssertionException)));
 			}
 
 			private void when_asserting_that_the_value_is_false_with_a_specific_error_message()
@@ -302,12 +302,12 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_throw_a_ShouldBeTrueAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeTrueAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeTrueAssertionException)));
 			}
 
 			private void when_asserting_that_the_value_is_true()
@@ -399,17 +399,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_throw_a_ShouldBeTrueAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeTrueAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeTrueAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_value_is_true()
@@ -486,12 +486,12 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_throw_a_ShouldBeTrueAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeTrueAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeTrueAssertionException)));
 			}
 
 			private void when_asserting_that_the_value_is_true_with_a_specific_error_message()
@@ -554,17 +554,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_nullable_integer_is_not_null()
@@ -660,22 +660,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeNullAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_nullable_integer_is_not_null()
@@ -756,17 +756,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_nullable_integer_is_not_null_with_a_specific_error_message()
@@ -829,17 +829,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_nullable_integer_is_not_null()
@@ -935,22 +935,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_nullable_integer_is_not_null()
@@ -1031,17 +1031,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_nullable_integer_is_not_null_with_a_specific_error_message()
@@ -1104,17 +1104,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeNullAssertionException), _exception.GetType());
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_string_is_not_null()
@@ -1209,22 +1209,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeNullAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_string_is_not_null()
@@ -1304,17 +1304,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_string_is_not_null_with_a_specific_error_message()
@@ -1377,17 +1377,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_string_is_not_null()
@@ -1482,22 +1482,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_string_is_not_null()
@@ -1577,17 +1577,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void when_asserting_that_the_string_is_not_null_with_a_specific_error_message()
@@ -1675,20 +1675,20 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
-				_exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: greater than {0}
-  But was:  {1}
-", _other, _input));
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanAssertionException)));
+				_exception.Message.ShouldBeEqualTo("  Assert.That(, )\r\n" + $@"  Expected: greater than {_other}
+  But was:  {_input}
+");
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_the_other()
@@ -1845,22 +1845,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_the_other()
@@ -1975,17 +1975,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message()
@@ -2090,20 +2090,20 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
-				_exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: greater than or equal to {0}
-  But was:  {1}
-", _other, _input));
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanOrEqualToAssertionException)));
+				_exception.Message.ShouldBeEqualTo("  Assert.That(, )\r\n"+$@"  Expected: greater than or equal to {_other}
+  But was:  {_input}
+");
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other()
@@ -2262,22 +2262,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanOrEqualToAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other()
@@ -2393,17 +2393,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanOrEqualToAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other_with_a_specific_error_message()
@@ -2506,20 +2506,20 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanAssertionException), _exception.GetType());
-				_exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: less than {0}
-  But was:  {1}
-", _other, _input));
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanAssertionException)));
+				_exception.Message.ShouldBeEqualTo("  Assert.That(, )\r\n" + $@"  Expected: less than {_other}
+  But was:  {_input}
+");
 			}
 
 			private void when_asserting_that_the_input_is_less_than_the_other()
@@ -2676,22 +2676,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_the_other()
@@ -2806,17 +2806,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_the_other_with_a_specific_error_message()
@@ -2921,20 +2921,20 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
-				_exception.Message.ShouldBeEqualTo(String.Format(@"  Expected: less than or equal to {0}
-  But was:  {1}
-", _other, _input));
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanOrEqualToAssertionException)));
+				_exception.Message.ShouldBeEqualTo("  Assert.That(, )\r\n" + $@"  Expected: less than or equal to {_other}
+  But was:  {_input}
+");
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other()
@@ -3093,22 +3093,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanOrEqualToAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other()
@@ -3224,17 +3224,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanOrEqualToAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other_with_a_specific_error_message()
@@ -3337,17 +3337,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_the_other()
@@ -3516,27 +3516,27 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanAssertionException)));
 			}
 
 			private void should_throw_a_ShouldNotBeNullAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeNullAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeNullAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_the_other()
@@ -3656,17 +3656,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_the_other_with_a_specific_error_message()
@@ -3771,17 +3771,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanOrEqualToAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other()
@@ -3940,22 +3940,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanOrEqualToAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other()
@@ -4072,17 +4072,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeGreaterThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeGreaterThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeGreaterThanOrEqualToAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_greater_than_or_equal_to_the_other_with_a_specific_error_message()
@@ -4185,17 +4185,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_the_other()
@@ -4382,7 +4382,7 @@ namespace FluentAssert.Tests
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void with_a_matching_other_string()
@@ -4465,17 +4465,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_the_other_with_a_specific_error_message()
@@ -4580,17 +4580,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanOrEqualToAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other()
@@ -4749,22 +4749,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanOrEqualToAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other()
@@ -4881,17 +4881,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeLessThanOrEqualToAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeLessThanOrEqualToAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeLessThanOrEqualToAssertionException)));
 			}
 
 			private void when_asserting_that_the_input_is_less_than_or_equal_to_the_other_with_a_specific_error_message()
@@ -5018,17 +5018,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_IEnumerables_are_equal()
@@ -5168,17 +5168,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_Types_are_equal()
@@ -5200,7 +5200,7 @@ namespace FluentAssert.Tests
 
 			private void with_a_non_matching_expected_Type()
 			{
-				_expected = typeof(Int32);
+				_expected = typeof(int);
 			}
 
 			private void with_a_non_null_expected_Type()
@@ -5315,17 +5315,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeEqualAssertionException), _exception.GetType());
+                Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_Types_are_not_equal()
@@ -5347,7 +5347,7 @@ namespace FluentAssert.Tests
 
 			private void with_a_non_matching_expected_Type()
 			{
-				_expected = typeof(Int32);
+				_expected = typeof(int);
 			}
 
 			private void with_a_non_null_expected_Type()
@@ -5428,17 +5428,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_integers_are_equal()
@@ -5513,17 +5513,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_integers_are_not_equal()
@@ -5640,17 +5640,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_nullable_integers_are_equal()
@@ -5787,17 +5787,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_nullable_integers_are_not_equal()
@@ -5953,17 +5953,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_strings_are_equal()
@@ -6105,17 +6105,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreSame(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_strings_are_not_equal()
@@ -6240,22 +6240,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_items_are_equal()
@@ -6343,17 +6343,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_items_are_equal_with_a_specific_error_message()
@@ -6458,22 +6458,22 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeEqualAssertionException)));
 			}
 
 			private void should_throw_an_ArgumentNullException()
 			{
-				Assert.AreEqual(typeof(ArgumentNullException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ArgumentNullException)));
 			}
 
 			private void when_asserting_that_items_are_not_equal()
@@ -6561,17 +6561,17 @@ namespace FluentAssert.Tests
 
 			private void should_not_throw_an_exception()
 			{
-				Assert.IsNull(_exception);
+				Assert.That(_exception, Is.Null);
 			}
 
 			private void should_return_the_input()
 			{
-				Assert.AreEqual(_input, _result);
+				Assert.That(_result, Is.EqualTo(_input));
 			}
 
 			private void should_throw_a_ShouldNotBeEqualAssertionException()
 			{
-				Assert.AreEqual(typeof(ShouldNotBeEqualAssertionException), _exception.GetType());
+				Assert.That(_exception.GetType(), Is.EqualTo(typeof(ShouldNotBeEqualAssertionException)));
 			}
 
 			private void when_asserting_that_items_are_not_equal_with_a_specific_error_message()

@@ -54,7 +54,7 @@ namespace FluentAssert.Exceptions
 				prefix += " Strings differ at index " + differenceIndex + "." + Environment.NewLine;
 			}
 
-			var message = ExpectedMessageBuilder.BuildFor(displayExpected, displayInput);
+			var message = ExpectedMessageBuilder.BuildFor(displayExpected, displayInput, false);
 			var suffix = "";
 			if (showStringDifferences)
 			{
@@ -64,12 +64,12 @@ namespace FluentAssert.Exceptions
 				}
 				suffix += "  " + "^".PadLeft(12 + differenceIndex, '-') + Environment.NewLine;
 			}
-			return prefix + message + suffix;
+			return "  Assert.That(, )\r\n" + prefix + message + suffix;
 		}
 
 		private static int GetDifferenceIndex(string input, string expected)
 		{
-			if (String.IsNullOrEmpty(input) || String.IsNullOrEmpty(expected))
+			if (string.IsNullOrEmpty(input) || string.IsNullOrEmpty(expected))
 			{
 				return 0;
 			}

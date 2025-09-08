@@ -28,7 +28,7 @@ TARGET_FRAMEWORK = "net48"
 STAGE = File.expand_path("build")
 SETTINGS_DIR = "settings"
 
-nunit_cmd = "tools/NUnit/nunit-console.exe"
+nunit_cmd = "tools/NUnit/nunit3-console.exe"
 
 beginning = Time.now
 
@@ -126,8 +126,10 @@ desc "Run the unit tests"
 task :test do
   puts "Running the unit tests in the build folder (#{settings[:stage]})..."
   nunit_assemblies = "#{settings[:stage]}/#{PRODUCT_NAME}.Tests.dll"
-  nunit_options = "/framework #{CLR_TOOLS_VERSION}"  
-  sh "#{nunit_cmd} #{nunit_assemblies} #{nunit_options}" 
+#  nunit_options = "/framework #{CLR_TOOLS_VERSION}"  
+  command="#{nunit_cmd} \"#{nunit_assemblies}\"" 
+  puts "\tcommand: sh "+command
+  sh command
 end
 
 desc "Create nuget package"

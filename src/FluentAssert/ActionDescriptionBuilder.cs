@@ -50,7 +50,7 @@ namespace FluentAssert
 			{
 				yield return ' ';
 			}
-			else if (Char.IsUpper(c))
+			else if (char.IsUpper(c))
 			{
 				yield return ' ';
 				yield return c;

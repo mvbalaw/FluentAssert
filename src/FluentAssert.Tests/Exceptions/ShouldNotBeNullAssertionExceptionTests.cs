@@ -35,15 +35,20 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.IsNotNull(null);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
-				_result.ShouldBeEqualTo(message);
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        // ReSharper disable once AssignNullToNotNullAttribute
+                        Assert.That(null, Is.Not.Null);
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_default_exception_message()

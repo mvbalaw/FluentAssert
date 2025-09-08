@@ -45,16 +45,20 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.AreNotEqual(_expected, _input);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(_expected, Is.Not.EqualTo(_input));
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
 
-				Assert.AreEqual(message, _result);
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_exception_message()
@@ -100,16 +104,20 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.AreNotEqual(_expected, _input);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(_expected, Is.Not.EqualTo(_input));
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
 
-				Assert.AreEqual(message, _result);
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_exception_message()
@@ -177,16 +185,20 @@ namespace FluentAssert.Tests.Exceptions
 			private void should_describe_the_problem_correctly()
 			{
 				var message = "";
-				try
-				{
-					Assert.AreNotEqual(_expected, _input);
-				}
-				catch (Exception exception)
-				{
-					message = exception.Message;
-				}
+                Assert.Throws<NUnit.Framework.AssertionException>(() =>
+                {
+                    try
+                    {
+                        Assert.That(_expected, Is.Not.EqualTo(_input));
+                    }
+                    catch (Exception exception)
+                    {
+                        message = exception.Message;
+                        throw;
+                    }
+                });
 
-				Assert.AreEqual(message, _result);
+                Assert.That(_result, Is.EqualTo(message));
 			}
 
 			private void when_building_the_exception_message()
